@@ -13,9 +13,8 @@ import Parse
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var userService: UserService!
     
-    private var appRegistry: AppRegistry!
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
@@ -23,11 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), forBarMetrics: .Default)
         
-        appRegistry = AppRegistry()
+//        if let nc = window?.rootViewController as? UINavigationController, vc = nc.topViewController as? LoginViewController {
+//            
+//        }
         
-        if let nc = window?.rootViewController as? UINavigationController, vc = nc.topViewController as? LoginViewController {
-            vc.appRegistry = appRegistry
-        }
+        userService = ParseUserService()
         
         return true
     }
@@ -56,4 +55,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+extension UIViewController {
+    var appDelegate: AppDelegate {
+        get {
+            return UIApplication.sharedApplication().delegate as! AppDelegate
+        }
+    }
+}
+
 

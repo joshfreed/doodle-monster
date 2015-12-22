@@ -29,7 +29,7 @@ class CreateAccountViewController: UIViewController, CreateAccountView {
     // MARK: - CreateAccountView
 
     func goToMainMenu() {
-        
+        performSegueWithIdentifier("MainMenu", sender: self)
     }
     
     func showCreateAccountError() {

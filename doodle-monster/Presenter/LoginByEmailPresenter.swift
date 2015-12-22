@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 
 protocol LoginByEmailView {
     func goToMainMenu()
@@ -16,39 +15,25 @@ protocol LoginByEmailView {
 }
 
 protocol LoginByEmailViewPresenter {
-    init(view: LoginByEmailView)
+    init(view: LoginByEmailView, userService: UserService)
     func login(username: String, password: String)
 }
 
 class LoginByEmailPresenter: LoginByEmailViewPresenter {
     let view: LoginByEmailView
+    let userService: UserService
     
-    required init(view: LoginByEmailView) {
+    required init(view: LoginByEmailView, userService: UserService) {
         self.view = view
+        self.userService = userService
     }
     
     func login(username: String, password: String) {
-        PFUser.query()?.whereKey("username", equalTo: username).getFirstObjectInBackgroundWithBlock() { (user, error) -> Void in
-            if let error = error {
-                if error.code == 101 {
-                    self.view.goToCreateAccount(username, password: password)
-                    return
-                } else {
-                    // Some other error occurred other than the "allowed" error "user not found"
-                    print("unexpected error \(error)")
-                }
-            }
-            
-            guard user != nil else {
-                // so what does this mean? That the query succeeded without an error but there was no user object returned?
-                // But it seems when a parse search does not find a result it actually sends back an error above
-                // So I don't know if it's possible to get here or what it even means if it happens
-                print("do what now?")
-                return
-            }
-            
-            PFUser.logInWithUsernameInBackground(username, password: password) { (user: PFUser?, error: NSError?) -> Void in
-                self.view.goToMainMenu()
+        userService.tryToLogIn(username, password: password) { result in
+            switch result {
+            case .Success: self.view.goToMainMenu()
+            case .NoSuchUser: self.view.goToCreateAccount(username, password: password)
+            case .Error: self.view.showError()
             }
         }
     }

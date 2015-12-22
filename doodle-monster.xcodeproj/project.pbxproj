@@ -14,9 +14,9 @@
 		5328009D1BA0ECF6005AD59C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5328009B1BA0ECF6005AD59C /* LaunchScreen.storyboard */; };
 		532800A81BA0ECF6005AD59C /* doodle_monsterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800A71BA0ECF6005AD59C /* doodle_monsterTests.swift */; };
 		532800B31BA0ECF6005AD59C /* doodle_monsterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800B21BA0ECF6005AD59C /* doodle_monsterUITests.swift */; };
-		53C8D3E71C29D6BC0052A9ED /* AppRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3E61C29D6BC0052A9ED /* AppRegistry.swift */; };
 		53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */; };
 		53C8D3EB1C29E9B70052A9ED /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */; };
+		53C8D3EE1C2A00730052A9ED /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3ED1C2A00730052A9ED /* UserService.swift */; };
 		53CED4BA1C1F4AE200B5BEEF /* LoginByEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4B91C1F4AE200B5BEEF /* LoginByEmailViewController.swift */; };
 		53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4BB1C1F4B4000B5BEEF /* CreateAccountViewController.swift */; };
 		53CED4BE1C1F691200B5BEEF /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 53CED4BD1C1F691200B5BEEF /* Cartfile */; };
@@ -59,9 +59,9 @@
 		532800AE1BA0ECF6005AD59C /* doodle-monsterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "doodle-monsterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		532800B21BA0ECF6005AD59C /* doodle_monsterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = doodle_monsterUITests.swift; sourceTree = "<group>"; };
 		532800B41BA0ECF6005AD59C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		53C8D3E61C29D6BC0052A9ED /* AppRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRegistry.swift; sourceTree = "<group>"; };
 		53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginByEmailPresenter.swift; path = Presenter/LoginByEmailPresenter.swift; sourceTree = "<group>"; };
 		53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
+		53C8D3ED1C2A00730052A9ED /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Model/UserService.swift; sourceTree = "<group>"; };
 		53CED4B91C1F4AE200B5BEEF /* LoginByEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginByEmailViewController.swift; path = Controller/LoginByEmailViewController.swift; sourceTree = "<group>"; };
 		53CED4BB1C1F4B4000B5BEEF /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = Controller/CreateAccountViewController.swift; sourceTree = "<group>"; };
 		53CED4BD1C1F691200B5BEEF /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -132,6 +132,7 @@
 		532800911BA0ECF6005AD59C /* doodle-monster */ = {
 			isa = PBXGroup;
 			children = (
+				53C8D3EC1C2A00350052A9ED /* Model */,
 				53CED4D01C1F8EDE00B5BEEF /* Presenter */,
 				53669E6A1BC4A91E00C2E9EE /* ViewModel */,
 				53669E691BC4A91100C2E9EE /* View */,
@@ -140,7 +141,6 @@
 				532800991BA0ECF6005AD59C /* Assets.xcassets */,
 				5328009B1BA0ECF6005AD59C /* LaunchScreen.storyboard */,
 				5328009E1BA0ECF6005AD59C /* Info.plist */,
-				53C8D3E61C29D6BC0052A9ED /* AppRegistry.swift */,
 			);
 			path = "doodle-monster";
 			sourceTree = "<group>";
@@ -176,6 +176,14 @@
 			children = (
 			);
 			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		53C8D3EC1C2A00350052A9ED /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				53C8D3ED1C2A00730052A9ED /* UserService.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		53CED4B81C1F4AA000B5BEEF /* Login */ = {
@@ -344,11 +352,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53C8D3EE1C2A00730052A9ED /* UserService.swift in Sources */,
 				53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */,
 				532800951BA0ECF6005AD59C /* LoginViewController.swift in Sources */,
 				53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */,
 				532800931BA0ECF6005AD59C /* AppDelegate.swift in Sources */,
-				53C8D3E71C29D6BC0052A9ED /* AppRegistry.swift in Sources */,
 				53CED4BA1C1F4AE200B5BEEF /* LoginByEmailViewController.swift in Sources */,
 				53CED4D21C1F8F2800B5BEEF /* CreateAccountPresenter.swift in Sources */,
 			);

@@ -264,12 +264,13 @@
                         <outlet property="confirmPasswordTextField" destination="Ns3-45-uXJ" id="Tat-10-Ey4"/>
                         <outlet property="displayNameTextField" destination="Fjh-1P-8re" id="VeT-1N-lvO"/>
                         <outlet property="emailAddressLabel" destination="aPj-fi-PTB" id="3n7-hq-ZLF"/>
+                        <segue destination="gWE-pp-Uki" kind="show" identifier="MainMenu" id="1oS-iW-VAh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OM7-lG-J6J" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="fmb-fY-Naj" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1843" y="-334"/>
+            <point key="canvasLocation" x="2610" y="-444"/>
         </scene>
         <!--Login By Email View Controller-->
         <scene sceneID="oc3-MV-6ZN">
@@ -376,6 +377,7 @@
                         <outlet property="passwordTextField" destination="jnP-wy-PLX" id="QeT-a3-Nuu"/>
                         <outlet property="usernameTextField" destination="T6y-gT-FbJ" id="FhU-7O-Sxm"/>
                         <segue destination="VUm-UG-NKk" kind="show" identifier="CreateAccount" id="sTg-P5-M5M"/>
+                        <segue destination="gWE-pp-Uki" kind="show" identifier="MainMenu" id="51A-Ag-woa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ANm-ge-s2E" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -411,7 +413,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bHN-FS-XS0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2831" y="411"/>
+            <point key="canvasLocation" x="2898" y="416"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mWb-4a-RqX">
@@ -439,4 +441,7 @@
         <image name="header" width="768" height="72"/>
         <image name="logo" width="561" height="247"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="1oS-iW-VAh"/>
+    </inferredMetricsTieBreakers>
 </document>

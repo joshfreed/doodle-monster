@@ -9,8 +9,6 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-    var appRegistry: AppRegistry!
-
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -26,7 +24,7 @@ class LoginViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "LoginByEmail" {
             if let vc = segue.destinationViewController as? LoginByEmailViewController {
-                vc.presenter = LoginByEmailPresenter(view: vc)
+                vc.presenter = LoginByEmailPresenter(view: vc, userService: appDelegate.userService)
             }
         }
     }
