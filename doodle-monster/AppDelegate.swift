@@ -7,15 +7,28 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    private var appRegistry: AppRegistry!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
+//        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        
+//        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), forBarMetrics: .Default)
+        
+        appRegistry = AppRegistry()
+        
+        if let nc = window?.rootViewController as? UINavigationController, vc = nc.topViewController as? LoginViewController {
+            vc.appRegistry = appRegistry
+        }
+        
         return true
     }
 

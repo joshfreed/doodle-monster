@@ -8,12 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		532800931BA0ECF6005AD59C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800921BA0ECF6005AD59C /* AppDelegate.swift */; };
-		532800951BA0ECF6005AD59C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800941BA0ECF6005AD59C /* ViewController.swift */; };
+		532800951BA0ECF6005AD59C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800941BA0ECF6005AD59C /* LoginViewController.swift */; };
 		532800981BA0ECF6005AD59C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 532800961BA0ECF6005AD59C /* Main.storyboard */; };
 		5328009A1BA0ECF6005AD59C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 532800991BA0ECF6005AD59C /* Assets.xcassets */; };
 		5328009D1BA0ECF6005AD59C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5328009B1BA0ECF6005AD59C /* LaunchScreen.storyboard */; };
 		532800A81BA0ECF6005AD59C /* doodle_monsterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800A71BA0ECF6005AD59C /* doodle_monsterTests.swift */; };
 		532800B31BA0ECF6005AD59C /* doodle_monsterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800B21BA0ECF6005AD59C /* doodle_monsterUITests.swift */; };
+		53C8D3E71C29D6BC0052A9ED /* AppRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3E61C29D6BC0052A9ED /* AppRegistry.swift */; };
+		53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */; };
+		53C8D3EB1C29E9B70052A9ED /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */; };
+		53CED4BA1C1F4AE200B5BEEF /* LoginByEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4B91C1F4AE200B5BEEF /* LoginByEmailViewController.swift */; };
+		53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4BB1C1F4B4000B5BEEF /* CreateAccountViewController.swift */; };
+		53CED4BE1C1F691200B5BEEF /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 53CED4BD1C1F691200B5BEEF /* Cartfile */; };
+		53CED4C11C1F6BC200B5BEEF /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4BF1C1F6BC200B5BEEF /* Bolts.framework */; };
+		53CED4C21C1F6BC200B5BEEF /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4C01C1F6BC200B5BEEF /* Parse.framework */; };
+		53CED4C51C1F6D4000B5BEEF /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4C41C1F6D4000B5BEEF /* libsqlite3.tbd */; };
+		53CED4C71C1F6D5600B5BEEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4C61C1F6D5600B5BEEF /* AudioToolbox.framework */; };
+		53CED4CF1C1F6DE000B5BEEF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4CE1C1F6DE000B5BEEF /* SystemConfiguration.framework */; };
+		53CED4D21C1F8F2800B5BEEF /* CreateAccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4D11C1F8F2800B5BEEF /* CreateAccountPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +48,7 @@
 /* Begin PBXFileReference section */
 		5328008F1BA0ECF6005AD59C /* doodle-monster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "doodle-monster.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		532800921BA0ECF6005AD59C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		532800941BA0ECF6005AD59C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		532800941BA0ECF6005AD59C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controller/LoginViewController.swift; sourceTree = "<group>"; };
 		532800971BA0ECF6005AD59C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		532800991BA0ECF6005AD59C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5328009C1BA0ECF6005AD59C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +59,21 @@
 		532800AE1BA0ECF6005AD59C /* doodle-monsterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "doodle-monsterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		532800B21BA0ECF6005AD59C /* doodle_monsterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = doodle_monsterUITests.swift; sourceTree = "<group>"; };
 		532800B41BA0ECF6005AD59C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53C8D3E61C29D6BC0052A9ED /* AppRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRegistry.swift; sourceTree = "<group>"; };
+		53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginByEmailPresenter.swift; path = Presenter/LoginByEmailPresenter.swift; sourceTree = "<group>"; };
+		53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
+		53CED4B91C1F4AE200B5BEEF /* LoginByEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginByEmailViewController.swift; path = Controller/LoginByEmailViewController.swift; sourceTree = "<group>"; };
+		53CED4BB1C1F4B4000B5BEEF /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = Controller/CreateAccountViewController.swift; sourceTree = "<group>"; };
+		53CED4BD1C1F691200B5BEEF /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		53CED4BF1C1F6BC200B5BEEF /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		53CED4C01C1F6BC200B5BEEF /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		53CED4C41C1F6D4000B5BEEF /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		53CED4C61C1F6D5600B5BEEF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		53CED4C81C1F6D6600B5BEEF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		53CED4CA1C1F6DB300B5BEEF /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		53CED4CC1C1F6DD300B5BEEF /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		53CED4CE1C1F6DE000B5BEEF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		53CED4D11C1F8F2800B5BEEF /* CreateAccountPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountPresenter.swift; path = Presenter/CreateAccountPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +81,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53CED4CF1C1F6DE000B5BEEF /* SystemConfiguration.framework in Frameworks */,
+				53CED4C71C1F6D5600B5BEEF /* AudioToolbox.framework in Frameworks */,
+				53CED4C51C1F6D4000B5BEEF /* libsqlite3.tbd in Frameworks */,
+				53CED4C21C1F6BC200B5BEEF /* Parse.framework in Frameworks */,
+				53CED4C11C1F6BC200B5BEEF /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,10 +109,13 @@
 		532800861BA0ECF6005AD59C = {
 			isa = PBXGroup;
 			children = (
+				53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */,
+				53CED4BD1C1F691200B5BEEF /* Cartfile */,
 				532800911BA0ECF6005AD59C /* doodle-monster */,
 				532800A61BA0ECF6005AD59C /* doodle-monsterTests */,
 				532800B11BA0ECF6005AD59C /* doodle-monsterUITests */,
 				532800901BA0ECF6005AD59C /* Products */,
+				53CED4C31C1F6BD200B5BEEF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,12 +132,15 @@
 		532800911BA0ECF6005AD59C /* doodle-monster */ = {
 			isa = PBXGroup;
 			children = (
+				53CED4D01C1F8EDE00B5BEEF /* Presenter */,
+				53669E6A1BC4A91E00C2E9EE /* ViewModel */,
+				53669E691BC4A91100C2E9EE /* View */,
 				532800921BA0ECF6005AD59C /* AppDelegate.swift */,
-				532800941BA0ECF6005AD59C /* ViewController.swift */,
 				532800961BA0ECF6005AD59C /* Main.storyboard */,
 				532800991BA0ECF6005AD59C /* Assets.xcassets */,
 				5328009B1BA0ECF6005AD59C /* LaunchScreen.storyboard */,
 				5328009E1BA0ECF6005AD59C /* Info.plist */,
+				53C8D3E61C29D6BC0052A9ED /* AppRegistry.swift */,
 			);
 			path = "doodle-monster";
 			sourceTree = "<group>";
@@ -123,6 +161,55 @@
 				532800B41BA0ECF6005AD59C /* Info.plist */,
 			);
 			path = "doodle-monsterUITests";
+			sourceTree = "<group>";
+		};
+		53669E691BC4A91100C2E9EE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				53CED4B81C1F4AA000B5BEEF /* Login */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		53669E6A1BC4A91E00C2E9EE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		53CED4B81C1F4AA000B5BEEF /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				532800941BA0ECF6005AD59C /* LoginViewController.swift */,
+				53CED4B91C1F4AE200B5BEEF /* LoginByEmailViewController.swift */,
+				53CED4BB1C1F4B4000B5BEEF /* CreateAccountViewController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		53CED4C31C1F6BD200B5BEEF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				53CED4CE1C1F6DE000B5BEEF /* SystemConfiguration.framework */,
+				53CED4CC1C1F6DD300B5BEEF /* Security.framework */,
+				53CED4CA1C1F6DB300B5BEEF /* libz.tbd */,
+				53CED4C81C1F6D6600B5BEEF /* CFNetwork.framework */,
+				53CED4C61C1F6D5600B5BEEF /* AudioToolbox.framework */,
+				53CED4C41C1F6D4000B5BEEF /* libsqlite3.tbd */,
+				53CED4BF1C1F6BC200B5BEEF /* Bolts.framework */,
+				53CED4C01C1F6BC200B5BEEF /* Parse.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		53CED4D01C1F8EDE00B5BEEF /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				53CED4D11C1F8F2800B5BEEF /* CreateAccountPresenter.swift */,
+				53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */,
+			);
+			name = Presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,6 +317,8 @@
 			files = (
 				5328009D1BA0ECF6005AD59C /* LaunchScreen.storyboard in Resources */,
 				5328009A1BA0ECF6005AD59C /* Assets.xcassets in Resources */,
+				53CED4BE1C1F691200B5BEEF /* Cartfile in Resources */,
+				53C8D3EB1C29E9B70052A9ED /* Cartfile.resolved in Resources */,
 				532800981BA0ECF6005AD59C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,8 +344,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				532800951BA0ECF6005AD59C /* ViewController.swift in Sources */,
+				53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */,
+				532800951BA0ECF6005AD59C /* LoginViewController.swift in Sources */,
+				53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */,
 				532800931BA0ECF6005AD59C /* AppDelegate.swift in Sources */,
+				53C8D3E71C29D6BC0052A9ED /* AppRegistry.swift in Sources */,
+				53CED4BA1C1F4AE200B5BEEF /* LoginByEmailViewController.swift in Sources */,
+				53CED4D21C1F8F2800B5BEEF /* CreateAccountPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +492,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "doodle-monster/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bleepsmazz.doodle-monster";
@@ -409,6 +507,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "doodle-monster/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bleepsmazz.doodle-monster";
@@ -483,6 +585,7 @@
 				532800B91BA0ECF6005AD59C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		532800BA1BA0ECF6005AD59C /* Build configuration list for PBXNativeTarget "doodle-monsterTests" */ = {
 			isa = XCConfigurationList;
@@ -491,6 +594,7 @@
 				532800BC1BA0ECF6005AD59C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		532800BD1BA0ECF6005AD59C /* Build configuration list for PBXNativeTarget "doodle-monsterUITests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +603,7 @@
 				532800BF1BA0ECF6005AD59C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
