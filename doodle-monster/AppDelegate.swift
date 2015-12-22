@@ -21,12 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
 //        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), forBarMetrics: .Default)
-        
-//        if let nc = window?.rootViewController as? UINavigationController, vc = nc.topViewController as? LoginViewController {
-//            
-//        }
-        
+
         userService = ParseUserService()
+
+        if PFUser.currentUser() != nil {
+            let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let vc = storyboard.instantiateViewControllerWithIdentifier("MainMenu")
+            window?.rootViewController = vc
+        }
         
         return true
     }

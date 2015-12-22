@@ -388,7 +388,7 @@
         <!--View Controller-->
         <scene sceneID="mi8-aM-h9Y">
             <objects>
-                <viewController id="gWE-pp-Uki" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainMenu" id="gWE-pp-Uki" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gah-k7-PjE"/>
                         <viewControllerLayoutGuide type="bottom" id="fS1-cO-lCz"/>
@@ -442,6 +442,6 @@
         <image name="logo" width="561" height="247"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1oS-iW-VAh"/>
+        <segue reference="51A-Ag-woa"/>
     </inferredMetricsTieBreakers>
 </document>

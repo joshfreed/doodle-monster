@@ -11,11 +11,13 @@ import UIKit
 protocol CreateAccountView {
     func goToMainMenu()
     func showCreateAccountError()
+    func setUsername(username: String)
 }
 
 protocol CreateAccountViewPresenter {
     init(view: CreateAccountView, userService: UserService, username: String, password: String)
     func createAccount(displayName: String, confirmPassword: String)
+    func showUsername()
 }
 
 class CreateAccountPresenter: CreateAccountViewPresenter {
@@ -48,5 +50,9 @@ class CreateAccountPresenter: CreateAccountViewPresenter {
             case .Error: self.view.showCreateAccountError()
             }
         }
+    }
+    
+    func showUsername() {
+        self.view.setUsername(username)
     }
 }

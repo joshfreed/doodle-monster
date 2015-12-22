@@ -18,7 +18,7 @@ class CreateAccountViewController: UIViewController, CreateAccountView {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        presenter.showUsername()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,6 +34,10 @@ class CreateAccountViewController: UIViewController, CreateAccountView {
     
     func showCreateAccountError() {
         
+    }
+    
+    func setUsername(username: String) {
+        emailAddressLabel.text = username
     }
 
     /*
