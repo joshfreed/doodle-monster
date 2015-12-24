@@ -12,6 +12,7 @@ import Parse
 protocol UserService {
     func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ())
     func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ())
+    func search(searchText: String, callback: (result: SearchResult) -> ())
 }
 
 class ParseUserService: UserService {
@@ -59,6 +60,38 @@ class ParseUserService: UserService {
             }
         }
     }
+    
+    func search(searchText: String, callback: (result: SearchResult) -> ()) {
+        if searchText.isEmpty {
+            callback(result: .Success([]))
+            return
+        }
+        
+        PFUser.query()?.whereKey("username", hasPrefix: searchText).findObjectsInBackgroundWithBlock { results, error in
+            guard let results = results else {
+                callback(result: .Error)
+                return
+            }
+            
+            var players: [Player] = []
+            for user in results {
+                if let user = user as? PFUser, player = self.pfUserToPlayer(user) {
+                    players.append(player)
+                }
+            }
+            callback(result: .Success(players))
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func pfUserToPlayer(user: PFUser) -> Player? {
+        guard let displayName = user["displayName"] as? String else {
+            return nil
+        }
+        
+        return Player(email: user.username!, displayName: displayName)
+    }
 }
 
 enum LoginResult {
@@ -69,5 +102,10 @@ enum LoginResult {
 
 enum CreateUserResult {
     case Success
+    case Error
+}
+
+enum SearchResult {
+    case Success([Player])
     case Error
 }

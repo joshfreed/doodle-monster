@@ -17,6 +17,12 @@
 		53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */; };
 		53C8D3EB1C29E9B70052A9ED /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */; };
 		53C8D3EE1C2A00730052A9ED /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3ED1C2A00730052A9ED /* UserService.swift */; };
+		53C8D3F11C2B0CA30052A9ED /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3F01C2B0CA30052A9ED /* MainMenuViewController.swift */; };
+		53C8D3F31C2B11340052A9ED /* NewMonsterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3F21C2B11340052A9ED /* NewMonsterViewController.swift */; };
+		53C8D3F61C2B13840052A9ED /* InviteByEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3F51C2B13840052A9ED /* InviteByEmailViewController.swift */; };
+		53C8D3F81C2B15B30052A9ED /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3F71C2B15B30052A9ED /* PlayerTableViewCell.swift */; };
+		53C8D3FC1C2C72890052A9ED /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3FB1C2C72890052A9ED /* Player.swift */; };
+		53C8D3FE1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3FD1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift */; };
 		53CED4BA1C1F4AE200B5BEEF /* LoginByEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4B91C1F4AE200B5BEEF /* LoginByEmailViewController.swift */; };
 		53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4BB1C1F4B4000B5BEEF /* CreateAccountViewController.swift */; };
 		53CED4BE1C1F691200B5BEEF /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 53CED4BD1C1F691200B5BEEF /* Cartfile */; };
@@ -62,6 +68,12 @@
 		53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginByEmailPresenter.swift; path = Presenter/LoginByEmailPresenter.swift; sourceTree = "<group>"; };
 		53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		53C8D3ED1C2A00730052A9ED /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Model/UserService.swift; sourceTree = "<group>"; };
+		53C8D3F01C2B0CA30052A9ED /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = Controller/MainMenuViewController.swift; sourceTree = "<group>"; };
+		53C8D3F21C2B11340052A9ED /* NewMonsterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewMonsterViewController.swift; path = Controller/NewMonsterViewController.swift; sourceTree = "<group>"; };
+		53C8D3F51C2B13840052A9ED /* InviteByEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InviteByEmailViewController.swift; path = Controller/InviteByEmailViewController.swift; sourceTree = "<group>"; };
+		53C8D3F71C2B15B30052A9ED /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerTableViewCell.swift; path = View/PlayerTableViewCell.swift; sourceTree = "<group>"; };
+		53C8D3FB1C2C72890052A9ED /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Player.swift; path = Model/Player.swift; sourceTree = "<group>"; };
+		53C8D3FD1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InviteByEmailViewModel.swift; path = ViewModel/InviteByEmailViewModel.swift; sourceTree = "<group>"; };
 		53CED4B91C1F4AE200B5BEEF /* LoginByEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginByEmailViewController.swift; path = Controller/LoginByEmailViewController.swift; sourceTree = "<group>"; };
 		53CED4BB1C1F4B4000B5BEEF /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = Controller/CreateAccountViewController.swift; sourceTree = "<group>"; };
 		53CED4BD1C1F691200B5BEEF /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -166,6 +178,8 @@
 		53669E691BC4A91100C2E9EE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				53C8D3F41C2B121E0052A9ED /* NewMonster */,
+				53C8D3EF1C2B0C910052A9ED /* MainMenu */,
 				53CED4B81C1F4AA000B5BEEF /* Login */,
 			);
 			name = View;
@@ -174,6 +188,7 @@
 		53669E6A1BC4A91E00C2E9EE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				53C8D3FD1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -182,8 +197,27 @@
 			isa = PBXGroup;
 			children = (
 				53C8D3ED1C2A00730052A9ED /* UserService.swift */,
+				53C8D3FB1C2C72890052A9ED /* Player.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		53C8D3EF1C2B0C910052A9ED /* MainMenu */ = {
+			isa = PBXGroup;
+			children = (
+				53C8D3F01C2B0CA30052A9ED /* MainMenuViewController.swift */,
+			);
+			name = MainMenu;
+			sourceTree = "<group>";
+		};
+		53C8D3F41C2B121E0052A9ED /* NewMonster */ = {
+			isa = PBXGroup;
+			children = (
+				53C8D3F21C2B11340052A9ED /* NewMonsterViewController.swift */,
+				53C8D3F51C2B13840052A9ED /* InviteByEmailViewController.swift */,
+				53C8D3F71C2B15B30052A9ED /* PlayerTableViewCell.swift */,
+			);
+			name = NewMonster;
 			sourceTree = "<group>";
 		};
 		53CED4B81C1F4AA000B5BEEF /* Login */ = {
@@ -352,11 +386,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53C8D3F11C2B0CA30052A9ED /* MainMenuViewController.swift in Sources */,
 				53C8D3EE1C2A00730052A9ED /* UserService.swift in Sources */,
 				53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */,
+				53C8D3F31C2B11340052A9ED /* NewMonsterViewController.swift in Sources */,
 				532800951BA0ECF6005AD59C /* LoginViewController.swift in Sources */,
+				53C8D3FC1C2C72890052A9ED /* Player.swift in Sources */,
 				53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */,
+				53C8D3FE1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift in Sources */,
 				532800931BA0ECF6005AD59C /* AppDelegate.swift in Sources */,
+				53C8D3F81C2B15B30052A9ED /* PlayerTableViewCell.swift in Sources */,
+				53C8D3F61C2B13840052A9ED /* InviteByEmailViewController.swift in Sources */,
 				53CED4BA1C1F4AE200B5BEEF /* LoginByEmailViewController.swift in Sources */,
 				53CED4D21C1F8F2800B5BEEF /* CreateAccountPresenter.swift in Sources */,
 			);
