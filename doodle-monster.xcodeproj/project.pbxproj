@@ -14,6 +14,8 @@
 		5328009D1BA0ECF6005AD59C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5328009B1BA0ECF6005AD59C /* LaunchScreen.storyboard */; };
 		532800A81BA0ECF6005AD59C /* doodle_monsterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800A71BA0ECF6005AD59C /* doodle_monsterTests.swift */; };
 		532800B31BA0ECF6005AD59C /* doodle_monsterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800B21BA0ECF6005AD59C /* doodle_monsterUITests.swift */; };
+		535ECC0F1C31E42400E17D0F /* NewMonsterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535ECC0E1C31E42400E17D0F /* NewMonsterViewModel.swift */; };
+		535ECC111C31E60600E17D0F /* NewGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535ECC101C31E60600E17D0F /* NewGame.swift */; };
 		53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */; };
 		53C8D3EB1C29E9B70052A9ED /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */; };
 		53C8D3EE1C2A00730052A9ED /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3ED1C2A00730052A9ED /* UserService.swift */; };
@@ -65,6 +67,8 @@
 		532800AE1BA0ECF6005AD59C /* doodle-monsterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "doodle-monsterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		532800B21BA0ECF6005AD59C /* doodle_monsterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = doodle_monsterUITests.swift; sourceTree = "<group>"; };
 		532800B41BA0ECF6005AD59C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		535ECC0E1C31E42400E17D0F /* NewMonsterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewMonsterViewModel.swift; path = ViewModel/NewMonsterViewModel.swift; sourceTree = "<group>"; };
+		535ECC101C31E60600E17D0F /* NewGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewGame.swift; path = Model/NewGame.swift; sourceTree = "<group>"; };
 		53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginByEmailPresenter.swift; path = Presenter/LoginByEmailPresenter.swift; sourceTree = "<group>"; };
 		53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		53C8D3ED1C2A00730052A9ED /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Model/UserService.swift; sourceTree = "<group>"; };
@@ -189,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				53C8D3FD1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift */,
+				535ECC0E1C31E42400E17D0F /* NewMonsterViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -198,6 +203,7 @@
 			children = (
 				53C8D3ED1C2A00730052A9ED /* UserService.swift */,
 				53C8D3FB1C2C72890052A9ED /* Player.swift */,
+				535ECC101C31E60600E17D0F /* NewGame.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -388,6 +394,7 @@
 			files = (
 				53C8D3F11C2B0CA30052A9ED /* MainMenuViewController.swift in Sources */,
 				53C8D3EE1C2A00730052A9ED /* UserService.swift in Sources */,
+				535ECC0F1C31E42400E17D0F /* NewMonsterViewModel.swift in Sources */,
 				53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */,
 				53C8D3F31C2B11340052A9ED /* NewMonsterViewController.swift in Sources */,
 				532800951BA0ECF6005AD59C /* LoginViewController.swift in Sources */,
@@ -397,6 +404,7 @@
 				532800931BA0ECF6005AD59C /* AppDelegate.swift in Sources */,
 				53C8D3F81C2B15B30052A9ED /* PlayerTableViewCell.swift in Sources */,
 				53C8D3F61C2B13840052A9ED /* InviteByEmailViewController.swift in Sources */,
+				535ECC111C31E60600E17D0F /* NewGame.swift in Sources */,
 				53CED4BA1C1F4AE200B5BEEF /* LoginByEmailViewController.swift in Sources */,
 				53CED4D21C1F8F2800B5BEEF /* CreateAccountPresenter.swift in Sources */,
 			);

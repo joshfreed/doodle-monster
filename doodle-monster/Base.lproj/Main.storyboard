@@ -472,7 +472,7 @@
                                                 <state key="normal" title="New Monster" backgroundImage="button-raised"/>
                                                 <connections>
                                                     <action selector="login:" destination="hPq-Om-kk2" eventType="touchUpInside" id="Lcp-8f-4Mv"/>
-                                                    <segue destination="Dci-DH-Tm1" kind="showDetail" action="showViewController:sender:" id="Tbs-vH-UfP"/>
+                                                    <segue destination="Dci-DH-Tm1" kind="showDetail" identifier="NewMonster" action="showViewController:sender:" id="Tbs-vH-UfP"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2W-lX-mrN">
@@ -696,7 +696,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="LvY-6e-IP6" kind="unwind" unwindAction="unwindToNewMonster:" id="v5s-9m-emk"/>
+                                    <segue destination="LvY-6e-IP6" kind="unwind" identifier="CloseInviteByEmail" unwindAction="unwindToNewMonster:" id="v5s-9m-emk"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0gS-lg-7GU">
@@ -818,6 +818,6 @@
         <image name="logo" width="561" height="247"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="51A-Ag-woa"/>
+        <segue reference="1oS-iW-VAh"/>
     </inferredMetricsTieBreakers>
 </document>

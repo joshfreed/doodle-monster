@@ -11,17 +11,12 @@ import UIKit
 protocol InviteByEmailViewModelProtocol: class {
     var players: [PlayerViewModelProtocol] { get }
     var playersDidChange: ((InviteByEmailViewModelProtocol) -> ())? { get set }
+    var playerWasSelected: ((Player) -> ())? { get set }
     
     init(userService: UserService)
     func search(text: String)
     func playerAt(index: Int) -> PlayerViewModelProtocol
-}
-
-protocol PlayerViewModelProtocol {
-    var email: String { get }
-    var displayName: String { get }
-    
-    init(player: Player)
+    func selectPlayer(index: NSIndexPath)
 }
 
 class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
@@ -32,8 +27,10 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     }
     
     var playersDidChange: ((InviteByEmailViewModelProtocol) -> ())?
+    var playerWasSelected: ((Player) -> ())?
     
     private let userService: UserService
+    private var playerModels: [Player] = []
     
     required init(userService: UserService) {
         self.userService = userService
@@ -43,6 +40,7 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
         userService.search(text) { result in
             switch result {
             case .Success(let players):
+                self.playerModels = players
                 var viewModels: [PlayerViewModelProtocol] = []
                 for player in players {
                     viewModels.append(PlayerViewModel(player: player))
@@ -57,6 +55,17 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     func playerAt(index: Int) -> PlayerViewModelProtocol {
         return players[index]
     }
+
+    func selectPlayer(index: NSIndexPath) {
+        playerWasSelected?(playerModels[index.row])
+    }
+}
+
+protocol PlayerViewModelProtocol {
+    var email: String { get }
+    var displayName: String { get }
+    
+    init(player: Player)
 }
 
 class PlayerViewModel: PlayerViewModelProtocol {

@@ -24,6 +24,7 @@ class InviteByEmailViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         playersTable.dataSource = self
+        playersTable.delegate = self
         searchTextField.delegate = self
         searchTextField.becomeFirstResponder()
     }
@@ -32,20 +33,13 @@ class InviteByEmailViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    // MARK: - InviteByEmailView
-    
-    
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
     }
-    */
 
     // MARK: - UITextFieldDelegate
     
@@ -67,3 +61,11 @@ extension InviteByEmailViewController: UITableViewDataSource {
         return cell
     }
 }
+
+extension InviteByEmailViewController: UITableViewDelegate {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        viewModel.selectPlayer(indexPath)
+        self.performSegueWithIdentifier("CloseInviteByEmail", sender: self)
+    }
+}
+

@@ -23,16 +23,16 @@ class MainMenuViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "NewMonster" {
+            if let vc = segue.destinationViewController as? NewMonsterViewController {
+                vc.viewModel = NewMonsterViewModel(userService: appDelegate.userService)
+            }
+        }
     }
-    */
     
     @IBAction func unwindToMainMenu(segue: UIStoryboardSegue) {
     }
@@ -40,6 +40,4 @@ class MainMenuViewController: UIViewController {
     @IBAction func signOut(sender: UIButton) {
         
     }
-    
-    
 }

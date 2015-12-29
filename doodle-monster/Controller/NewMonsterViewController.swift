@@ -11,6 +11,25 @@ import UIKit
 class NewMonsterViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
 
+    var viewModel: NewMonsterViewModelProtocol! {
+        didSet {
+            self.viewModel.playerWasAdded = { viewModel in
+                let view = UIStackView()
+                view.axis = UILayoutConstraintAxis.Horizontal
+                
+                let displayNameLabel = UILabel()
+                displayNameLabel.text = viewModel.displayName
+                view.addArrangedSubview(displayNameLabel)
+                
+                let emailAddressLabel = UILabel()
+                emailAddressLabel.text = viewModel.email
+                view.addArrangedSubview(emailAddressLabel)
+                
+                self.stackView.insertArrangedSubview(view, atIndex: 1)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,7 +47,7 @@ class NewMonsterViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "InviteByEmail" {
             if let vc = segue.destinationViewController as? InviteByEmailViewController {
-                vc.viewModel = InviteByEmailViewModel(userService: appDelegate.userService)
+                vc.viewModel = viewModel.invitePlayerByEmail()
             }
         }
     }
