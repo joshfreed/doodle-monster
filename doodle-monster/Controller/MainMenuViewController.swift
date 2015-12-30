@@ -29,7 +29,7 @@ class MainMenuViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "NewMonster" {
             if let vc = segue.destinationViewController as? NewMonsterViewController {
-                vc.viewModel = NewMonsterViewModel(userService: appDelegate.userService)
+                vc.viewModel = NewMonsterViewModel()
             }
         }
     }

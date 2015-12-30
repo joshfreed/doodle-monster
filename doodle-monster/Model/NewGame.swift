@@ -14,4 +14,12 @@ class NewGame: NSObject {
     func addPlayer(player: Player) {
         players.append(player)
     }
+    
+    func removePlayer(player: Player) {
+        guard let index = players.indexOf(player) else {
+            return
+        }
+        
+        players.removeAtIndex(index)
+    }
 }

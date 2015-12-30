@@ -34,6 +34,10 @@
 		53CED4C71C1F6D5600B5BEEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4C61C1F6D5600B5BEEF /* AudioToolbox.framework */; };
 		53CED4CF1C1F6DE000B5BEEF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4CE1C1F6DE000B5BEEF /* SystemConfiguration.framework */; };
 		53CED4D21C1F8F2800B5BEEF /* CreateAccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4D11C1F8F2800B5BEEF /* CreateAccountPresenter.swift */; };
+		53EE34F11C32E1C900C70635 /* UIViewLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE34F01C32E1C900C70635 /* UIViewLoading.swift */; };
+		53EE34F31C32E2A000C70635 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE34F21C32E2A000C70635 /* PlayerView.swift */; };
+		53EE34F51C32E2B000C70635 /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53EE34F41C32E2B000C70635 /* PlayerView.xib */; };
+		53EE34F71C345E8600C70635 /* NewMonsterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE34F61C345E8600C70635 /* NewMonsterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +94,10 @@
 		53CED4CC1C1F6DD300B5BEEF /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		53CED4CE1C1F6DE000B5BEEF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		53CED4D11C1F8F2800B5BEEF /* CreateAccountPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountPresenter.swift; path = Presenter/CreateAccountPresenter.swift; sourceTree = "<group>"; };
+		53EE34F01C32E1C900C70635 /* UIViewLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewLoading.swift; path = View/UIViewLoading.swift; sourceTree = "<group>"; };
+		53EE34F21C32E2A000C70635 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerView.swift; path = View/PlayerView.swift; sourceTree = "<group>"; };
+		53EE34F41C32E2B000C70635 /* PlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerView.xib; path = View/PlayerView.xib; sourceTree = "<group>"; };
+		53EE34F61C345E8600C70635 /* NewMonsterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMonsterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +174,7 @@
 			children = (
 				532800A71BA0ECF6005AD59C /* doodle_monsterTests.swift */,
 				532800A91BA0ECF6005AD59C /* Info.plist */,
+				53EE34F61C345E8600C70635 /* NewMonsterTests.swift */,
 			);
 			path = "doodle-monsterTests";
 			sourceTree = "<group>";
@@ -185,6 +194,7 @@
 				53C8D3F41C2B121E0052A9ED /* NewMonster */,
 				53C8D3EF1C2B0C910052A9ED /* MainMenu */,
 				53CED4B81C1F4AA000B5BEEF /* Login */,
+				53EE34F01C32E1C900C70635 /* UIViewLoading.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -222,6 +232,8 @@
 				53C8D3F21C2B11340052A9ED /* NewMonsterViewController.swift */,
 				53C8D3F51C2B13840052A9ED /* InviteByEmailViewController.swift */,
 				53C8D3F71C2B15B30052A9ED /* PlayerTableViewCell.swift */,
+				53EE34F21C32E2A000C70635 /* PlayerView.swift */,
+				53EE34F41C32E2B000C70635 /* PlayerView.xib */,
 			);
 			name = NewMonster;
 			sourceTree = "<group>";
@@ -368,6 +380,7 @@
 				53CED4BE1C1F691200B5BEEF /* Cartfile in Resources */,
 				53C8D3EB1C29E9B70052A9ED /* Cartfile.resolved in Resources */,
 				532800981BA0ECF6005AD59C /* Main.storyboard in Resources */,
+				53EE34F51C32E2B000C70635 /* PlayerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +409,9 @@
 				53C8D3EE1C2A00730052A9ED /* UserService.swift in Sources */,
 				535ECC0F1C31E42400E17D0F /* NewMonsterViewModel.swift in Sources */,
 				53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */,
+				53EE34F31C32E2A000C70635 /* PlayerView.swift in Sources */,
 				53C8D3F31C2B11340052A9ED /* NewMonsterViewController.swift in Sources */,
+				53EE34F11C32E1C900C70635 /* UIViewLoading.swift in Sources */,
 				532800951BA0ECF6005AD59C /* LoginViewController.swift in Sources */,
 				53C8D3FC1C2C72890052A9ED /* Player.swift in Sources */,
 				53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */,
@@ -415,6 +430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				532800A81BA0ECF6005AD59C /* doodle_monsterTests.swift in Sources */,
+				53EE34F71C345E8600C70635 /* NewMonsterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

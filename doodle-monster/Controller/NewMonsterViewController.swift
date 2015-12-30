@@ -11,22 +11,12 @@ import UIKit
 class NewMonsterViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
 
+    var playerViews: [PlayerView] = []
+    
     var viewModel: NewMonsterViewModelProtocol! {
         didSet {
-            self.viewModel.playerWasAdded = { viewModel in
-                let view = UIStackView()
-                view.axis = UILayoutConstraintAxis.Horizontal
-                
-                let displayNameLabel = UILabel()
-                displayNameLabel.text = viewModel.displayName
-                view.addArrangedSubview(displayNameLabel)
-                
-                let emailAddressLabel = UILabel()
-                emailAddressLabel.text = viewModel.email
-                view.addArrangedSubview(emailAddressLabel)
-                
-                self.stackView.insertArrangedSubview(view, atIndex: 1)
-            }
+            self.viewModel.playerWasAdded = self.addPlayerView
+            self.viewModel.playerWasRemoved = self.removePlayerView
         }
     }
     
@@ -47,7 +37,9 @@ class NewMonsterViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "InviteByEmail" {
             if let vc = segue.destinationViewController as? InviteByEmailViewController {
-                vc.viewModel = viewModel.invitePlayerByEmail()
+                let vm = InviteByEmailViewModel(userService: appDelegate.userService)
+                vm.playerWasSelected = viewModel.addPlayer
+                vc.viewModel = vm
             }
         }
     }
@@ -68,5 +60,22 @@ class NewMonsterViewController: UIViewController {
     
     @IBAction func start(sender: UIButton) {
         
+    }
+    
+    // MARK: Views or whatever
+    
+    private func addPlayerView(playerViewModel: PlayerViewModelProtocol) {
+        let playerView = PlayerView.loadFromNib()
+        playerView.configure(self.viewModel, playerViewModel: playerViewModel)
+        self.stackView.insertArrangedSubview(playerView, atIndex: 1)
+        self.playerViews.append(playerView)
+    }
+    
+    private func removePlayerView(playerViewModel: PlayerViewModelProtocol) {
+        for playerView in self.playerViews {
+            if playerView.playerViewModel.isEqualTo(playerViewModel) {
+                self.stackView.removeArrangedSubview(playerView)
+            }
+        }
     }
 }

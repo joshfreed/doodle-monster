@@ -9,39 +9,48 @@
 import UIKit
 
 protocol NewMonsterViewModelProtocol {
-    var playerWasAdded: ((InvitedPlayerViewModelProtocol) -> ())? { get set }
-    init(userService: UserService)
-    func invitePlayerByEmail() -> InviteByEmailViewModelProtocol
+    var playerWasAdded: ((PlayerViewModelProtocol) -> ())? { get set }
+    var playerWasRemoved: ((PlayerViewModelProtocol) -> ())? { get set }
+    var players: [PlayerViewModelProtocol] { get }
+    
+    func addPlayer(player: PlayerViewModelProtocol)
+    func removePlayer(player: PlayerViewModelProtocol)
 }
 
 class NewMonsterViewModel: NewMonsterViewModelProtocol {
-    let userService: UserService
-    let newGame = NewGame()
+    var playerWasAdded: ((PlayerViewModelProtocol) -> ())?
+    var playerWasRemoved: ((PlayerViewModelProtocol) -> ())?
     
-    var playerWasAdded: ((InvitedPlayerViewModelProtocol) -> ())?
+    var players: [PlayerViewModelProtocol] = []
     
-    required init(userService: UserService) {
-        self.userService = userService
+    func removePlayer(player: PlayerViewModelProtocol) {
+        guard let index = players.indexOf({ (p) -> Bool in return p.isEqualTo(player) }) else {
+            return
+        }
+        
+        self.playerWasRemoved?(player)
+        players.removeAtIndex(index)
     }
     
-    func invitePlayerByEmail() -> InviteByEmailViewModelProtocol {
-        let vm = InviteByEmailViewModel(userService: userService)
-        vm.playerWasSelected = { player in
-            self.newGame.addPlayer(player)
-            self.playerWasAdded?(InvitedPlayerViewModel(player: player))
+    func addPlayer(player: PlayerViewModelProtocol) {
+        guard !players.contains({ (p) -> Bool in return p.isEqualTo(player) }) else {
+            return
         }
-        return vm
+        
+        players.append(player)
+        self.playerWasAdded?(player)
     }
 }
 
-protocol InvitedPlayerViewModelProtocol {
+protocol PlayerViewModelProtocol {
     var email: String { get }
     var displayName: String { get }
     
     init(player: Player)
+    func isEqualTo(other: PlayerViewModelProtocol) -> Bool
 }
 
-class InvitedPlayerViewModel: InvitedPlayerViewModelProtocol {
+struct PlayerViewModel: PlayerViewModelProtocol {
     var email: String {
         return player.email
     }
@@ -51,7 +60,13 @@ class InvitedPlayerViewModel: InvitedPlayerViewModelProtocol {
     
     private let player: Player
     
-    required init(player: Player) {
+    init(player: Player) {
         self.player = player
     }
+    
+    func isEqualTo(other: PlayerViewModelProtocol) -> Bool {
+        return self.displayName == other.displayName && self.email == other.email
+    }
 }
+
+
