@@ -30,8 +30,7 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     var playerWasSelected: ((PlayerViewModelProtocol) -> ())?
     
     private let playerService: PlayerService
-    private var playerModels: [Player] = []
-    
+
     required init(playerService: PlayerService) {
         self.playerService = playerService
     }
@@ -39,17 +38,23 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     func search(text: String) {
         playerService.search(text) { result in
             switch result {
-            case .Success(let players):
-                self.playerModels = players
-                var viewModels: [PlayerViewModelProtocol] = []
-                for player in players {
-                    viewModels.append(PlayerViewModel(player: player))
-                }
-                self.players = viewModels
-                break
+            case .Success(let players): self.processSearchResults(players)
             case .Error: break
             }
         }
+    }
+
+    private func processSearchResults(players: [Player]) {
+        let currentPlayer = playerService.getCurrentPlayer()!
+        var viewModels: [PlayerViewModelProtocol] = []
+        for player in players {
+            if player == currentPlayer {
+                continue
+            }
+
+            viewModels.append(PlayerViewModel(player: player))
+        }
+        self.players = viewModels
     }
 
     func playerAt(index: Int) -> PlayerViewModelProtocol {

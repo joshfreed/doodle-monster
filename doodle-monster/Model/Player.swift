@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Player: NSObject {
+struct Player {
     let email: String
     var displayName: String
     
@@ -16,4 +16,11 @@ class Player: NSObject {
         self.email = email
         self.displayName = displayName
     }
+}
+
+extension Player: Equatable {}
+
+func ==(lhs: Player, rhs: Player) -> Bool {
+    return lhs.email == rhs.email
+        && lhs.displayName == lhs.displayName
 }
