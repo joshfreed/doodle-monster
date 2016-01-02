@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InviteByEmailViewController: UIViewController, UITextFieldDelegate {
+class InviteByEmailViewController: UIViewController {
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var playersTable: UITableView!
     
@@ -25,7 +25,7 @@ class InviteByEmailViewController: UIViewController, UITextFieldDelegate {
 
         playersTable.dataSource = self
         playersTable.delegate = self
-        searchTextField.delegate = self
+        searchTextField.addTarget(self, action: "searchTextDidChange", forControlEvents: .EditingChanged)
         searchTextField.becomeFirstResponder()
     }
 
@@ -34,22 +34,19 @@ class InviteByEmailViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    func searchTextDidChange() {
+        viewModel.search(searchTextField.text!)
+    }
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-    }
 
-    // MARK: - UITextFieldDelegate
-    
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let updatedTextString = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
-        viewModel.search(updatedTextString)
-        return true
     }
 }
 
+// MARK: - UITableViewDataSource
 extension InviteByEmailViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.players.count
@@ -62,6 +59,7 @@ extension InviteByEmailViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension InviteByEmailViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         viewModel.selectPlayer(indexPath)

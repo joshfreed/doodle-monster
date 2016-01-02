@@ -33,7 +33,7 @@ class LoginByEmailViewController: UIViewController, LoginByEmailView {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CreateAccount" {
             if let vc = segue.destinationViewController as? CreateAccountViewController {
-                vc.presenter = CreateAccountPresenter(view: vc, userService: appDelegate.userService, username: username!, password: password!)
+                vc.presenter = CreateAccountPresenter(view: vc, playerService: appDelegate.playerService, username: username!, password: password!)
             }
         }
     }

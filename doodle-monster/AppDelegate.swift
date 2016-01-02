@@ -13,21 +13,22 @@ import Parse
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var userService: UserService!
+    var playerService: PlayerService!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
 //        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
-//        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), forBarMetrics: .Default)
+        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), forBarMetrics: .Default)
 
-        userService = ParseUserService()
+        playerService = ParseUserService()
 
         if PFUser.currentUser() != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let vc = storyboard.instantiateViewControllerWithIdentifier("MainMenu")
-            window?.rootViewController = vc
+            let nc = window?.rootViewController as! UINavigationController
+            nc.pushViewController(vc, animated: false)
         }
         
         return true

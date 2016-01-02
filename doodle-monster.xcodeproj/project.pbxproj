@@ -18,7 +18,7 @@
 		535ECC111C31E60600E17D0F /* NewGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535ECC101C31E60600E17D0F /* NewGame.swift */; };
 		53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */; };
 		53C8D3EB1C29E9B70052A9ED /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */; };
-		53C8D3EE1C2A00730052A9ED /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3ED1C2A00730052A9ED /* UserService.swift */; };
+		53C8D3EE1C2A00730052A9ED /* PlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3ED1C2A00730052A9ED /* PlayerService.swift */; };
 		53C8D3F11C2B0CA30052A9ED /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3F01C2B0CA30052A9ED /* MainMenuViewController.swift */; };
 		53C8D3F31C2B11340052A9ED /* NewMonsterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3F21C2B11340052A9ED /* NewMonsterViewController.swift */; };
 		53C8D3F61C2B13840052A9ED /* InviteByEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3F51C2B13840052A9ED /* InviteByEmailViewController.swift */; };
@@ -75,7 +75,7 @@
 		535ECC101C31E60600E17D0F /* NewGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewGame.swift; path = Model/NewGame.swift; sourceTree = "<group>"; };
 		53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginByEmailPresenter.swift; path = Presenter/LoginByEmailPresenter.swift; sourceTree = "<group>"; };
 		53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
-		53C8D3ED1C2A00730052A9ED /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Model/UserService.swift; sourceTree = "<group>"; };
+		53C8D3ED1C2A00730052A9ED /* PlayerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerService.swift; path = Model/PlayerService.swift; sourceTree = "<group>"; };
 		53C8D3F01C2B0CA30052A9ED /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = Controller/MainMenuViewController.swift; sourceTree = "<group>"; };
 		53C8D3F21C2B11340052A9ED /* NewMonsterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewMonsterViewController.swift; path = Controller/NewMonsterViewController.swift; sourceTree = "<group>"; };
 		53C8D3F51C2B13840052A9ED /* InviteByEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InviteByEmailViewController.swift; path = Controller/InviteByEmailViewController.swift; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 		53C8D3EC1C2A00350052A9ED /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				53C8D3ED1C2A00730052A9ED /* UserService.swift */,
+				53C8D3ED1C2A00730052A9ED /* PlayerService.swift */,
 				53C8D3FB1C2C72890052A9ED /* Player.swift */,
 				535ECC101C31E60600E17D0F /* NewGame.swift */,
 			);
@@ -406,7 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53C8D3F11C2B0CA30052A9ED /* MainMenuViewController.swift in Sources */,
-				53C8D3EE1C2A00730052A9ED /* UserService.swift in Sources */,
+				53C8D3EE1C2A00730052A9ED /* PlayerService.swift in Sources */,
 				535ECC0F1C31E42400E17D0F /* NewMonsterViewModel.swift in Sources */,
 				53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */,
 				53EE34F31C32E2A000C70635 /* PlayerView.swift in Sources */,

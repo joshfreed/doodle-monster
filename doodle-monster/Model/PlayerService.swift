@@ -1,5 +1,5 @@
 //
-//  UserService.swift
+//  PlayerService.swift
 //  doodle-monster
 //
 //  Created by Josh Freed on 12/22/15.
@@ -9,13 +9,14 @@
 import UIKit
 import Parse
 
-protocol UserService {
+protocol PlayerService {
     func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ())
     func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ())
     func search(searchText: String, callback: (result: SearchResult) -> ())
+    func getCurrentPlayer() -> Player?
 }
 
-class ParseUserService: UserService {
+class ParseUserService: PlayerService {
     func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ()) {
         PFUser.query()?.whereKey("username", equalTo: username).getFirstObjectInBackgroundWithBlock() { (user, error) -> Void in
             if let error = error {
@@ -81,6 +82,14 @@ class ParseUserService: UserService {
             }
             callback(result: .Success(players))
         }
+    }
+
+    func getCurrentPlayer() -> Player? {
+        guard let currentUser = PFUser.currentUser() else {
+            return nil
+        }
+
+        return pfUserToPlayer(currentUser)
     }
     
     // MARK: - Private

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class MainMenuViewController: UIViewController {
     @IBOutlet weak var yourTurnCollection: UICollectionView!
@@ -15,7 +16,7 @@ class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        navigationItem.hidesBackButton = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,7 +30,8 @@ class MainMenuViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "NewMonster" {
             if let vc = segue.destinationViewController as? NewMonsterViewController {
-                vc.viewModel = NewMonsterViewModel()
+                let currentPlayer = appDelegate.playerService.getCurrentPlayer()!
+                vc.viewModel = NewMonsterViewModel(currentPlayer: currentPlayer)
             }
         }
     }
@@ -38,6 +40,7 @@ class MainMenuViewController: UIViewController {
     }
 
     @IBAction func signOut(sender: UIButton) {
-        
+        PFUser.logOut()
+        performSegueWithIdentifier("ShowLoginScreen", sender: self)
     }
 }

@@ -9,7 +9,13 @@
 import UIKit
 
 class NewMonsterViewController: UIViewController {
+    @IBOutlet weak var currentPlayersLabel: UILabel!
     @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var invitePlayersLabel: UILabel!
+    @IBOutlet weak var inviteButtonsStack: UIStackView!
+    @IBOutlet weak var currentPlayerName: UILabel!
+    @IBOutlet weak var currentPlayerEmail: UILabel!
 
     var playerViews: [PlayerView] = []
     
@@ -17,13 +23,16 @@ class NewMonsterViewController: UIViewController {
         didSet {
             self.viewModel.playerWasAdded = self.addPlayerView
             self.viewModel.playerWasRemoved = self.removePlayerView
+            self.viewModel.buttonVisibilityChanged = self.updateStartButton
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        currentPlayerName.text = viewModel.currentPlayer.displayName
+        currentPlayerEmail.text = viewModel.currentPlayer.email
+        updateStartButton()
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,8 +45,10 @@ class NewMonsterViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "InviteByEmail" {
-            if let vc = segue.destinationViewController as? InviteByEmailViewController {
-                let vm = InviteByEmailViewModel(userService: appDelegate.userService)
+            if let nc = segue.destinationViewController as? UINavigationController,
+                vc = nc.topViewController as? InviteByEmailViewController
+            {
+                let vm = InviteByEmailViewModel(playerService: appDelegate.playerService)
                 vm.playerWasSelected = viewModel.addPlayer
                 vc.viewModel = vm
             }
@@ -54,10 +65,6 @@ class NewMonsterViewController: UIViewController {
         
     }
     
-    @IBAction func inviteByEmail(sender: UIButton) {
-        
-    }
-    
     @IBAction func start(sender: UIButton) {
         
     }
@@ -67,7 +74,7 @@ class NewMonsterViewController: UIViewController {
     private func addPlayerView(playerViewModel: PlayerViewModelProtocol) {
         let playerView = PlayerView.loadFromNib()
         playerView.configure(self.viewModel, playerViewModel: playerViewModel)
-        self.stackView.insertArrangedSubview(playerView, atIndex: 1)
+        self.stackView.addArrangedSubview(playerView)
         self.playerViews.append(playerView)
     }
     
@@ -75,7 +82,12 @@ class NewMonsterViewController: UIViewController {
         for playerView in self.playerViews {
             if playerView.playerViewModel.isEqualTo(playerViewModel) {
                 self.stackView.removeArrangedSubview(playerView)
+                playerView.removeFromSuperview()
             }
         }
+    }
+
+    private func updateStartButton() {
+        startButton.hidden = viewModel.buttonHidden
     }
 }

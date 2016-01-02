@@ -16,6 +16,7 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+Resources/
 # Pods - for those of you who use CocoaPods
 Pods
 Carthage/CheckOuts

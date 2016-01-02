@@ -13,7 +13,7 @@ protocol InviteByEmailViewModelProtocol: class {
     var playersDidChange: ((InviteByEmailViewModelProtocol) -> ())? { get set }
     var playerWasSelected: ((PlayerViewModelProtocol) -> ())? { get set }
     
-    init(userService: UserService)
+    init(playerService: PlayerService)
     func search(text: String)
     func playerAt(index: Int) -> PlayerViewModelProtocol
     func selectPlayer(index: NSIndexPath)
@@ -29,15 +29,15 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     var playersDidChange: ((InviteByEmailViewModelProtocol) -> ())?
     var playerWasSelected: ((PlayerViewModelProtocol) -> ())?
     
-    private let userService: UserService
+    private let playerService: PlayerService
     private var playerModels: [Player] = []
     
-    required init(userService: UserService) {
-        self.userService = userService
+    required init(playerService: PlayerService) {
+        self.playerService = playerService
     }
     
     func search(text: String) {
-        userService.search(text) { result in
+        playerService.search(text) { result in
             switch result {
             case .Success(let players):
                 self.playerModels = players
