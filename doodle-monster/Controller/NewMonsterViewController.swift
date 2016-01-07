@@ -66,7 +66,7 @@ class NewMonsterViewController: UIViewController {
     }
     
     @IBAction func start(sender: UIButton) {
-        
+        viewModel.startGame()
     }
     
     // MARK: Views or whatever

@@ -11,7 +11,7 @@ import UIKit
 protocol InviteByEmailViewModelProtocol: class {
     var players: [PlayerViewModelProtocol] { get }
     var playersDidChange: ((InviteByEmailViewModelProtocol) -> ())? { get set }
-    var playerWasSelected: ((PlayerViewModelProtocol) -> ())? { get set }
+    var playerWasSelected: ((Player) -> ())? { get set }
     
     init(playerService: PlayerService)
     func search(text: String)
@@ -27,9 +27,10 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     }
     
     var playersDidChange: ((InviteByEmailViewModelProtocol) -> ())?
-    var playerWasSelected: ((PlayerViewModelProtocol) -> ())?
+    var playerWasSelected: ((Player) -> ())?
     
     private let playerService: PlayerService
+    private var playerModels: [Player] = []
 
     required init(playerService: PlayerService) {
         self.playerService = playerService
@@ -54,6 +55,7 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
 
             viewModels.append(PlayerViewModel(player: player))
         }
+        self.playerModels = players
         self.players = viewModels
     }
 
@@ -62,6 +64,6 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     }
 
     func selectPlayer(index: NSIndexPath) {
-        playerWasSelected?(players[index.row])
+        playerWasSelected?(playerModels[index.row])
     }
 }

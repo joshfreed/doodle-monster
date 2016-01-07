@@ -76,7 +76,7 @@ class ParseUserService: PlayerService {
             
             var players: [Player] = []
             for user in results {
-                if let user = user as? PFUser, player = self.pfUserToPlayer(user) {
+                if let player = user as? Player {
                     players.append(player)
                 }
             }
@@ -89,17 +89,16 @@ class ParseUserService: PlayerService {
             return nil
         }
 
-        return pfUserToPlayer(currentUser)
-    }
-    
-    // MARK: - Private
-    
-    private func pfUserToPlayer(user: PFUser) -> Player? {
-        guard let displayName = user["displayName"] as? String else {
-            return nil
+        // TODO: this shit is slow and running on the main thread
+
+        let player = Player.objectWithoutDataWithObjectId(currentUser.objectId)
+        do {
+            try player.fetchIfNeeded()
+        } catch _ {
+
         }
-        
-        return Player(email: user.username!, displayName: displayName)
+
+        return player
     }
 }
 

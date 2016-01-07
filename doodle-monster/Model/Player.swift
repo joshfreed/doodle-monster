@@ -6,21 +6,17 @@
 //  Copyright © 2015 BleepSmazz. All rights reserved.
 //
 
-import UIKit
+import Parse
 
-struct Player {
-    let email: String
-    var displayName: String
-    
-    init(email: String, displayName: String) {
-        self.email = email
-        self.displayName = displayName
+class Player: PFUser {
+    @NSManaged var displayName: String
+
+    override class func initialize() {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0;
+        }
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
     }
-}
-
-extension Player: Equatable {}
-
-func ==(lhs: Player, rhs: Player) -> Bool {
-    return lhs.email == rhs.email
-        && lhs.displayName == lhs.displayName
 }

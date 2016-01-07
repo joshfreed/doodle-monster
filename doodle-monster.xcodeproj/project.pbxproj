@@ -38,6 +38,7 @@
 		53EE34F31C32E2A000C70635 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE34F21C32E2A000C70635 /* PlayerView.swift */; };
 		53EE34F51C32E2B000C70635 /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53EE34F41C32E2B000C70635 /* PlayerView.xib */; };
 		53EE34F71C345E8600C70635 /* NewMonsterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE34F61C345E8600C70635 /* NewMonsterTests.swift */; };
+		53EE34F91C38697F00C70635 /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE34F81C38697F00C70635 /* GameService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,8 @@
 		53EE34F21C32E2A000C70635 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerView.swift; path = View/PlayerView.swift; sourceTree = "<group>"; };
 		53EE34F41C32E2B000C70635 /* PlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerView.xib; path = View/PlayerView.xib; sourceTree = "<group>"; };
 		53EE34F61C345E8600C70635 /* NewMonsterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMonsterTests.swift; sourceTree = "<group>"; };
+		53EE34F81C38697F00C70635 /* GameService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameService.swift; path = Model/GameService.swift; sourceTree = "<group>"; };
+		53EE34FA1C386F6C00C70635 /* doodle-monster-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "doodle-monster-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +168,7 @@
 				532800991BA0ECF6005AD59C /* Assets.xcassets */,
 				5328009B1BA0ECF6005AD59C /* LaunchScreen.storyboard */,
 				5328009E1BA0ECF6005AD59C /* Info.plist */,
+				53EE34FA1C386F6C00C70635 /* doodle-monster-Bridging-Header.h */,
 			);
 			path = "doodle-monster";
 			sourceTree = "<group>";
@@ -214,6 +218,7 @@
 				53C8D3ED1C2A00730052A9ED /* PlayerService.swift */,
 				53C8D3FB1C2C72890052A9ED /* Player.swift */,
 				535ECC101C31E60600E17D0F /* NewGame.swift */,
+				53EE34F81C38697F00C70635 /* GameService.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -408,6 +413,7 @@
 				53C8D3F11C2B0CA30052A9ED /* MainMenuViewController.swift in Sources */,
 				53C8D3EE1C2A00730052A9ED /* PlayerService.swift in Sources */,
 				535ECC0F1C31E42400E17D0F /* NewMonsterViewModel.swift in Sources */,
+				53EE34F91C38697F00C70635 /* GameService.swift in Sources */,
 				53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */,
 				53EE34F31C32E2A000C70635 /* PlayerView.swift in Sources */,
 				53C8D3F31C2B11340052A9ED /* NewMonsterViewController.swift in Sources */,
@@ -572,6 +578,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bleepsmazz.doodle-monster";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "doodle-monster/doodle-monster-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -587,6 +594,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bleepsmazz.doodle-monster";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "doodle-monster/doodle-monster-Bridging-Header.h";
 			};
 			name = Release;
 		};

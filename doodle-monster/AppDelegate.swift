@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var playerService: PlayerService!
+    var gameService: GameService!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -23,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), forBarMetrics: .Default)
 
         playerService = ParseUserService()
+        gameService = ParseGameService()
 
         if PFUser.currentUser() != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())

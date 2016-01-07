@@ -31,7 +31,7 @@ class MainMenuViewController: UIViewController {
         if segue.identifier == "NewMonster" {
             if let vc = segue.destinationViewController as? NewMonsterViewController {
                 let currentPlayer = appDelegate.playerService.getCurrentPlayer()!
-                vc.viewModel = NewMonsterViewModel(currentPlayer: currentPlayer)
+                vc.viewModel = NewMonsterViewModel(currentPlayer: currentPlayer, gameService: appDelegate.gameService)
             }
         }
     }

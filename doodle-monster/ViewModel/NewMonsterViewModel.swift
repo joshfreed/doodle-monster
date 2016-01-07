@@ -18,9 +18,10 @@ protocol NewMonsterViewModelProtocol {
     var playerWasRemoved: ((PlayerViewModelProtocol) -> ())? { get set }
     var buttonVisibilityChanged: (() -> ())? { get set }
 
-    init(currentPlayer: Player)
-    func addPlayer(player: PlayerViewModelProtocol)
+    init(currentPlayer: Player, gameService: GameService)
+    func addPlayer(player: Player)
     func removePlayer(player: PlayerViewModelProtocol)
+    func startGame()
 }
 
 class NewMonsterViewModel: NewMonsterViewModelProtocol {
@@ -29,15 +30,19 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
     var currentPlayer: PlayerViewModelProtocol
     var buttonHidden = true
     private let _currentPlayerModel: Player
+    private var _playerModels: [Player] = []
+    private let gameService: GameService
 
     // Changes
     var playerWasAdded: ((PlayerViewModelProtocol) -> ())?
     var playerWasRemoved: ((PlayerViewModelProtocol) -> ())?
     var buttonVisibilityChanged: (() -> ())?
 
-    required init(currentPlayer: Player) {
+    required init(currentPlayer: Player, gameService: GameService) {
         self._currentPlayerModel = currentPlayer
         self.currentPlayer = PlayerViewModel(player: currentPlayer)
+        self.gameService = gameService
+        _playerModels.append(self._currentPlayerModel)
     }
 
     func removePlayer(player: PlayerViewModelProtocol) {
@@ -50,13 +55,15 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
         validateGame()
     }
     
-    func addPlayer(player: PlayerViewModelProtocol) {
-        guard !players.contains({ (p) -> Bool in return p.isEqualTo(player) }) else {
+    func addPlayer(player: Player) {
+        guard !_playerModels.contains(player) else {
             return
         }
-        
-        players.append(player)
-        self.playerWasAdded?(player)
+
+        _playerModels.append(player)
+        let playerVm = PlayerViewModel(player: player)
+        players.append(playerVm)
+        self.playerWasAdded?(playerVm)
         validateGame()
     }
 
@@ -68,6 +75,10 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
         }
 
         buttonVisibilityChanged?()
+    }
+
+    func startGame() {
+        gameService.createGame(_playerModels)
     }
 }
 
@@ -81,7 +92,11 @@ protocol PlayerViewModelProtocol {
 
 struct PlayerViewModel: PlayerViewModelProtocol {
     var email: String {
-        return player.email
+        if let un = player.username {
+            return un
+        } else {
+            return ""
+        }
     }
     var displayName: String {
         return player.displayName
