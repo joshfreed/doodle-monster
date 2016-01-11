@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var gameService: GameService!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
+        Game.registerSubclass()
         Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
 //        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
@@ -28,7 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if PFUser.currentUser() != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let vc = storyboard.instantiateViewControllerWithIdentifier("MainMenu")
+            let vc = storyboard.instantiateViewControllerWithIdentifier("MainMenu") as! MainMenuViewController
+            let currentPlayer = playerService.getCurrentPlayer()!
+            vc.viewModel = MainMenuViewModel(gameService: gameService, currentPlayer: currentPlayer)
             let nc = window?.rootViewController as! UINavigationController
             nc.pushViewController(vc, animated: false)
         }

@@ -13,8 +13,23 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var yourTurnCollection: UICollectionView!
     @IBOutlet weak var waitingCollection: UICollectionView!
 
+    var waitingDataSource: ArrayDataSource<WaitingCellCollectionViewCell, GameViewModel>!
+    
+    var viewModel: MainMenuViewModelProtocol! {
+        didSet {
+            viewModel.gamesUpdated = self.gamesUpdated
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        waitingDataSource = ArrayDataSource(items: [], cellIdentifier: "WaitingGameCell")
+        
+        waitingCollection.registerNib(UINib(nibName: "WaitingCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "WaitingGameCell")
+        waitingCollection.dataSource = waitingDataSource
+        
+        viewModel.loadItems()
 
         navigationItem.hidesBackButton = true
     }
@@ -42,5 +57,12 @@ class MainMenuViewController: UIViewController {
     @IBAction func signOut(sender: UIButton) {
         PFUser.logOut()
         performSegueWithIdentifier("ShowLoginScreen", sender: self)
+    }
+
+    func gamesUpdated() {
+        print("Games updated")
+        waitingDataSource.replaceItems(viewModel.waitingGames)
+        waitingCollection.insertItemsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)])
+        waitingCollection.reloadData()
     }
 }

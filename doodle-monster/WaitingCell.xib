@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="WaitingGameCell" id="xTH-g1-kxN" customClass="WaitingCellCollectionViewCell" customModule="doodle_monster" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="325"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="200" height="325"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PSV-49-coA" userLabel="Thumbnail">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="250"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="250" id="lbf-yv-mjy"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUS-9m-fAg" userLabel="Monster name">
+                        <rect key="frame" x="0.0" y="256" width="200" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAV-Jp-Hzp" userLabel="Time since last turn">
+                        <rect key="frame" x="0.0" y="290" width="200" height="15"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZP-E3-c59" userLabel="Current player name">
+                        <rect key="frame" x="0.0" y="275" width="200" height="15"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="PSV-49-coA" secondAttribute="trailing" id="5RI-sG-MRi"/>
+                <constraint firstItem="PSV-49-coA" firstAttribute="leading" secondItem="xTH-g1-kxN" secondAttribute="leading" id="6lo-WY-lkA"/>
+                <constraint firstItem="PSV-49-coA" firstAttribute="top" secondItem="xTH-g1-kxN" secondAttribute="top" id="FGV-SB-3R4"/>
+                <constraint firstItem="XZP-E3-c59" firstAttribute="leading" secondItem="xTH-g1-kxN" secondAttribute="leading" id="JEj-KY-ddL"/>
+                <constraint firstAttribute="trailing" secondItem="pAV-Jp-Hzp" secondAttribute="trailing" id="LF9-Qr-2iT"/>
+                <constraint firstItem="XUS-9m-fAg" firstAttribute="top" secondItem="PSV-49-coA" secondAttribute="bottom" constant="6" id="MNK-fJ-vZ1"/>
+                <constraint firstItem="XZP-E3-c59" firstAttribute="top" secondItem="XUS-9m-fAg" secondAttribute="bottom" id="QUQ-Hg-Fig"/>
+                <constraint firstAttribute="trailing" secondItem="XZP-E3-c59" secondAttribute="trailing" id="UY3-If-idQ"/>
+                <constraint firstItem="XUS-9m-fAg" firstAttribute="leading" secondItem="xTH-g1-kxN" secondAttribute="leading" id="Vrp-wS-FAe"/>
+                <constraint firstAttribute="trailing" secondItem="XUS-9m-fAg" secondAttribute="trailing" id="b7N-jB-vbp"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pAV-Jp-Hzp" secondAttribute="bottom" id="gpg-sA-0Z6"/>
+                <constraint firstItem="pAV-Jp-Hzp" firstAttribute="top" secondItem="XZP-E3-c59" secondAttribute="bottom" id="o5V-gw-rp1"/>
+                <constraint firstItem="pAV-Jp-Hzp" firstAttribute="leading" secondItem="xTH-g1-kxN" secondAttribute="leading" id="xJr-TV-RPL"/>
+            </constraints>
+            <size key="customSize" width="311" height="317"/>
+            <connections>
+                <outlet property="currentPlayerInfo" destination="XZP-E3-c59" id="dAr-ZD-Sxd"/>
+                <outlet property="lastTurnInfo" destination="pAV-Jp-Hzp" id="aYg-UG-Hl3"/>
+                <outlet property="monsterName" destination="XUS-9m-fAg" id="8o4-bH-QS4"/>
+                <outlet property="monsterThumbnail" destination="PSV-49-coA" id="USQ-pX-Roo"/>
+            </connections>
+            <point key="canvasLocation" x="199.5" y="712.5"/>
+        </collectionViewCell>
+    </objects>
+</document>
