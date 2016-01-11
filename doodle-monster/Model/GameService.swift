@@ -9,13 +9,13 @@
 import Parse
 
 protocol GameService {
-    func createGame(players: [Player])
+    func createGame(players: [Player]) -> Game
     func getActiveGames(callback: ([Game]) -> ())
 }
 
 class ParseGameService: GameService {
-    func createGame(players: [Player]) {
-        let newGame = PFObject(className: "Game")
+    func createGame(players: [Player]) -> Game {
+        let newGame = Game()
         newGame["gameOver"] = false
         newGame["currentPlayer"] = players.first
         let relation = newGame.relationForKey("players")
@@ -23,6 +23,7 @@ class ParseGameService: GameService {
             relation.addObject(player)
         }
         newGame.saveInBackground()
+        return newGame
     }
 
     func getActiveGames(callback: ([Game] -> ())) {

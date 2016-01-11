@@ -14,6 +14,7 @@ protocol MainMenuViewModelProtocol {
 
     init(gameService: GameService, currentPlayer: Player)
     func loadItems()
+    func getDrawingViewModel(index: Int) -> DrawingViewModel
 }
 
 struct GameViewModel {
@@ -55,5 +56,9 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
             }
             self.gamesUpdated?()
         }
+    }
+    
+    func getDrawingViewModel(index: Int) -> DrawingViewModel {
+        return DrawingViewModel(game: gameModels[index])
     }
 }

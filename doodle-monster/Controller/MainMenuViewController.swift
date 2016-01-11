@@ -9,11 +9,13 @@
 import UIKit
 import Parse
 
-class MainMenuViewController: UIViewController {
+class MainMenuViewController: UIViewController, UICollectionViewDelegate {
     @IBOutlet weak var yourTurnCollection: UICollectionView!
     @IBOutlet weak var waitingCollection: UICollectionView!
 
+    var yourTurnDataSource: ArrayDataSource<YourTurnCell, GameViewModel>!
     var waitingDataSource: ArrayDataSource<WaitingCellCollectionViewCell, GameViewModel>!
+    var selectedIndex: Int?
     
     var viewModel: MainMenuViewModelProtocol! {
         didSet {
@@ -24,8 +26,12 @@ class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        waitingDataSource = ArrayDataSource(items: [], cellIdentifier: "WaitingGameCell")
+        yourTurnDataSource = ArrayDataSource(items: [], cellIdentifier: "YourTurnGameCell")
+        yourTurnCollection.registerNib(UINib(nibName: "YourTurnCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "YourTurnGameCell")
+        yourTurnCollection.dataSource = yourTurnDataSource
+        yourTurnCollection.delegate = self
         
+        waitingDataSource = ArrayDataSource(items: [], cellIdentifier: "WaitingGameCell")
         waitingCollection.registerNib(UINib(nibName: "WaitingCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "WaitingGameCell")
         waitingCollection.dataSource = waitingDataSource
         
@@ -46,7 +52,18 @@ class MainMenuViewController: UIViewController {
         if segue.identifier == "NewMonster" {
             if let vc = segue.destinationViewController as? NewMonsterViewController {
                 let currentPlayer = appDelegate.playerService.getCurrentPlayer()!
-                vc.viewModel = NewMonsterViewModel(currentPlayer: currentPlayer, gameService: appDelegate.gameService)
+                vc.viewModel = NewMonsterViewModel(
+                    currentPlayer: currentPlayer,
+                    gameService: appDelegate.gameService,
+                    router: vc
+                )
+            }
+        } else if segue.identifier == "goToGame" {
+            if let nc = segue.destinationViewController as? UINavigationController,
+                vc = nc.topViewController as? DrawingViewController,
+                selectedIndex = self.selectedIndex
+            {
+                vc.viewModel = viewModel.getDrawingViewModel(selectedIndex)
             }
         }
     }
@@ -60,9 +77,18 @@ class MainMenuViewController: UIViewController {
     }
 
     func gamesUpdated() {
-        print("Games updated")
+        yourTurnDataSource.replaceItems(viewModel.yourTurnGames)
+        yourTurnCollection.insertItemsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)])
+        yourTurnCollection.reloadData()
+        
         waitingDataSource.replaceItems(viewModel.waitingGames)
         waitingCollection.insertItemsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)])
         waitingCollection.reloadData()
     }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        selectedIndex = indexPath.row
+        performSegueWithIdentifier("goToGame", sender: self)
+    }
 }
+

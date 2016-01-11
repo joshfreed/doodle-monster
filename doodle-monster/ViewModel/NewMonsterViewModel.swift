@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol NewMonsterRouter {
+    func goToNewMonster(game: Game)
+}
+
 protocol NewMonsterViewModelProtocol {
     // Properties
     var players: [PlayerViewModelProtocol] { get }
@@ -18,7 +22,7 @@ protocol NewMonsterViewModelProtocol {
     var playerWasRemoved: ((PlayerViewModelProtocol) -> ())? { get set }
     var buttonVisibilityChanged: (() -> ())? { get set }
 
-    init(currentPlayer: Player, gameService: GameService)
+    init(currentPlayer: Player, gameService: GameService, router: NewMonsterRouter)
     func addPlayer(player: Player)
     func removePlayer(player: PlayerViewModelProtocol)
     func startGame()
@@ -32,16 +36,18 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
     private let _currentPlayerModel: Player
     private var _playerModels: [Player] = []
     private let gameService: GameService
+    private let router: NewMonsterRouter
 
     // Changes
     var playerWasAdded: ((PlayerViewModelProtocol) -> ())?
     var playerWasRemoved: ((PlayerViewModelProtocol) -> ())?
     var buttonVisibilityChanged: (() -> ())?
 
-    required init(currentPlayer: Player, gameService: GameService) {
+    required init(currentPlayer: Player, gameService: GameService, router: NewMonsterRouter) {
         self._currentPlayerModel = currentPlayer
         self.currentPlayer = PlayerViewModel(player: currentPlayer)
         self.gameService = gameService
+        self.router = router
         _playerModels.append(self._currentPlayerModel)
     }
 
@@ -78,7 +84,8 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
     }
 
     func startGame() {
-        gameService.createGame(_playerModels)
+        let newGame = gameService.createGame(_playerModels)
+        router.goToNewMonster(newGame)
     }
 }
 

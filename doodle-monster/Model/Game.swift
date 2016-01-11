@@ -27,10 +27,10 @@ class Game: PFObject, PFSubclassing {
     }
 
     func isCurrentTurn(player: Player) -> Bool {
-        return currentPlayer == player
+        return currentPlayer.objectId == player.objectId
     }
 
     func isWaitingForAnotherPlayer(player: Player) -> Bool {
-        return currentPlayer != player
+        return currentPlayer.objectId != player.objectId
     }
 }

@@ -18,6 +18,7 @@ class NewMonsterViewController: UIViewController {
     @IBOutlet weak var currentPlayerEmail: UILabel!
 
     var playerViews: [PlayerView] = []
+    var newMonster: Game?
     
     var viewModel: NewMonsterViewModelProtocol! {
         didSet {
@@ -51,6 +52,12 @@ class NewMonsterViewController: UIViewController {
                 let vm = InviteByEmailViewModel(playerService: appDelegate.playerService)
                 vm.playerWasSelected = viewModel.addPlayer
                 vc.viewModel = vm
+            }
+        } else if segue.identifier == "goToNewMonster" {
+            if let nc = segue.destinationViewController as? UINavigationController,
+                vc = nc.topViewController as? DrawingViewController
+            {
+                vc.viewModel = DrawingViewModel(game: newMonster!)
             }
         }
     }
@@ -89,5 +96,12 @@ class NewMonsterViewController: UIViewController {
 
     private func updateStartButton() {
         startButton.hidden = viewModel.buttonHidden
+    }
+}
+
+extension NewMonsterViewController: NewMonsterRouter {
+    func goToNewMonster(game: Game) {
+        newMonster = game
+        performSegueWithIdentifier("goToNewMonster", sender: self)
     }
 }

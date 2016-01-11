@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="J5P-sg-7AY">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="J5P-sg-7AY" customClass="YourTurnCell" customModule="doodle_monster" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -19,13 +19,13 @@
                             <constraint firstAttribute="height" constant="250" id="cnQ-ht-eI1"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0hn-8h-Vxd">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0hn-8h-Vxd" userLabel="Monster name">
                         <rect key="frame" x="0.0" y="256" width="200" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inI-eh-XhT">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inI-eh-XhT" userLabel="Player info">
                         <rect key="frame" x="0.0" y="276.5" width="200" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -46,6 +46,11 @@
                 <constraint firstItem="inI-eh-XhT" firstAttribute="leading" secondItem="J5P-sg-7AY" secondAttribute="leading" id="wKz-w9-sRw"/>
                 <constraint firstAttribute="trailing" secondItem="0hn-8h-Vxd" secondAttribute="trailing" id="yNR-gf-wyK"/>
             </constraints>
+            <connections>
+                <outlet property="monsterName" destination="0hn-8h-Vxd" id="ioy-R2-z4j"/>
+                <outlet property="playerInfo" destination="inI-eh-XhT" id="dMQ-hk-esd"/>
+                <outlet property="thumbnail" destination="z81-gV-JxF" id="iep-u2-Pji"/>
+            </connections>
             <point key="canvasLocation" x="257" y="848"/>
         </collectionViewCell>
     </objects>
