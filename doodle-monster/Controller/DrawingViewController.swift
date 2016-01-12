@@ -13,19 +13,23 @@ class DrawingViewController: UIViewController {
     var viewModel: DrawingViewModel!
     @IBOutlet weak var previousTurnsImageView: UIImageView!
     @IBOutlet weak var currentTurnImageView: UIImageView!
+    @IBOutlet weak var pencilButton: UIButton!
+    @IBOutlet weak var eraserButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
     
     var lastPoint = CGPoint.zero
     var red: CGFloat = 0.0
     var green: CGFloat = 0.0
     var blue: CGFloat = 0.0
-    var brushWidth: CGFloat = 10.0
+    var brushWidth: CGFloat = 2.0
     var opacity: CGFloat = 1.0
     var swiped = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        navigationItem.hidesBackButton = true
         
         if let previousMonsterFile = viewModel.game.imageFile {
             previousMonsterFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
@@ -44,20 +48,18 @@ class DrawingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+
     }
-    */
     
     // MARK: - Actions
     
-    @IBAction func touchedSave(sender: UIBarButtonItem) {
+    @IBAction func touchedSave(sender: UIButton) {
         UIGraphicsBeginImageContext(previousTurnsImageView.frame.size)
         previousTurnsImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), blendMode: CGBlendMode.Normal, alpha: 1.0)
         currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), blendMode: CGBlendMode.Normal, alpha: opacity)
@@ -79,6 +81,24 @@ class DrawingViewController: UIViewController {
         }
         
         viewModel.save(currentTurnImageData, fullImageData: fullImageData)
+    }
+    
+    @IBAction func touchedPencil(sender: UIButton) {
+        // change to highlighted image; animate upwards
+        // change eraser to regular; animate down
+    }
+    
+    @IBAction func touchedEraser(sender: UIButton) {
+    }
+    
+    @IBAction func touchedCancel(sender: UIButton) {
+        
+    }
+    
+    @IBAction func undo(sender: UIButton) {
+    }
+    
+    @IBAction func redo(sender: UIButton) {
     }
 
     // MARK: - Touches

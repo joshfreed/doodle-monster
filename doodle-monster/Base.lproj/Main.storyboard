@@ -497,7 +497,7 @@
             </objects>
             <point key="canvasLocation" x="2898" y="416"/>
         </scene>
-        <!--Title-->
+        <!--Drawing View Controller-->
         <scene sceneID="KaH-Pk-WMH">
             <objects>
                 <viewController id="p3D-xo-2oL" customClass="DrawingViewController" customModule="doodle_monster" customModuleProvider="target" sceneMemberID="viewController">
@@ -509,39 +509,140 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sSf-pk-7zV" userLabel="Previous Image">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notepade-edge" translatesAutoresizingMaskIntoConstraints="NO" id="JW9-jX-TG6">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="9bp-Co-OXT"/>
+                                </constraints>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sSf-pk-7zV" userLabel="Previous Image">
+                                <rect key="frame" x="0.0" y="15" width="600" height="521"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neQ-g8-bbl" userLabel="Pencil">
+                                <rect key="frame" x="20" y="386" width="70" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="neQ-g8-bbl" secondAttribute="height" multiplier="7:15" id="1q4-Hz-z5l"/>
+                                    <constraint firstAttribute="width" constant="70" id="rd0-u7-WOP">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="35"/>
+                                    </constraint>
+                                </constraints>
+                                <state key="normal" image="pencil-selected"/>
+                                <connections>
+                                    <action selector="touchedPencil:" destination="p3D-xo-2oL" eventType="touchUpInside" id="HbN-FG-nDl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UrP-HF-oxp" userLabel="Eraser">
+                                <rect key="frame" x="90" y="406" width="70" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="3U3-jU-orK">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="35"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" secondItem="UrP-HF-oxp" secondAttribute="height" multiplier="7:15" id="ms7-uJ-dE3"/>
+                                </constraints>
+                                <state key="normal" image="eraser"/>
+                                <connections>
+                                    <action selector="touchedEraser:" destination="p3D-xo-2oL" eventType="touchUpInside" id="q32-Sm-liU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aab-MY-bz4" userLabel="Undo">
+                                <rect key="frame" x="200" y="436" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="GR4-hQ-DBa">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="50"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" secondItem="aab-MY-bz4" secondAttribute="height" multiplier="1:1" id="Jnj-nL-8iJ"/>
+                                </constraints>
+                                <state key="normal" image="undo"/>
+                                <connections>
+                                    <action selector="undo:" destination="p3D-xo-2oL" eventType="touchUpInside" id="aTt-WL-oh4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIl-Lg-8ys" userLabel="Cancel">
+                                <rect key="frame" x="500" y="436" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="iOW-Qb-ouz">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="50"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" secondItem="OIl-Lg-8ys" secondAttribute="height" multiplier="1:1" id="xFK-Kc-Ts4"/>
+                                </constraints>
+                                <state key="normal" image="cancel-drawing"/>
+                                <connections>
+                                    <action selector="touchedCancel:" destination="p3D-xo-2oL" eventType="touchUpInside" id="ZlO-ge-1VT"/>
+                                    <segue destination="vba-Rs-2tY" kind="unwind" identifier="cancelDrawing" unwindAction="unwindToMainMenu:" id="Wyk-G9-bVf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXU-3c-UyV">
+                                <rect key="frame" x="400" y="436" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="XOx-5X-lI2">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="50"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" secondItem="NXU-3c-UyV" secondAttribute="height" multiplier="1:1" id="m90-jY-6Uy"/>
+                                </constraints>
+                                <state key="normal" image="save-drawing"/>
+                                <connections>
+                                    <action selector="touchedSave:" destination="p3D-xo-2oL" eventType="touchUpInside" id="5RK-eM-hp6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oc4-y1-5tA" userLabel="Redo">
+                                <rect key="frame" x="300" y="436" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="oc4-y1-5tA" secondAttribute="height" multiplier="1:1" id="0nF-nf-x6y"/>
+                                    <constraint firstAttribute="width" constant="100" id="iRe-Qq-6or">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="50"/>
+                                    </constraint>
+                                </constraints>
+                                <state key="normal" image="redo"/>
+                                <connections>
+                                    <action selector="redo:" destination="p3D-xo-2oL" eventType="touchUpInside" id="TER-K1-djZ"/>
+                                </connections>
+                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qgM-dv-vqy" userLabel="Current Turn Image">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="15" width="600" height="521"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="UrP-HF-oxp" secondAttribute="bottom" constant="-20" id="0HT-Xk-HWg"/>
+                            <constraint firstItem="sSf-pk-7zV" firstAttribute="top" secondItem="JW9-jX-TG6" secondAttribute="bottom" id="2Fh-dN-afQ"/>
+                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="NXU-3c-UyV" secondAttribute="bottom" id="4iG-pE-IJl"/>
+                            <constraint firstItem="JW9-jX-TG6" firstAttribute="leading" secondItem="hJ3-dt-lYg" secondAttribute="leading" id="AD0-6a-jsD"/>
+                            <constraint firstAttribute="trailing" secondItem="JW9-jX-TG6" secondAttribute="trailing" id="Ajw-rj-c0t"/>
+                            <constraint firstItem="UrP-HF-oxp" firstAttribute="leading" secondItem="neQ-g8-bbl" secondAttribute="trailing" id="D3p-kH-wi4"/>
                             <constraint firstAttribute="trailing" secondItem="sSf-pk-7zV" secondAttribute="trailing" id="HrV-u9-6Fy"/>
-                            <constraint firstItem="qgM-dv-vqy" firstAttribute="top" secondItem="mfg-3p-BmS" secondAttribute="bottom" id="LEd-bG-UMj"/>
+                            <constraint firstItem="qgM-dv-vqy" firstAttribute="top" secondItem="JW9-jX-TG6" secondAttribute="bottom" id="KbK-X8-8Pe"/>
+                            <constraint firstItem="OIl-Lg-8ys" firstAttribute="trailing" secondItem="hJ3-dt-lYg" secondAttribute="trailing" id="Kce-EO-yOB"/>
+                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="oc4-y1-5tA" secondAttribute="bottom" id="MBY-sO-00t"/>
                             <constraint firstItem="sSf-pk-7zV" firstAttribute="leading" secondItem="hJ3-dt-lYg" secondAttribute="leading" id="ORv-Fz-3OR"/>
+                            <constraint firstItem="aab-MY-bz4" firstAttribute="centerX" secondItem="hJ3-dt-lYg" secondAttribute="centerX" constant="-50" id="Pe7-Oj-8gi">
+                                <variation key="heightClass=regular-widthClass=compact" constant="-25"/>
+                            </constraint>
+                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="aab-MY-bz4" secondAttribute="bottom" id="TdL-Nb-kMe"/>
                             <constraint firstAttribute="trailing" secondItem="qgM-dv-vqy" secondAttribute="trailing" id="VPv-oi-NGq"/>
                             <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="sSf-pk-7zV" secondAttribute="bottom" id="VmW-vi-cA5"/>
+                            <constraint firstItem="OIl-Lg-8ys" firstAttribute="leading" secondItem="NXU-3c-UyV" secondAttribute="trailing" id="XFD-4z-nK1"/>
+                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="OIl-Lg-8ys" secondAttribute="bottom" id="ZvP-6m-fbx"/>
                             <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="qgM-dv-vqy" secondAttribute="bottom" id="d5Z-vV-pqu"/>
-                            <constraint firstItem="sSf-pk-7zV" firstAttribute="top" secondItem="mfg-3p-BmS" secondAttribute="bottom" id="dGd-53-PsZ"/>
                             <constraint firstItem="qgM-dv-vqy" firstAttribute="leading" secondItem="hJ3-dt-lYg" secondAttribute="leading" id="eFQ-Cu-EJB"/>
+                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="neQ-g8-bbl" secondAttribute="bottom" id="h4x-Gf-sJZ"/>
+                            <constraint firstItem="oc4-y1-5tA" firstAttribute="centerX" secondItem="hJ3-dt-lYg" secondAttribute="centerX" constant="50" id="qaZ-Nb-rah">
+                                <variation key="heightClass=regular-widthClass=compact" constant="25"/>
+                            </constraint>
+                            <constraint firstItem="neQ-g8-bbl" firstAttribute="leading" secondItem="hJ3-dt-lYg" secondAttribute="leadingMargin" id="sV3-5R-W7f"/>
+                            <constraint firstItem="JW9-jX-TG6" firstAttribute="top" secondItem="mfg-3p-BmS" secondAttribute="bottom" id="tGz-rv-R6l"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="nrh-NN-r6L">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="TIt-G0-ciE">
-                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="touchedSave:" destination="p3D-xo-2oL" id="SEp-b0-qk8"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="OIl-Lg-8ys" id="MFe-GB-EQh"/>
                         <outlet property="currentTurnImageView" destination="qgM-dv-vqy" id="9Qx-RI-jnw"/>
+                        <outlet property="eraserButton" destination="UrP-HF-oxp" id="QW9-Od-dv1"/>
+                        <outlet property="pencilButton" destination="neQ-g8-bbl" id="hjt-8o-BPL"/>
                         <outlet property="previousTurnsImageView" destination="sSf-pk-7zV" id="DzP-cx-HsI"/>
+                        <outlet property="saveButton" destination="NXU-3c-UyV" id="t2J-XV-07o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LKh-Yv-fRJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="vba-Rs-2tY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3923" y="158"/>
         </scene>
@@ -890,10 +991,16 @@
     </scenes>
     <resources>
         <image name="button-raised" width="280" height="109"/>
+        <image name="cancel-drawing" width="100" height="100"/>
         <image name="email-button" width="138" height="138"/>
+        <image name="eraser" width="70" height="150"/>
         <image name="facebook-button" width="138" height="138"/>
         <image name="logo" width="561" height="247"/>
         <image name="notepade-edge" width="384" height="16"/>
+        <image name="pencil-selected" width="70" height="150"/>
+        <image name="redo" width="100" height="100"/>
+        <image name="save-drawing" width="100" height="100"/>
+        <image name="undo" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="51A-Ag-woa"/>
