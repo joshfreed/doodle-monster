@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WaitingCellCollectionViewCell: UICollectionViewCell, CellProtocol {
+class WaitingCell: UICollectionViewCell, CellProtocol {
     @IBOutlet weak var monsterThumbnail: UIImageView!
     @IBOutlet weak var monsterName: UILabel!
     @IBOutlet weak var currentPlayerInfo: UILabel!
@@ -16,5 +16,15 @@ class WaitingCellCollectionViewCell: UICollectionViewCell, CellProtocol {
     
     func configure(item: GameViewModel) {
         currentPlayerInfo.text = item.currentPlayerName
+        
+        if let thumbnailFile = item.game.thumbnail {
+            thumbnailFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
+                if error == nil {
+                    if let imageData = imageData {
+                        self.monsterThumbnail.image = UIImage(data: imageData)
+                    }
+                }
+            }
+        }
     }
 }

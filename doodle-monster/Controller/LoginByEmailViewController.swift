@@ -35,6 +35,11 @@ class LoginByEmailViewController: UIViewController, LoginByEmailView {
             if let vc = segue.destinationViewController as? CreateAccountViewController {
                 vc.presenter = CreateAccountPresenter(view: vc, playerService: appDelegate.playerService, username: username!, password: password!)
             }
+        } else if segue.identifier == "MainMenu" {
+            if let vc = segue.destinationViewController as? MainMenuViewController,
+                currentPlayer = appDelegate.playerService.getCurrentPlayer() {
+                vc.viewModel = MainMenuViewModel(gameService: appDelegate.gameService, currentPlayer: currentPlayer)
+            }
         }
     }
 

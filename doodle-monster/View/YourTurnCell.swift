@@ -15,5 +15,15 @@ class YourTurnCell: UICollectionViewCell, CellProtocol {
     
     func configure(item: GameViewModel) {
         monsterName.text = "Barry"
+        
+        if let thumbnailFile = item.game.thumbnail {
+            thumbnailFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
+                if error == nil {
+                    if let imageData = imageData {
+                        self.thumbnail.image = UIImage(data: imageData)
+                    }
+                }
+            }
+        }
     }
 }

@@ -377,22 +377,22 @@
                                 <rect key="frame" x="0.0" y="15" width="600" height="521"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rYS-6d-3G4">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="805"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="755"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Turn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QTZ-PC-xNu">
-                                                <rect key="frame" x="264" y="0.0" width="73" height="21"/>
+                                                <rect key="frame" x="264" y="0.0" width="73.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2C8-ik-9f2">
-                                                <rect key="frame" x="0.0" y="21" width="600" height="300"/>
+                                                <rect key="frame" x="0.0" y="20.5" width="600" height="300"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="300" id="6OH-KC-iJ0"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XgP-M6-Fdk">
-                                                    <size key="itemSize" width="200" height="300"/>
+                                                    <size key="itemSize" width="125" height="300"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -400,19 +400,19 @@
                                                 <cells/>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25m-F1-8Lz">
-                                                <rect key="frame" x="272" y="321" width="57" height="20"/>
+                                                <rect key="frame" x="272" y="320.5" width="57.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GEP-tZ-Hcy">
-                                                <rect key="frame" x="0.0" y="341" width="600" height="325"/>
+                                                <rect key="frame" x="0.0" y="341" width="600" height="275"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="325" id="83i-kb-Zxc"/>
+                                                    <constraint firstAttribute="height" constant="275" id="83i-kb-Zxc"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uif-Tw-EQ7">
-                                                    <size key="itemSize" width="200" height="325"/>
+                                                    <size key="itemSize" width="125" height="275"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -420,7 +420,7 @@
                                                 <cells/>
                                             </collectionView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MLS-QH-xKs">
-                                                <rect key="frame" x="0.0" y="666" width="600" height="139"/>
+                                                <rect key="frame" x="0.0" y="616" width="600" height="139"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crK-d2-qzg">
                                                         <rect key="frame" x="160" y="0.0" width="280" height="109"/>
@@ -497,7 +497,7 @@
             </objects>
             <point key="canvasLocation" x="2898" y="416"/>
         </scene>
-        <!--Drawing View Controller-->
+        <!--Title-->
         <scene sceneID="KaH-Pk-WMH">
             <objects>
                 <viewController id="p3D-xo-2oL" customClass="DrawingViewController" customModule="doodle_monster" customModuleProvider="target" sceneMemberID="viewController">
@@ -508,8 +508,38 @@
                     <view key="view" contentMode="scaleToFill" id="hJ3-dt-lYg">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sSf-pk-7zV" userLabel="Previous Image">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qgM-dv-vqy" userLabel="Current Turn Image">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="sSf-pk-7zV" secondAttribute="trailing" id="HrV-u9-6Fy"/>
+                            <constraint firstItem="qgM-dv-vqy" firstAttribute="top" secondItem="mfg-3p-BmS" secondAttribute="bottom" id="LEd-bG-UMj"/>
+                            <constraint firstItem="sSf-pk-7zV" firstAttribute="leading" secondItem="hJ3-dt-lYg" secondAttribute="leading" id="ORv-Fz-3OR"/>
+                            <constraint firstAttribute="trailing" secondItem="qgM-dv-vqy" secondAttribute="trailing" id="VPv-oi-NGq"/>
+                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="sSf-pk-7zV" secondAttribute="bottom" id="VmW-vi-cA5"/>
+                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="qgM-dv-vqy" secondAttribute="bottom" id="d5Z-vV-pqu"/>
+                            <constraint firstItem="sSf-pk-7zV" firstAttribute="top" secondItem="mfg-3p-BmS" secondAttribute="bottom" id="dGd-53-PsZ"/>
+                            <constraint firstItem="qgM-dv-vqy" firstAttribute="leading" secondItem="hJ3-dt-lYg" secondAttribute="leading" id="eFQ-Cu-EJB"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="nrh-NN-r6L">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="TIt-G0-ciE">
+                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="touchedSave:" destination="p3D-xo-2oL" id="SEp-b0-qk8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="currentTurnImageView" destination="qgM-dv-vqy" id="9Qx-RI-jnw"/>
+                        <outlet property="previousTurnsImageView" destination="sSf-pk-7zV" id="DzP-cx-HsI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LKh-Yv-fRJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

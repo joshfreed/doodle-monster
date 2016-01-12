@@ -14,7 +14,7 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
     @IBOutlet weak var waitingCollection: UICollectionView!
 
     var yourTurnDataSource: ArrayDataSource<YourTurnCell, GameViewModel>!
-    var waitingDataSource: ArrayDataSource<WaitingCellCollectionViewCell, GameViewModel>!
+    var waitingDataSource: ArrayDataSource<WaitingCell, GameViewModel>!
     var selectedIndex: Int?
     
     var viewModel: MainMenuViewModelProtocol! {
@@ -59,12 +59,15 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
                 )
             }
         } else if segue.identifier == "goToGame" {
-            if let nc = segue.destinationViewController as? UINavigationController,
-                vc = nc.topViewController as? DrawingViewController,
-                selectedIndex = self.selectedIndex
-            {
-                vc.viewModel = viewModel.getDrawingViewModel(selectedIndex)
+            guard let vc = segue.destinationViewController as? DrawingViewController else {
+                return
             }
+            
+            guard let selectedIndex = self.selectedIndex else {
+                return
+            }
+
+            vc.viewModel = viewModel.getDrawingViewModel(selectedIndex)
         }
     }
     
@@ -77,12 +80,20 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
     }
 
     func gamesUpdated() {
+        var indexPaths: [NSIndexPath] = []
         yourTurnDataSource.replaceItems(viewModel.yourTurnGames)
-        yourTurnCollection.insertItemsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)])
+        for (index, _) in viewModel.yourTurnGames.enumerate() {
+            indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
+        }
+        yourTurnCollection.insertItemsAtIndexPaths(indexPaths)
         yourTurnCollection.reloadData()
         
+        indexPaths = []
         waitingDataSource.replaceItems(viewModel.waitingGames)
-        waitingCollection.insertItemsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)])
+        for (index, _) in viewModel.waitingGames.enumerate() {
+            indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
+        }
+        waitingCollection.insertItemsAtIndexPaths(indexPaths)
         waitingCollection.reloadData()
     }
     

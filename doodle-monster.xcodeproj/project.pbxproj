@@ -20,7 +20,7 @@
 		536D6C4F1C44482A00BF5EBC /* YourTurnCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C4E1C44482A00BF5EBC /* YourTurnCell.swift */; };
 		53B60DEB1C4301F900AF0E09 /* YourTurnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B60DEA1C4301F900AF0E09 /* YourTurnCell.xib */; };
 		53B60DED1C43020100AF0E09 /* WaitingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B60DEC1C43020100AF0E09 /* WaitingCell.xib */; };
-		53B60DEF1C43047900AF0E09 /* WaitingCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B60DEE1C43047900AF0E09 /* WaitingCellCollectionViewCell.swift */; };
+		53B60DEF1C43047900AF0E09 /* WaitingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B60DEE1C43047900AF0E09 /* WaitingCell.swift */; };
 		53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */; };
 		53C8D3EB1C29E9B70052A9ED /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */; };
 		53C8D3EE1C2A00730052A9ED /* PlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3ED1C2A00730052A9ED /* PlayerService.swift */; };
@@ -86,7 +86,7 @@
 		536D6C4E1C44482A00BF5EBC /* YourTurnCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YourTurnCell.swift; path = View/YourTurnCell.swift; sourceTree = "<group>"; };
 		53B60DEA1C4301F900AF0E09 /* YourTurnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = YourTurnCell.xib; path = View/YourTurnCell.xib; sourceTree = "<group>"; };
 		53B60DEC1C43020100AF0E09 /* WaitingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitingCell.xib; sourceTree = "<group>"; };
-		53B60DEE1C43047900AF0E09 /* WaitingCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaitingCellCollectionViewCell.swift; path = View/WaitingCellCollectionViewCell.swift; sourceTree = "<group>"; };
+		53B60DEE1C43047900AF0E09 /* WaitingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaitingCell.swift; path = View/WaitingCell.swift; sourceTree = "<group>"; };
 		53C8D3E81C29E57F0052A9ED /* LoginByEmailPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginByEmailPresenter.swift; path = Presenter/LoginByEmailPresenter.swift; sourceTree = "<group>"; };
 		53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		53C8D3ED1C2A00730052A9ED /* PlayerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerService.swift; path = Model/PlayerService.swift; sourceTree = "<group>"; };
@@ -257,7 +257,7 @@
 				53C8D3F01C2B0CA30052A9ED /* MainMenuViewController.swift */,
 				53B60DEA1C4301F900AF0E09 /* YourTurnCell.xib */,
 				53B60DEC1C43020100AF0E09 /* WaitingCell.xib */,
-				53B60DEE1C43047900AF0E09 /* WaitingCellCollectionViewCell.swift */,
+				53B60DEE1C43047900AF0E09 /* WaitingCell.swift */,
 				536D6C4E1C44482A00BF5EBC /* YourTurnCell.swift */,
 			);
 			name = MainMenu;
@@ -463,7 +463,7 @@
 				53EE34F11C32E1C900C70635 /* UIViewLoading.swift in Sources */,
 				532800951BA0ECF6005AD59C /* LoginViewController.swift in Sources */,
 				53E5BBC31C3F1BFA0035504F /* ArrayDataSource.swift in Sources */,
-				53B60DEF1C43047900AF0E09 /* WaitingCellCollectionViewCell.swift in Sources */,
+				53B60DEF1C43047900AF0E09 /* WaitingCell.swift in Sources */,
 				53C8D3FC1C2C72890052A9ED /* Player.swift in Sources */,
 				536D6C4F1C44482A00BF5EBC /* YourTurnCell.swift in Sources */,
 				53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */,

@@ -12,6 +12,8 @@ class Game: PFObject, PFSubclassing {
     @NSManaged var gameOver: Bool
     @NSManaged var players: [Player]
     @NSManaged var currentPlayer: Player
+    @NSManaged var imageFile: PFFile?
+    @NSManaged var thumbnail: PFFile?
 
     override class func initialize() {
         struct Static {

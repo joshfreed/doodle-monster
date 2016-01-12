@@ -7,14 +7,36 @@
 //
 
 import UIKit
+import Parse
 
 class DrawingViewController: UIViewController {
     var viewModel: DrawingViewModel!
+    @IBOutlet weak var previousTurnsImageView: UIImageView!
+    @IBOutlet weak var currentTurnImageView: UIImageView!
+    
+    var lastPoint = CGPoint.zero
+    var red: CGFloat = 0.0
+    var green: CGFloat = 0.0
+    var blue: CGFloat = 0.0
+    var brushWidth: CGFloat = 10.0
+    var opacity: CGFloat = 1.0
+    var swiped = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if let previousMonsterFile = viewModel.game.imageFile {
+            previousMonsterFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
+                if error == nil {
+                    if let imageData = imageData {
+                        let image = UIImage(data: imageData)
+                        self.previousTurnsImageView.image = image
+                    }
+                }
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,5 +54,82 @@ class DrawingViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - Actions
+    
+    @IBAction func touchedSave(sender: UIBarButtonItem) {
+        UIGraphicsBeginImageContext(previousTurnsImageView.frame.size)
+        previousTurnsImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), blendMode: CGBlendMode.Normal, alpha: 1.0)
+        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), blendMode: CGBlendMode.Normal, alpha: opacity)
+        previousTurnsImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        guard let newFullImage = previousTurnsImageView.image else {
+            return
+        }
+        guard let fullImageData = UIImagePNGRepresentation(newFullImage) else {
+            return
+        }
 
+        guard let currentTurnImage = currentTurnImageView.image else {
+            return
+        }
+        guard let currentTurnImageData = UIImagePNGRepresentation(currentTurnImage) else {
+            return
+        }
+        
+        viewModel.save(currentTurnImageData, fullImageData: fullImageData)
+    }
+
+    // MARK: - Touches
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        swiped = false
+        
+        if let touch = touches.first {
+             lastPoint = touch.locationInView(self.view)
+        }
+        
+        super.touchesBegan(touches, withEvent:event)
+    }
+
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        swiped = true
+        
+        if let touch = touches.first {
+            let currentPoint = touch.locationInView(view)
+            drawLineFrom(lastPoint, toPoint: currentPoint)
+            
+            lastPoint = currentPoint
+        }
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if !swiped {
+            // draw a single point
+            drawLineFrom(lastPoint, toPoint: lastPoint)
+        }
+    }
+    
+    // MARK: - Drawing
+    
+    func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
+        UIGraphicsBeginImageContext(view.frame.size)
+        let context = UIGraphicsGetCurrentContext()
+        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+        
+        CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
+        CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
+        
+        CGContextSetLineCap(context, CGLineCap.Round)
+        CGContextSetLineWidth(context, brushWidth)
+        CGContextSetRGBStrokeColor(context, red, green, blue, 1.0)
+        CGContextSetBlendMode(context, CGBlendMode.Normal)
+        
+        CGContextStrokePath(context)
+        
+        currentTurnImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        currentTurnImageView.alpha = opacity
+        UIGraphicsEndImageContext()
+    }
 }

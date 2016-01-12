@@ -54,9 +54,7 @@ class NewMonsterViewController: UIViewController {
                 vc.viewModel = vm
             }
         } else if segue.identifier == "goToNewMonster" {
-            if let nc = segue.destinationViewController as? UINavigationController,
-                vc = nc.topViewController as? DrawingViewController
-            {
+            if let vc = segue.destinationViewController as? DrawingViewController {
                 vc.viewModel = DrawingViewModel(game: newMonster!)
             }
         }
