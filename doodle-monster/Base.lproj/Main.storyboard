@@ -380,13 +380,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="755"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Turn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QTZ-PC-xNu">
-                                                <rect key="frame" x="264" y="0.0" width="73.5" height="20.5"/>
+                                                <rect key="frame" x="264" y="0.0" width="74" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2C8-ik-9f2">
-                                                <rect key="frame" x="0.0" y="20.5" width="600" height="300"/>
+                                                <rect key="frame" x="0.0" y="21" width="600" height="300"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="300" id="6OH-KC-iJ0"/>
@@ -400,7 +400,7 @@
                                                 <cells/>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25m-F1-8Lz">
-                                                <rect key="frame" x="272" y="320.5" width="57.5" height="20.5"/>
+                                                <rect key="frame" x="272" y="321" width="58" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -518,6 +518,12 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sSf-pk-7zV" userLabel="Previous Image">
                                 <rect key="frame" x="0.0" y="15" width="600" height="521"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qgM-dv-vqy" userLabel="Current Turn Image">
+                                <rect key="frame" x="0.0" y="15" width="600" height="521"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dYj-ji-H6N" userLabel="Temp Image View">
+                                <rect key="frame" x="0.0" y="15" width="600" height="521"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neQ-g8-bbl" userLabel="Pencil">
                                 <rect key="frame" x="20" y="386" width="70" height="150"/>
                                 <constraints>
@@ -597,18 +603,16 @@
                                     <action selector="redo:" destination="p3D-xo-2oL" eventType="touchUpInside" id="TER-K1-djZ"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qgM-dv-vqy" userLabel="Current Turn Image">
-                                <rect key="frame" x="0.0" y="15" width="600" height="521"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="UrP-HF-oxp" secondAttribute="bottom" constant="-20" id="0HT-Xk-HWg"/>
+                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="UrP-HF-oxp" secondAttribute="bottom" id="0HT-Xk-HWg"/>
                             <constraint firstItem="sSf-pk-7zV" firstAttribute="top" secondItem="JW9-jX-TG6" secondAttribute="bottom" id="2Fh-dN-afQ"/>
                             <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="NXU-3c-UyV" secondAttribute="bottom" id="4iG-pE-IJl"/>
                             <constraint firstItem="JW9-jX-TG6" firstAttribute="leading" secondItem="hJ3-dt-lYg" secondAttribute="leading" id="AD0-6a-jsD"/>
                             <constraint firstAttribute="trailing" secondItem="JW9-jX-TG6" secondAttribute="trailing" id="Ajw-rj-c0t"/>
                             <constraint firstItem="UrP-HF-oxp" firstAttribute="leading" secondItem="neQ-g8-bbl" secondAttribute="trailing" id="D3p-kH-wi4"/>
+                            <constraint firstAttribute="trailing" secondItem="dYj-ji-H6N" secondAttribute="trailing" id="DSC-RU-eJg"/>
                             <constraint firstAttribute="trailing" secondItem="sSf-pk-7zV" secondAttribute="trailing" id="HrV-u9-6Fy"/>
                             <constraint firstItem="qgM-dv-vqy" firstAttribute="top" secondItem="JW9-jX-TG6" secondAttribute="bottom" id="KbK-X8-8Pe"/>
                             <constraint firstItem="OIl-Lg-8ys" firstAttribute="trailing" secondItem="hJ3-dt-lYg" secondAttribute="trailing" id="Kce-EO-yOB"/>
@@ -622,23 +626,39 @@
                             <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="sSf-pk-7zV" secondAttribute="bottom" id="VmW-vi-cA5"/>
                             <constraint firstItem="OIl-Lg-8ys" firstAttribute="leading" secondItem="NXU-3c-UyV" secondAttribute="trailing" id="XFD-4z-nK1"/>
                             <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="OIl-Lg-8ys" secondAttribute="bottom" id="ZvP-6m-fbx"/>
+                            <constraint firstItem="dYj-ji-H6N" firstAttribute="leading" secondItem="hJ3-dt-lYg" secondAttribute="leading" id="bPc-Og-IjF"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="UrP-HF-oxp" secondAttribute="bottom" constant="-20" id="cd1-p4-yaq"/>
                             <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="qgM-dv-vqy" secondAttribute="bottom" id="d5Z-vV-pqu"/>
                             <constraint firstItem="qgM-dv-vqy" firstAttribute="leading" secondItem="hJ3-dt-lYg" secondAttribute="leading" id="eFQ-Cu-EJB"/>
+                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="neQ-g8-bbl" secondAttribute="bottom" constant="-20" id="gbP-35-MXf"/>
                             <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="neQ-g8-bbl" secondAttribute="bottom" id="h4x-Gf-sJZ"/>
                             <constraint firstItem="oc4-y1-5tA" firstAttribute="centerX" secondItem="hJ3-dt-lYg" secondAttribute="centerX" constant="50" id="qaZ-Nb-rah">
                                 <variation key="heightClass=regular-widthClass=compact" constant="25"/>
                             </constraint>
+                            <constraint firstItem="nTt-dW-LGC" firstAttribute="top" secondItem="dYj-ji-H6N" secondAttribute="bottom" id="sER-3O-RXW"/>
                             <constraint firstItem="neQ-g8-bbl" firstAttribute="leading" secondItem="hJ3-dt-lYg" secondAttribute="leadingMargin" id="sV3-5R-W7f"/>
+                            <constraint firstItem="dYj-ji-H6N" firstAttribute="top" secondItem="JW9-jX-TG6" secondAttribute="bottom" id="shz-8Y-ce3"/>
                             <constraint firstItem="JW9-jX-TG6" firstAttribute="top" secondItem="mfg-3p-BmS" secondAttribute="bottom" id="tGz-rv-R6l"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="0HT-Xk-HWg"/>
+                                <exclude reference="gbP-35-MXf"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="OIl-Lg-8ys" id="MFe-GB-EQh"/>
                         <outlet property="currentTurnImageView" destination="qgM-dv-vqy" id="9Qx-RI-jnw"/>
                         <outlet property="eraserButton" destination="UrP-HF-oxp" id="QW9-Od-dv1"/>
+                        <outlet property="eraserNotSelectedConstraint" destination="cd1-p4-yaq" id="YwP-AA-RUg"/>
+                        <outlet property="eraserSelectedConstraint" destination="0HT-Xk-HWg" id="81E-bY-nhz"/>
                         <outlet property="pencilButton" destination="neQ-g8-bbl" id="hjt-8o-BPL"/>
+                        <outlet property="pencilNotSelectedConstraint" destination="gbP-35-MXf" id="KGn-Ft-bMD"/>
+                        <outlet property="pencilSelectedContraint" destination="h4x-Gf-sJZ" id="JKb-lb-KSa"/>
                         <outlet property="previousTurnsImageView" destination="sSf-pk-7zV" id="DzP-cx-HsI"/>
                         <outlet property="saveButton" destination="NXU-3c-UyV" id="t2J-XV-07o"/>
+                        <outlet property="tempImageView" destination="dYj-ji-H6N" id="58l-Jz-IDX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LKh-Yv-fRJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -862,7 +882,7 @@
                                         <rect key="frame" x="0.0" y="28" width="560" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tLC-UC-SBK" id="i3h-p3-CJ6">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzX-5W-Qy8">

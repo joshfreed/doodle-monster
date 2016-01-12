@@ -13,16 +13,26 @@ class DrawingViewController: UIViewController {
     var viewModel: DrawingViewModel!
     @IBOutlet weak var previousTurnsImageView: UIImageView!
     @IBOutlet weak var currentTurnImageView: UIImageView!
+    @IBOutlet weak var tempImageView: UIImageView!
     @IBOutlet weak var pencilButton: UIButton!
     @IBOutlet weak var eraserButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
+    
+    @IBOutlet weak var pencilSelectedContraint: NSLayoutConstraint!
+    @IBOutlet weak var pencilNotSelectedConstraint: NSLayoutConstraint!
+    @IBOutlet weak var eraserSelectedConstraint: NSLayoutConstraint!
+    @IBOutlet weak var eraserNotSelectedConstraint: NSLayoutConstraint!
+    
+    let pencilConstantOffset: Double = 0.0
+    var drawingMode: DrawingMode = .Draw
     
     var lastPoint = CGPoint.zero
     var red: CGFloat = 0.0
     var green: CGFloat = 0.0
     var blue: CGFloat = 0.0
     var brushWidth: CGFloat = 2.0
+    var eraserWidth: CGFloat = 10.0
     var opacity: CGFloat = 1.0
     var swiped = false
     
@@ -84,11 +94,47 @@ class DrawingViewController: UIViewController {
     }
     
     @IBAction func touchedPencil(sender: UIButton) {
-        // change to highlighted image; animate upwards
-        // change eraser to regular; animate down
+        guard drawingMode != .Draw else {
+            return
+        }
+        
+        pencilButton.setImage(UIImage(named: "pencil-selected"), forState: .Normal)
+        eraserButton.setImage(UIImage(named: "eraser"), forState: .Normal)
+        
+        view.layoutIfNeeded()
+        
+        pencilNotSelectedConstraint.active = false
+        eraserSelectedConstraint.active = false
+        pencilSelectedContraint.active = true
+        eraserNotSelectedConstraint.active = true
+        
+        UIView.animateWithDuration(0.5) { () -> Void in
+            self.view.layoutIfNeeded()
+        }
+        
+        drawingMode = .Draw
     }
     
     @IBAction func touchedEraser(sender: UIButton) {
+        guard drawingMode != .Erase else {
+            return
+        }
+        
+        pencilButton.setImage(UIImage(named: "pencil"), forState: .Normal)
+        eraserButton.setImage(UIImage(named: "eraser-selected"), forState: .Normal)
+        
+        view.layoutIfNeeded()
+        
+        pencilSelectedContraint.active = false
+        eraserNotSelectedConstraint.active = false
+        pencilNotSelectedConstraint.active = true
+        eraserSelectedConstraint.active = true
+        
+        UIView.animateWithDuration(0.5) { () -> Void in
+            self.view.layoutIfNeeded()
+        }
+        
+        drawingMode = .Erase
     }
     
     @IBAction func touchedCancel(sender: UIButton) {
@@ -107,7 +153,9 @@ class DrawingViewController: UIViewController {
         swiped = false
         
         if let touch = touches.first {
-             lastPoint = touch.locationInView(self.view)
+            lastPoint = touch.locationInView(self.view)
+            tempImageView.image = currentTurnImageView.image
+            currentTurnImageView.image = nil
         }
         
         super.touchesBegan(touches, withEvent:event)
@@ -129,6 +177,13 @@ class DrawingViewController: UIViewController {
             // draw a single point
             drawLineFrom(lastPoint, toPoint: lastPoint)
         }
+        
+        UIGraphicsBeginImageContext(currentTurnImageView.frame.size)
+        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), blendMode: CGBlendMode.Normal, alpha: 1.0)
+        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), blendMode: CGBlendMode.Normal, alpha: opacity)
+        currentTurnImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        tempImageView.image = nil
+        UIGraphicsEndImageContext()
     }
     
     // MARK: - Drawing
@@ -136,20 +191,30 @@ class DrawingViewController: UIViewController {
     func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
         UIGraphicsBeginImageContext(view.frame.size)
         let context = UIGraphicsGetCurrentContext()
-        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
         
         CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
         CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
-        
         CGContextSetLineCap(context, CGLineCap.Round)
-        CGContextSetLineWidth(context, brushWidth)
-        CGContextSetRGBStrokeColor(context, red, green, blue, 1.0)
-        CGContextSetBlendMode(context, CGBlendMode.Normal)
+        
+        if drawingMode == .Draw {
+            CGContextSetLineWidth(context, brushWidth)
+            CGContextSetRGBStrokeColor(context, red, green, blue, 1.0)
+            CGContextSetBlendMode(context, CGBlendMode.Normal)
+        } else if drawingMode == .Erase {
+            CGContextSetLineWidth(context, eraserWidth)
+            CGContextSetBlendMode(context, CGBlendMode.Clear)
+        }
         
         CGContextStrokePath(context)
         
-        currentTurnImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        currentTurnImageView.alpha = opacity
+        tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        tempImageView.alpha = opacity
         UIGraphicsEndImageContext()
     }
+}
+
+enum DrawingMode {
+    case Draw
+    case Erase
 }
