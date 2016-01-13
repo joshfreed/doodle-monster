@@ -18,6 +18,9 @@
 		536D6C4B1C44424300BF5EBC /* DrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C4A1C44424300BF5EBC /* DrawingViewController.swift */; };
 		536D6C4D1C4442DE00BF5EBC /* DrawingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C4C1C4442DE00BF5EBC /* DrawingViewModel.swift */; };
 		536D6C4F1C44482A00BF5EBC /* YourTurnCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C4E1C44482A00BF5EBC /* YourTurnCell.swift */; };
+		536D6C511C46DA7200BF5EBC /* StrokeHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C501C46DA7200BF5EBC /* StrokeHistory.swift */; };
+		536D6C531C46DCCC00BF5EBC /* StrokeHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C521C46DCCC00BF5EBC /* StrokeHistoryTests.swift */; };
+		536D6C541C46E83800BF5EBC /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4BF1C1F6BC200B5BEEF /* Bolts.framework */; };
 		53B60DEB1C4301F900AF0E09 /* YourTurnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B60DEA1C4301F900AF0E09 /* YourTurnCell.xib */; };
 		53B60DED1C43020100AF0E09 /* WaitingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B60DEC1C43020100AF0E09 /* WaitingCell.xib */; };
 		53B60DEF1C43047900AF0E09 /* WaitingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B60DEE1C43047900AF0E09 /* WaitingCell.swift */; };
@@ -84,6 +87,8 @@
 		536D6C4A1C44424300BF5EBC /* DrawingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawingViewController.swift; path = Controller/DrawingViewController.swift; sourceTree = "<group>"; };
 		536D6C4C1C4442DE00BF5EBC /* DrawingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawingViewModel.swift; path = ViewModel/DrawingViewModel.swift; sourceTree = "<group>"; };
 		536D6C4E1C44482A00BF5EBC /* YourTurnCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YourTurnCell.swift; path = View/YourTurnCell.swift; sourceTree = "<group>"; };
+		536D6C501C46DA7200BF5EBC /* StrokeHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StrokeHistory.swift; path = Model/StrokeHistory.swift; sourceTree = "<group>"; };
+		536D6C521C46DCCC00BF5EBC /* StrokeHistoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeHistoryTests.swift; sourceTree = "<group>"; };
 		53B60DEA1C4301F900AF0E09 /* YourTurnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = YourTurnCell.xib; path = View/YourTurnCell.xib; sourceTree = "<group>"; };
 		53B60DEC1C43020100AF0E09 /* WaitingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitingCell.xib; sourceTree = "<group>"; };
 		53B60DEE1C43047900AF0E09 /* WaitingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaitingCell.swift; path = View/WaitingCell.swift; sourceTree = "<group>"; };
@@ -136,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				536D6C541C46E83800BF5EBC /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +201,7 @@
 				532800A71BA0ECF6005AD59C /* doodle_monsterTests.swift */,
 				532800A91BA0ECF6005AD59C /* Info.plist */,
 				53EE34F61C345E8600C70635 /* NewMonsterTests.swift */,
+				536D6C521C46DCCC00BF5EBC /* StrokeHistoryTests.swift */,
 			);
 			path = "doodle-monsterTests";
 			sourceTree = "<group>";
@@ -247,6 +254,7 @@
 				53C8D3FB1C2C72890052A9ED /* Player.swift */,
 				53EE34F81C38697F00C70635 /* GameService.swift */,
 				53E5BBBF1C3EF7F90035504F /* Game.swift */,
+				536D6C501C46DA7200BF5EBC /* StrokeHistory.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -465,6 +473,7 @@
 				53E5BBC31C3F1BFA0035504F /* ArrayDataSource.swift in Sources */,
 				53B60DEF1C43047900AF0E09 /* WaitingCell.swift in Sources */,
 				53C8D3FC1C2C72890052A9ED /* Player.swift in Sources */,
+				536D6C511C46DA7200BF5EBC /* StrokeHistory.swift in Sources */,
 				536D6C4F1C44482A00BF5EBC /* YourTurnCell.swift in Sources */,
 				53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */,
 				53C8D3FE1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift in Sources */,
@@ -484,6 +493,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				532800A81BA0ECF6005AD59C /* doodle_monsterTests.swift in Sources */,
+				536D6C531C46DCCC00BF5EBC /* StrokeHistoryTests.swift in Sources */,
 				53EE34F71C345E8600C70635 /* NewMonsterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -650,11 +660,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "doodle-monsterTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bleepsmazz.doodle-monsterTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/doodle-monster.app/doodle-monster";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -662,11 +678,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "doodle-monsterTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bleepsmazz.doodle-monsterTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/doodle-monster.app/doodle-monster";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

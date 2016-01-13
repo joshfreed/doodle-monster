@@ -26,6 +26,7 @@ class DrawingViewController: UIViewController {
     
     let pencilConstantOffset: Double = 0.0
     var drawingMode: DrawingMode = .Draw
+    var strokeHistory: StrokeHistory!
     
     var lastPoint = CGPoint.zero
     var red: CGFloat = 0.0
@@ -51,6 +52,9 @@ class DrawingViewController: UIViewController {
                 }
             }
         }
+        
+        strokeHistory = StrokeHistory(canvas: currentTurnImageView)
+        saveCurrentToHistory()
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,9 +74,9 @@ class DrawingViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func touchedSave(sender: UIButton) {
-        UIGraphicsBeginImageContext(previousTurnsImageView.frame.size)
-        previousTurnsImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), blendMode: CGBlendMode.Normal, alpha: 1.0)
-        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), blendMode: CGBlendMode.Normal, alpha: opacity)
+        UIGraphicsBeginImageContext(currentTurnImageView.frame.size)
+        previousTurnsImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height), blendMode: CGBlendMode.Normal, alpha: 1.0)
+        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height), blendMode: CGBlendMode.Normal, alpha: opacity)
         previousTurnsImageView.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
@@ -142,9 +146,11 @@ class DrawingViewController: UIViewController {
     }
     
     @IBAction func undo(sender: UIButton) {
+        strokeHistory.undo()
     }
     
     @IBAction func redo(sender: UIButton) {
+        strokeHistory.redo()
     }
 
     // MARK: - Touches
@@ -178,20 +184,16 @@ class DrawingViewController: UIViewController {
             drawLineFrom(lastPoint, toPoint: lastPoint)
         }
         
-        UIGraphicsBeginImageContext(currentTurnImageView.frame.size)
-        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), blendMode: CGBlendMode.Normal, alpha: 1.0)
-        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height), blendMode: CGBlendMode.Normal, alpha: opacity)
-        currentTurnImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        tempImageView.image = nil
-        UIGraphicsEndImageContext()
+        mergeTempIntoCurrent()
+        saveCurrentToHistory()
     }
     
     // MARK: - Drawing
     
     func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
-        UIGraphicsBeginImageContext(view.frame.size)
+        UIGraphicsBeginImageContext(currentTurnImageView.frame.size)
         let context = UIGraphicsGetCurrentContext()
-        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height))
         
         CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
         CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
@@ -212,9 +214,40 @@ class DrawingViewController: UIViewController {
         tempImageView.alpha = opacity
         UIGraphicsEndImageContext()
     }
+    
+    func mergeTempIntoCurrent() {
+        UIGraphicsBeginImageContext(currentTurnImageView.frame.size)
+        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height), blendMode: CGBlendMode.Normal, alpha: 1.0)
+        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height), blendMode: CGBlendMode.Normal, alpha: opacity)
+        currentTurnImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        tempImageView.image = nil
+        UIGraphicsEndImageContext()
+    }
+
+    func saveCurrentToHistory() {
+        guard let image = currentTurnImageView.image else {
+            return
+        }
+        
+        strokeHistory.addStroke(image)
+    }
 }
 
 enum DrawingMode {
     case Draw
     case Erase
 }
+
+extension UIImage: Stroke {
+    var image: UIImage {
+        return self
+    }
+}
+
+extension UIImageView: Canvas {
+    var currentStroke: Stroke? {
+        get { return image }
+        set(stroke) { image = stroke?.image }
+    }
+}
+
