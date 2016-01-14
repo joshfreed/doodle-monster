@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class DrawingViewController: UIViewController {
+class DrawingViewController: UIViewController, UIScrollViewDelegate {
     var viewModel: DrawingViewModel!
     @IBOutlet weak var previousTurnsImageView: UIImageView!
     @IBOutlet weak var currentTurnImageView: UIImageView!
@@ -18,7 +18,9 @@ class DrawingViewController: UIViewController {
     @IBOutlet weak var eraserButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
-    
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var imageContainer: UIView!
+
     @IBOutlet weak var pencilSelectedContraint: NSLayoutConstraint!
     @IBOutlet weak var pencilNotSelectedConstraint: NSLayoutConstraint!
     @IBOutlet weak var eraserSelectedConstraint: NSLayoutConstraint!
@@ -42,6 +44,13 @@ class DrawingViewController: UIViewController {
 
         navigationItem.hidesBackButton = true
         
+        scrollView.minimumZoomScale = 1.0;
+        scrollView.maximumZoomScale = 7.0;
+        scrollView.contentSize = imageContainer.frame.size;
+        scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
+        scrollView.delaysContentTouches = false
+        scrollView.delegate = self
+
         if let previousMonsterFile = viewModel.game.imageFile {
             previousMonsterFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
                 if error == nil {
@@ -69,6 +78,14 @@ class DrawingViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
 
+    }
+    
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return imageContainer
+    }
+    
+    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
+        
     }
     
     // MARK: - Actions
@@ -152,48 +169,51 @@ class DrawingViewController: UIViewController {
     @IBAction func redo(sender: UIButton) {
         strokeHistory.redo()
     }
-
+    
     // MARK: - Touches
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        swiped = false
-        
         if let touch = touches.first {
-            lastPoint = touch.locationInView(self.view)
-            tempImageView.image = currentTurnImageView.image
-            currentTurnImageView.image = nil
+            startDraw(touch.locationInView(imageContainer))
         }
-        
-        super.touchesBegan(touches, withEvent:event)
     }
-
+    
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        swiped = true
-        
         if let touch = touches.first {
-            let currentPoint = touch.locationInView(view)
-            drawLineFrom(lastPoint, toPoint: currentPoint)
-            
-            lastPoint = currentPoint
+            movePencilTo(touch.locationInView(imageContainer))
         }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if !swiped {
-            // draw a single point
-            drawLineFrom(lastPoint, toPoint: lastPoint)
-        }
-        
-        mergeTempIntoCurrent()
-        saveCurrentToHistory()
+        endDraw()
     }
     
     // MARK: - Drawing
     
+    func startDraw(currentPoint: CGPoint) {
+        swiped = false
+        lastPoint = currentPoint
+    }
+    
+    func movePencilTo(currentPoint: CGPoint) {
+        swiped = true
+        drawLineFrom(lastPoint, toPoint: currentPoint)
+        lastPoint = currentPoint
+    }
+    
+    func endDraw() {
+        if !swiped {
+            // draw a single point
+            drawLineFrom(lastPoint, toPoint: lastPoint)
+        }
+
+        saveCurrentToHistory()
+    }
+    
     func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
         UIGraphicsBeginImageContext(currentTurnImageView.frame.size)
         let context = UIGraphicsGetCurrentContext()
-        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height))
+        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height))
         
         CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
         CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
@@ -210,17 +230,8 @@ class DrawingViewController: UIViewController {
         
         CGContextStrokePath(context)
         
-        tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        tempImageView.alpha = opacity
-        UIGraphicsEndImageContext()
-    }
-    
-    func mergeTempIntoCurrent() {
-        UIGraphicsBeginImageContext(currentTurnImageView.frame.size)
-        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height), blendMode: CGBlendMode.Normal, alpha: 1.0)
-        tempImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height), blendMode: CGBlendMode.Normal, alpha: opacity)
         currentTurnImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        tempImageView.image = nil
+        currentTurnImageView.alpha = opacity
         UIGraphicsEndImageContext()
     }
 

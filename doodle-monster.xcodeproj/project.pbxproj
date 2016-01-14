@@ -21,6 +21,7 @@
 		536D6C511C46DA7200BF5EBC /* StrokeHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C501C46DA7200BF5EBC /* StrokeHistory.swift */; };
 		536D6C531C46DCCC00BF5EBC /* StrokeHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C521C46DCCC00BF5EBC /* StrokeHistoryTests.swift */; };
 		536D6C541C46E83800BF5EBC /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4BF1C1F6BC200B5BEEF /* Bolts.framework */; };
+		536D6C561C4809A300BF5EBC /* DrawingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C551C4809A300BF5EBC /* DrawingScrollView.swift */; };
 		53B60DEB1C4301F900AF0E09 /* YourTurnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B60DEA1C4301F900AF0E09 /* YourTurnCell.xib */; };
 		53B60DED1C43020100AF0E09 /* WaitingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B60DEC1C43020100AF0E09 /* WaitingCell.xib */; };
 		53B60DEF1C43047900AF0E09 /* WaitingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B60DEE1C43047900AF0E09 /* WaitingCell.swift */; };
@@ -89,6 +90,7 @@
 		536D6C4E1C44482A00BF5EBC /* YourTurnCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YourTurnCell.swift; path = View/YourTurnCell.swift; sourceTree = "<group>"; };
 		536D6C501C46DA7200BF5EBC /* StrokeHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StrokeHistory.swift; path = Model/StrokeHistory.swift; sourceTree = "<group>"; };
 		536D6C521C46DCCC00BF5EBC /* StrokeHistoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeHistoryTests.swift; sourceTree = "<group>"; };
+		536D6C551C4809A300BF5EBC /* DrawingScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawingScrollView.swift; path = View/Game/DrawingScrollView.swift; sourceTree = "<group>"; };
 		53B60DEA1C4301F900AF0E09 /* YourTurnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = YourTurnCell.xib; path = View/YourTurnCell.xib; sourceTree = "<group>"; };
 		53B60DEC1C43020100AF0E09 /* WaitingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitingCell.xib; sourceTree = "<group>"; };
 		53B60DEE1C43047900AF0E09 /* WaitingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaitingCell.swift; path = View/WaitingCell.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				536D6C4A1C44424300BF5EBC /* DrawingViewController.swift */,
+				536D6C551C4809A300BF5EBC /* DrawingScrollView.swift */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				536D6C511C46DA7200BF5EBC /* StrokeHistory.swift in Sources */,
 				536D6C4F1C44482A00BF5EBC /* YourTurnCell.swift in Sources */,
 				53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */,
+				536D6C561C4809A300BF5EBC /* DrawingScrollView.swift in Sources */,
 				53C8D3FE1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift in Sources */,
 				532800931BA0ECF6005AD59C /* AppDelegate.swift in Sources */,
 				53E5BBC01C3EF7F90035504F /* Game.swift in Sources */,
