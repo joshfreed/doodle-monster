@@ -9,16 +9,15 @@
 import UIKit
 import Parse
 
-class DrawingViewController: UIViewController, UIScrollViewDelegate {
+class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView {
     var viewModel: DrawingViewModel!
     @IBOutlet weak var previousTurnsImageView: UIImageView!
     @IBOutlet weak var currentTurnImageView: UIImageView!
-    @IBOutlet weak var tempImageView: UIImageView!
     @IBOutlet weak var pencilButton: UIButton!
     @IBOutlet weak var eraserButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var scrollView: DrawingScrollView!
     @IBOutlet weak var imageContainer: UIView!
 
     @IBOutlet weak var pencilSelectedContraint: NSLayoutConstraint!
@@ -30,6 +29,7 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate {
     var drawingMode: DrawingMode = .Draw
     var strokeHistory: StrokeHistory!
     
+    var startPoint = CGPoint.zero
     var lastPoint = CGPoint.zero
     var red: CGFloat = 0.0
     var green: CGFloat = 0.0
@@ -41,15 +41,13 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationItem.hidesBackButton = true
         
-        scrollView.minimumZoomScale = 1.0;
-        scrollView.maximumZoomScale = 7.0;
-        scrollView.contentSize = imageContainer.frame.size;
+        navigationItem.hidesBackButton = true
+
         scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
         scrollView.delaysContentTouches = false
         scrollView.delegate = self
+        scrollView.drawingDelegate = self
 
         if let previousMonsterFile = viewModel.game.imageFile {
             previousMonsterFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
@@ -69,6 +67,19 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        updateZoom()
+    }
+
+    func updateZoom() {
+        let heightScale = scrollView.bounds.size.height / imageContainer.bounds.size.height
+        let widthScale = scrollView.bounds.size.width / imageContainer.bounds.size.width
+//        print("ScrollView bounds: \(scrollView.bounds.size), img: \(imageContainer.bounds.size), heightScale: \(heightScale), widthScale: \(widthScale)")
+        scrollView.minimumZoomScale = min(heightScale, widthScale)
+        scrollView.maximumZoomScale = 7.0
+        scrollView.zoomScale = scrollView.minimumZoomScale
     }
     
     // MARK: - Navigation
@@ -188,11 +199,34 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate {
         endDraw()
     }
     
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        abortLine()
+    }
+    
+    // MARK: - DrawingView
+    
+    func allowPanningAndZooming() -> Bool {
+        if startPoint != CGPoint.zero {
+            let xDist = lastPoint.x - startPoint.x
+            let yDist = lastPoint.y - startPoint.y
+            let distance = sqrt((xDist * xDist) + (yDist * yDist))
+            print("Distance: \(distance)")
+            
+            // 8 seems like an okay number of my iPhone 6
+            // If your finger has moved more than 8, then don't allow panning and zooming - continue drawing
+            // If less than 8, then cancel the stroke - erase it, and allow panning and zooming
+            return distance < 8
+        }
+        
+        return true
+    }
+    
     // MARK: - Drawing
     
     func startDraw(currentPoint: CGPoint) {
         swiped = false
         lastPoint = currentPoint
+        startPoint = currentPoint
     }
     
     func movePencilTo(currentPoint: CGPoint) {
@@ -203,11 +237,17 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate {
     
     func endDraw() {
         if !swiped {
-            // draw a single point
             drawLineFrom(lastPoint, toPoint: lastPoint)
         }
 
+        startPoint = CGPoint.zero
+        
         saveCurrentToHistory()
+    }
+    
+    func abortLine() {
+        saveCurrentToHistory()
+        strokeHistory.undo()
     }
     
     func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
