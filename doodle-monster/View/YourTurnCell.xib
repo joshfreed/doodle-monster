@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="J5P-sg-7AY" customClass="YourTurnCell" customModule="doodle_monster" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="YourTurnCell" id="J5P-sg-7AY" customClass="YourTurnCell" customModule="doodle_monster" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="128" height="196"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -38,10 +38,10 @@
             <constraints>
                 <constraint firstItem="0hn-8h-Vxd" firstAttribute="top" secondItem="z81-gV-JxF" secondAttribute="bottom" constant="6" id="2Iq-d5-YqF"/>
                 <constraint firstItem="inI-eh-XhT" firstAttribute="top" secondItem="0hn-8h-Vxd" secondAttribute="bottom" id="3Ii-dE-qiQ"/>
+                <constraint firstItem="z81-gV-JxF" firstAttribute="leading" secondItem="J5P-sg-7AY" secondAttribute="leading" id="BbV-7E-xO8"/>
                 <constraint firstItem="z81-gV-JxF" firstAttribute="top" secondItem="J5P-sg-7AY" secondAttribute="top" id="OnH-32-YiH"/>
                 <constraint firstItem="0hn-8h-Vxd" firstAttribute="leading" secondItem="J5P-sg-7AY" secondAttribute="leading" id="aOz-8S-eYU"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="inI-eh-XhT" secondAttribute="bottom" id="b8l-id-h8W"/>
-                <constraint firstItem="z81-gV-JxF" firstAttribute="centerX" secondItem="J5P-sg-7AY" secondAttribute="centerX" id="bUb-dP-ZaK"/>
                 <constraint firstAttribute="trailing" secondItem="inI-eh-XhT" secondAttribute="trailing" id="fQM-mt-lcz"/>
                 <constraint firstItem="inI-eh-XhT" firstAttribute="leading" secondItem="J5P-sg-7AY" secondAttribute="leading" id="wKz-w9-sRw"/>
                 <constraint firstAttribute="trailing" secondItem="0hn-8h-Vxd" secondAttribute="trailing" id="yNR-gf-wyK"/>

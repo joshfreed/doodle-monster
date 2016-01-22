@@ -6,15 +6,21 @@
 //  Copyright © 2016 BleepSmazz. All rights reserved.
 //
 
+import Parse
+
 protocol MainMenuViewModelProtocol {
     var yourTurnGames: [GameViewModel] { get }
     var waitingGames: [GameViewModel] { get }
 
     var gamesUpdated: (() -> ())? { get set }
+    var signedOut: (() -> ())? { get set }
+    var routeToNewMonster: (() -> ())? { get set }
 
     init(gameService: GameService, currentPlayer: Player)
     func loadItems()
     func getDrawingViewModel(index: Int) -> DrawingViewModel
+    func signOut()
+    func newMonster()
 }
 
 struct GameViewModel {
@@ -36,6 +42,8 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     var waitingGames: [GameViewModel] = []
 
     var gamesUpdated: (() -> ())?
+    var signedOut: (() -> ())?
+    var routeToNewMonster: (() -> ())?
 
     private var gameModels: [Game] = []
 
@@ -60,5 +68,14 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     
     func getDrawingViewModel(index: Int) -> DrawingViewModel {
         return DrawingViewModel(game: gameModels[index])
+    }
+
+    func signOut() {
+        PFUser.logOut()
+        self.signedOut?()
+    }
+
+    func newMonster() {
+        self.routeToNewMonster?()
     }
 }

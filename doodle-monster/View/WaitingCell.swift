@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WaitingCell: UICollectionViewCell, CellProtocol {
+class WaitingCell: UICollectionViewCell, CollectionViewCell {
     @IBOutlet weak var monsterThumbnail: UIImageView!
     @IBOutlet weak var monsterName: UILabel!
     @IBOutlet weak var currentPlayerInfo: UILabel!

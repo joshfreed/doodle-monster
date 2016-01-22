@@ -7,33 +7,53 @@
 //
 
 import UIKit
-import Parse
 
 class MainMenuViewController: UIViewController, UICollectionViewDelegate {
-    @IBOutlet weak var yourTurnCollection: UICollectionView!
-    @IBOutlet weak var waitingCollection: UICollectionView!
+    @IBOutlet weak var monsterCollection: UICollectionView!
 
-    var yourTurnDataSource: ArrayDataSource<YourTurnCell, GameViewModel>!
-    var waitingDataSource: ArrayDataSource<WaitingCell, GameViewModel>!
+    var monsterDataSource: SectionedArrayDataSource<GameViewModel>!
     var selectedIndex: Int?
+    
+    let kHorizontalInsets: CGFloat = 10.0
+    let kVerticalInsets: CGFloat = 0.0
+    
+    var offscreenCells = Dictionary<String, UICollectionViewCell>()
+
+    var headerViewFactory: SupplementaryViewFactory<MonsterSectionHeader>!
+    var footerViewFactory: MonsterFooterViewFactory!
+    var yourTurn: Section<GameViewModel, YourTurnCell, MonsterSectionHeader, MonsterSectionFooter>!
+    var waiting: Section<GameViewModel, WaitingCell, MonsterSectionHeader, MonsterSectionFooter>!
     
     var viewModel: MainMenuViewModelProtocol! {
         didSet {
             viewModel.gamesUpdated = self.gamesUpdated
+            viewModel.signedOut = self.signedOut
+            viewModel.routeToNewMonster = self.routeToNewMonster
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        yourTurnDataSource = ArrayDataSource(items: [], cellIdentifier: "YourTurnGameCell")
-        yourTurnCollection.registerNib(UINib(nibName: "YourTurnCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "YourTurnGameCell")
-        yourTurnCollection.dataSource = yourTurnDataSource
-        yourTurnCollection.delegate = self
+        headerViewFactory = SupplementaryViewFactory<MonsterSectionHeader>()
+        footerViewFactory = MonsterFooterViewFactory(viewModel: viewModel)
+
+        yourTurn = Section<GameViewModel, YourTurnCell, MonsterSectionHeader, MonsterSectionFooter>(items: [])
+        yourTurn.headerViewFactory = headerViewFactory
+        yourTurn.footerViewFactory = footerViewFactory
+        waiting = Section<GameViewModel, WaitingCell, MonsterSectionHeader, MonsterSectionFooter>(items: [])
+        waiting.headerViewFactory = headerViewFactory
+        waiting.footerViewFactory = footerViewFactory
         
-        waitingDataSource = ArrayDataSource(items: [], cellIdentifier: "WaitingGameCell")
-        waitingCollection.registerNib(UINib(nibName: "WaitingCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "WaitingGameCell")
-        waitingCollection.dataSource = waitingDataSource
+        monsterDataSource = SectionedArrayDataSource(sections: [yourTurn, waiting])
+
+        monsterCollection.register(YourTurnCell.self)
+        monsterCollection.register(WaitingCell.self)
+        monsterCollection.dataSource = monsterDataSource
+        monsterCollection.delegate = self
+        
+        let theNib = UINib(nibName: MainMenuBottom.nibName, bundle: NSBundle(forClass: MainMenuBottom.self))
+        monsterCollection.registerNib(theNib, forSupplementaryViewOfKind: "MainMenuBottom", withReuseIdentifier: MainMenuBottom.defaultReuseIdentifier)
         
         viewModel.loadItems()
 
@@ -75,31 +95,107 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
     }
 
     @IBAction func signOut(sender: UIButton) {
-        PFUser.logOut()
-        performSegueWithIdentifier("ShowLoginScreen", sender: self)
+        viewModel.signOut()
     }
 
     func gamesUpdated() {
+        yourTurn.replaceItems(viewModel.yourTurnGames)
+        waiting.replaceItems(viewModel.waitingGames)
+
         var indexPaths: [NSIndexPath] = []
-        yourTurnDataSource.replaceItems(viewModel.yourTurnGames)
         for (index, _) in viewModel.yourTurnGames.enumerate() {
             indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
         }
-        yourTurnCollection.insertItemsAtIndexPaths(indexPaths)
-        yourTurnCollection.reloadData()
-        
-        indexPaths = []
-        waitingDataSource.replaceItems(viewModel.waitingGames)
-        for (index, _) in viewModel.waitingGames.enumerate() {
-            indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
+        for (index2, _) in viewModel.waitingGames.enumerate() {
+            indexPaths.append(NSIndexPath(forRow: index2, inSection: 1))
         }
-        waitingCollection.insertItemsAtIndexPaths(indexPaths)
-        waitingCollection.reloadData()
+
+        monsterCollection.insertItemsAtIndexPaths(indexPaths)
+        monsterCollection.reloadData()
+    }
+
+    func signedOut() {
+        performSegueWithIdentifier("ShowLoginScreen", sender: self)
+    }
+
+    func routeToNewMonster() {
+        performSegueWithIdentifier("NewMonster", sender: self)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         selectedIndex = indexPath.row
         performSegueWithIdentifier("goToGame", sender: self)
+    }
+
+    // MARK: - UICollectionViewFlowLayout Delegate
+
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        // Set up desired width
+        let targetWidth: CGFloat = (collectionView.bounds.width - 3 * kHorizontalInsets) / 2
+
+        if indexPath.section == 0 {
+            var cell: YourTurnCell? = self.offscreenCells[YourTurnCell.defaultReuseIdentifier] as? YourTurnCell
+            if cell == nil {
+                cell = NSBundle.mainBundle().loadNibNamed(YourTurnCell.nibName, owner: self, options: nil)[0] as? YourTurnCell
+                self.offscreenCells[YourTurnCell.defaultReuseIdentifier] = cell
+            }
+            
+            cell!.configure(yourTurn.items[indexPath.row])
+            
+            return calculateCellSize(cell!, targetWidth: targetWidth)
+        } else {
+            var cell: WaitingCell? = self.offscreenCells[WaitingCell.defaultReuseIdentifier] as? WaitingCell
+            if cell == nil {
+                cell = NSBundle.mainBundle().loadNibNamed(WaitingCell.nibName, owner: self, options: nil)[0] as? WaitingCell
+                self.offscreenCells[WaitingCell.defaultReuseIdentifier] = cell
+            }
+            cell!.configure(waiting.items[indexPath.row])
+            return calculateCellSize(cell!, targetWidth: targetWidth)
+        }
+    }
+    
+    private func calculateCellSize(cell: UICollectionViewCell, targetWidth: CGFloat) -> CGSize {
+        // Cell's size is determined in nib file, need to set it's width (in this case), and inside, use this cell's width to set label's preferredMaxLayoutWidth, thus, height can be determined, this size will be returned for real cell initialization
+        cell.bounds = CGRectMake(0, 0, targetWidth, cell.bounds.height)
+        cell.contentView.bounds = cell.bounds
+        
+        
+        // Layout subviews, this will let labels on this cell to set preferredMaxLayoutWidth
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
+        
+        var size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        // Still need to force the width, since width can be smalled due to break mode of labels
+        size.width = targetWidth
+        return size
+    }
+
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(kVerticalInsets, kHorizontalInsets, kVerticalInsets, kHorizontalInsets)
+    }
+
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return kHorizontalInsets
+    }
+
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return kVerticalInsets
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if monsterDataSource.sections[section].count == 0 {
+            return CGSizeZero
+        } else {
+            return (collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if section == 1 {
+            return CGSize(width: collectionView.frame.size.width, height: 155)
+        } else {
+            return CGSizeZero
+        }
     }
 }
 

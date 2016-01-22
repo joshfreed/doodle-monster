@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YourTurnCell: UICollectionViewCell, CellProtocol {
+class YourTurnCell: UICollectionViewCell, CollectionViewCell {
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet weak var monsterName: UILabel!
     @IBOutlet weak var playerInfo: UILabel!
