@@ -10,11 +10,21 @@ import Parse
 
 class Game: PFObject, PFSubclassing {
     @NSManaged var gameOver: Bool
-    @NSManaged var players: [Player]
-    @NSManaged var currentPlayer: Player
+    @NSManaged var players: NSArray
     @NSManaged var imageFile: PFFile?
     @NSManaged var thumbnail: PFFile?
+    @NSManaged var name: String
+    @NSManaged var lastTurn: NSDate
+    @NSManaged var currentPlayerNumber: Int
 
+    var currentPlayerName: String {
+        return currentPlayer.displayName
+    }
+    
+    var currentPlayer: Player {
+        return players[currentPlayerNumber] as! Player
+    }
+    
     override class func initialize() {
         struct Static {
             static var onceToken : dispatch_once_t = 0;
@@ -34,5 +44,9 @@ class Game: PFObject, PFSubclassing {
 
     func isWaitingForAnotherPlayer(player: Player) -> Bool {
         return currentPlayer.objectId != player.objectId
+    }
+    
+    func friendlyLastTurnText() -> String {
+        return DateService().getPrettyDiff(lastTurn, date2: NSDate()) + " ago"
     }
 }

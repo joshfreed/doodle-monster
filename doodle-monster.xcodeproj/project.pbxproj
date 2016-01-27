@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		531602AB1C529C600023C19E /* MonsterSectionFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531602AA1C529C600023C19E /* MonsterSectionFooter.swift */; };
+		531602AD1C52DA7D0023C19E /* SaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531602AC1C52DA7D0023C19E /* SaveViewController.swift */; };
 		532800931BA0ECF6005AD59C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800921BA0ECF6005AD59C /* AppDelegate.swift */; };
 		532800951BA0ECF6005AD59C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800941BA0ECF6005AD59C /* LoginViewController.swift */; };
 		532800981BA0ECF6005AD59C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 532800961BA0ECF6005AD59C /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 		5328009D1BA0ECF6005AD59C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5328009B1BA0ECF6005AD59C /* LaunchScreen.storyboard */; };
 		532800A81BA0ECF6005AD59C /* doodle_monsterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800A71BA0ECF6005AD59C /* doodle_monsterTests.swift */; };
 		532800B31BA0ECF6005AD59C /* doodle_monsterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800B21BA0ECF6005AD59C /* doodle_monsterUITests.swift */; };
+		534965CB1C585CA5009552CC /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534965CA1C585CA5009552CC /* DateService.swift */; };
 		535ECC0F1C31E42400E17D0F /* NewMonsterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535ECC0E1C31E42400E17D0F /* NewMonsterViewModel.swift */; };
 		536D6C4B1C44424300BF5EBC /* DrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C4A1C44424300BF5EBC /* DrawingViewController.swift */; };
 		536D6C4D1C4442DE00BF5EBC /* DrawingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C4C1C4442DE00BF5EBC /* DrawingViewModel.swift */; };
@@ -78,6 +80,7 @@
 
 /* Begin PBXFileReference section */
 		531602AA1C529C600023C19E /* MonsterSectionFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonsterSectionFooter.swift; path = View/MainMenu/MonsterSectionFooter.swift; sourceTree = "<group>"; };
+		531602AC1C52DA7D0023C19E /* SaveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaveViewController.swift; path = Controller/SaveViewController.swift; sourceTree = "<group>"; };
 		5328008F1BA0ECF6005AD59C /* doodle-monster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "doodle-monster.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		532800921BA0ECF6005AD59C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		532800941BA0ECF6005AD59C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controller/LoginViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +94,7 @@
 		532800AE1BA0ECF6005AD59C /* doodle-monsterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "doodle-monsterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		532800B21BA0ECF6005AD59C /* doodle_monsterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = doodle_monsterUITests.swift; sourceTree = "<group>"; };
 		532800B41BA0ECF6005AD59C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		534965CA1C585CA5009552CC /* DateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateService.swift; path = Service/DateService.swift; sourceTree = "<group>"; };
 		535ECC0E1C31E42400E17D0F /* NewMonsterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewMonsterViewModel.swift; path = ViewModel/NewMonsterViewModel.swift; sourceTree = "<group>"; };
 		536D6C4A1C44424300BF5EBC /* DrawingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawingViewController.swift; path = Controller/DrawingViewController.swift; sourceTree = "<group>"; };
 		536D6C4C1C4442DE00BF5EBC /* DrawingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawingViewModel.swift; path = ViewModel/DrawingViewModel.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 		532800911BA0ECF6005AD59C /* doodle-monster */ = {
 			isa = PBXGroup;
 			children = (
+				534965C91C585C8D009552CC /* Service */,
 				53C8D3EC1C2A00350052A9ED /* Model */,
 				53CED4D01C1F8EDE00B5BEEF /* Presenter */,
 				53669E6A1BC4A91E00C2E9EE /* ViewModel */,
@@ -229,6 +234,14 @@
 			path = "doodle-monsterUITests";
 			sourceTree = "<group>";
 		};
+		534965C91C585C8D009552CC /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				534965CA1C585CA5009552CC /* DateService.swift */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
 		53669E691BC4A91100C2E9EE /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +271,7 @@
 			children = (
 				536D6C4A1C44424300BF5EBC /* DrawingViewController.swift */,
 				536D6C551C4809A300BF5EBC /* DrawingScrollView.swift */,
+				531602AC1C52DA7D0023C19E /* SaveViewController.swift */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -483,6 +497,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53C8D3F11C2B0CA30052A9ED /* MainMenuViewController.swift in Sources */,
+				531602AD1C52DA7D0023C19E /* SaveViewController.swift in Sources */,
 				53C8D3EE1C2A00730052A9ED /* PlayerService.swift in Sources */,
 				53E5BBBE1C3EF5EB0035504F /* MainMenuViewModel.swift in Sources */,
 				535ECC0F1C31E42400E17D0F /* NewMonsterViewModel.swift in Sources */,
@@ -496,6 +511,7 @@
 				53E5BBC31C3F1BFA0035504F /* ArrayDataSource.swift in Sources */,
 				53B60DEF1C43047900AF0E09 /* WaitingCell.swift in Sources */,
 				531602AB1C529C600023C19E /* MonsterSectionFooter.swift in Sources */,
+				534965CB1C585CA5009552CC /* DateService.swift in Sources */,
 				53C8D3FC1C2C72890052A9ED /* Player.swift in Sources */,
 				536D6C511C46DA7200BF5EBC /* StrokeHistory.swift in Sources */,
 				536D6C4F1C44482A00BF5EBC /* YourTurnCell.swift in Sources */,

@@ -29,6 +29,7 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
             viewModel.gamesUpdated = self.gamesUpdated
             viewModel.signedOut = self.signedOut
             viewModel.routeToNewMonster = self.routeToNewMonster
+            viewModel.turnSaved = self.turnSaved
         }
     }
 
@@ -113,6 +114,12 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
         monsterCollection.insertItemsAtIndexPaths(indexPaths)
         monsterCollection.reloadData()
     }
+    
+    func turnSaved(index: Int) {
+        yourTurn.replaceItems(viewModel.yourTurnGames)
+        waiting.replaceItems(viewModel.waitingGames)
+        monsterCollection.reloadData()
+    }
 
     func signedOut() {
         performSegueWithIdentifier("ShowLoginScreen", sender: self)
@@ -123,7 +130,12 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 1 {
+            return
+        }
+        
         selectedIndex = indexPath.row
+        
         performSegueWithIdentifier("goToGame", sender: self)
     }
 

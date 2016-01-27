@@ -73,6 +73,9 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
         updateZoom()
     }
 
+    @IBAction func unwindToDrawing(segue: UIStoryboardSegue) {
+    }
+    
     func updateZoom() {
         let heightScale = scrollView.bounds.size.height / imageContainer.bounds.size.height
         let widthScale = scrollView.bounds.size.width / imageContainer.bounds.size.width
@@ -88,7 +91,10 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-
+        if segue.identifier == "SaveDrawing" {
+            let vc = segue.destinationViewController as! SaveViewController
+            vc.viewModel = viewModel
+        }
     }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
@@ -107,7 +113,7 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
         currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height), blendMode: CGBlendMode.Normal, alpha: opacity)
         previousTurnsImageView.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
+
         guard let newFullImage = previousTurnsImageView.image else {
             return
         }
@@ -121,8 +127,9 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
         guard let currentTurnImageData = UIImagePNGRepresentation(currentTurnImage) else {
             return
         }
-        
-        viewModel.save(currentTurnImageData, fullImageData: fullImageData)
+        viewModel.saveImages(currentTurnImageData, fullImageData: fullImageData)
+
+        performSegueWithIdentifier("SaveDrawing", sender: self)
     }
     
     @IBAction func touchedPencil(sender: UIButton) {

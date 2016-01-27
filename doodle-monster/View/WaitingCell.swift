@@ -15,7 +15,9 @@ class WaitingCell: UICollectionViewCell, CollectionViewCell {
     @IBOutlet weak var lastTurnInfo: UILabel!
     
     func configure(item: GameViewModel) {
+        monsterName.text = item.monsterName
         currentPlayerInfo.text = item.currentPlayerName
+        lastTurnInfo.text = item.lastTurnText
         
         if let thumbnailFile = item.game.thumbnail {
             thumbnailFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in

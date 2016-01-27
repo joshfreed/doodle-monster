@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var gameService: GameService!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        Player.registerSubclass()
         Game.registerSubclass()
         Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
 //        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)

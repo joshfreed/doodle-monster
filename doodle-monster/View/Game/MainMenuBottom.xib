@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
@@ -7,11 +7,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MainMenuBottom" id="jL9-xb-uRl" customClass="MainMenuBottom" customModule="doodle_monster" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="280" height="139"/>
+            <rect key="frame" x="0.0" y="0.0" width="280" height="155"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pjs-kA-75p">
-                    <rect key="frame" x="0.0" y="0.0" width="280" height="109"/>
+                    <rect key="frame" x="0.0" y="16" width="280" height="109"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="280" id="s78-4U-Uqj"/>
                     </constraints>
@@ -27,7 +27,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJ3-Uu-N5x">
-                    <rect key="frame" x="110" y="109" width="60" height="30"/>
+                    <rect key="frame" x="110" y="125" width="60" height="30"/>
                     <state key="normal" title="Sign Out"/>
                     <connections>
                         <action selector="signOut:" destination="jL9-xb-uRl" eventType="touchUpInside" id="9vB-eu-eo0"/>
@@ -37,7 +37,7 @@
             <constraints>
                 <constraint firstItem="iJ3-Uu-N5x" firstAttribute="centerX" secondItem="jL9-xb-uRl" secondAttribute="centerX" id="Ax1-yd-LrP"/>
                 <constraint firstItem="iJ3-Uu-N5x" firstAttribute="top" secondItem="pjs-kA-75p" secondAttribute="bottom" id="CE1-Wc-O55"/>
-                <constraint firstItem="pjs-kA-75p" firstAttribute="top" secondItem="jL9-xb-uRl" secondAttribute="top" id="RrN-tS-ib8"/>
+                <constraint firstItem="pjs-kA-75p" firstAttribute="top" secondItem="jL9-xb-uRl" secondAttribute="top" constant="16" id="RrN-tS-ib8"/>
                 <constraint firstItem="pjs-kA-75p" firstAttribute="centerX" secondItem="jL9-xb-uRl" secondAttribute="centerX" id="Tu0-b5-BTe"/>
             </constraints>
             <point key="canvasLocation" x="252" y="549.5"/>

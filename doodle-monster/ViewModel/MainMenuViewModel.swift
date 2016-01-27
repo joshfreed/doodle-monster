@@ -15,6 +15,7 @@ protocol MainMenuViewModelProtocol {
     var gamesUpdated: (() -> ())? { get set }
     var signedOut: (() -> ())? { get set }
     var routeToNewMonster: (() -> ())? { get set }
+    var turnSaved: ((index: Int) -> ())? { get set }
 
     init(gameService: GameService, currentPlayer: Player)
     func loadItems()
@@ -27,7 +28,19 @@ struct GameViewModel {
     let game: Game
     
     var currentPlayerName: String {
-        return "Fred"
+        return "Waiting on " + game.currentPlayerName
+    }
+
+    var monsterName: String {
+        return game.name
+    }
+    
+    var lastTurnText: String {
+        return "Last turn " + game.friendlyLastTurnText()
+    }
+    
+    var playerInfo: String {
+        return "\(game.players.count) doodlers"
     }
 
     init(game: Game) {
@@ -44,6 +57,7 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     var gamesUpdated: (() -> ())?
     var signedOut: (() -> ())?
     var routeToNewMonster: (() -> ())?
+    var turnSaved: ((index: Int) -> ())?
 
     private var gameModels: [Game] = []
 
@@ -67,7 +81,29 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     }
     
     func getDrawingViewModel(index: Int) -> DrawingViewModel {
-        return DrawingViewModel(game: gameModels[index])
+        let vm = DrawingViewModel(game: yourTurnGames[index].game)
+        vm.turnSaved = { game in
+            self.moveGameToWaiting(game)
+            self.turnSaved?(index: index)
+        }
+        return vm
+    }
+    
+    private func moveGameToWaiting(game: Game) {
+        var indexToMove: Int?
+        for (index, vm) in yourTurnGames.enumerate() {
+            if vm.game.objectId == game.objectId {
+                indexToMove = index
+                break
+            }
+        }
+        
+        guard let index = indexToMove else {
+            fatalError("Game not found")
+        }
+        
+        let element = yourTurnGames.removeAtIndex(index)
+        waitingGames.append(element)
     }
 
     func signOut() {

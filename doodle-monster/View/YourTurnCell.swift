@@ -14,7 +14,8 @@ class YourTurnCell: UICollectionViewCell, CollectionViewCell {
     @IBOutlet weak var playerInfo: UILabel!
     
     func configure(item: GameViewModel) {
-        monsterName.text = "Barry"
+        monsterName.text = item.monsterName
+        playerInfo.text = item.playerInfo
         
         if let thumbnailFile = item.game.thumbnail {
             thumbnailFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
