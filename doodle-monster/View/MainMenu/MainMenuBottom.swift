@@ -9,13 +9,13 @@
 import UIKit
 
 class MainMenuBottom: UICollectionReusableView, NibLoadableView {
-    var viewModel: MainMenuViewModelProtocol!
+    weak var viewModel: MainMenuViewModelProtocol?
 
     @IBAction func newMonster(sender: AnyObject) {
-        viewModel.newMonster()
+        viewModel?.newMonster()
     }
     
     @IBAction func signOut(sender: AnyObject) {
-        viewModel.signOut()
+        viewModel?.signOut()
     }
 }

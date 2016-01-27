@@ -9,7 +9,7 @@
 import UIKit
 
 class MonsterSectionFooter: UICollectionReusableView, SupplementaryView {
-    var viewModel: MainMenuViewModelProtocol!
+    weak var viewModel: MainMenuViewModelProtocol?
 
     func configure(section: Int) {
         guard viewModel != nil else {
@@ -19,7 +19,7 @@ class MonsterSectionFooter: UICollectionReusableView, SupplementaryView {
         if section == 1 {
             let nib = UINib(nibName: MainMenuBottom.nibName, bundle: NSBundle(forClass: MainMenuBottom.self))
             let bottom = nib.instantiateWithOwner(nil, options: nil)[0] as! MainMenuBottom
-            bottom.viewModel = viewModel
+            bottom.viewModel = viewModel!
             bottom.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(bottom)
             self.addConstraint(NSLayoutConstraint(item: self, attribute: .Top, relatedBy: .Equal, toItem: bottom, attribute: .Top, multiplier: 1, constant: 0))
@@ -31,7 +31,7 @@ class MonsterSectionFooter: UICollectionReusableView, SupplementaryView {
 }
 
 class MonsterFooterViewFactory: SupplementaryViewFactory<MonsterSectionFooter> {
-    let viewModel: MainMenuViewModelProtocol
+    weak var viewModel: MainMenuViewModelProtocol?
 
     init(viewModel: MainMenuViewModelProtocol) {
         self.viewModel = viewModel

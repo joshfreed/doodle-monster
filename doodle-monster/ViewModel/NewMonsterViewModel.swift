@@ -85,6 +85,7 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
 
     func startGame() {
         let newGame = gameService.createGame(_playerModels)
+        NSNotificationCenter.defaultCenter().postNotificationName("NewGameStarted", object: nil, userInfo: ["game": newGame])
         router.goToNewMonster(newGame)
     }
 }

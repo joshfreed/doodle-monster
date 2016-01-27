@@ -12,8 +12,6 @@ import Parse
 protocol DrawingViewModelProtocol {
     var name: String { get }
 
-    var turnSaved: ((Game) -> ())? { get set }
-    
     init(game: Game)
     func saveImages(currentImageData: NSData, fullImageData: NSData)
     func saveTurn(letter: String)
@@ -26,9 +24,6 @@ class DrawingViewModel: NSObject {
         return game.name
     }
 
-    var turnSaved: ((Game) -> ())?
-    
-    private var current: NSData?
     private var full: NSData?
     
     required init(game: Game) {
@@ -36,14 +31,10 @@ class DrawingViewModel: NSObject {
     }
 
     func saveImages(currentImageData: NSData, fullImageData: NSData) {
-        current = currentImageData
         full = fullImageData
     }
 
     func saveTurn(letter: String, completion: () -> ()) {
-//        guard let currentImageData = current else {
-//            fatalError("Did not set the images before saving")
-//        }
         guard let fullImageData = full else {
             fatalError("Did not set the images before saving")
         }
@@ -67,8 +58,8 @@ class DrawingViewModel: NSObject {
             self.game.lastTurn = updatedGame.lastTurn
             self.game.currentPlayerNumber = updatedGame.currentPlayerNumber
             self.game.gameOver = updatedGame.gameOver
-            
-            self.turnSaved?(self.game)
+
+            NSNotificationCenter.defaultCenter().postNotificationName("TurnComplete", object: nil, userInfo: ["game": self.game])
             completion()
         }
     }

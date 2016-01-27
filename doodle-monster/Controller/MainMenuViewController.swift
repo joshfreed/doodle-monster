@@ -26,10 +26,9 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
     
     var viewModel: MainMenuViewModelProtocol! {
         didSet {
-            viewModel.gamesUpdated = self.gamesUpdated
-            viewModel.signedOut = self.signedOut
-            viewModel.routeToNewMonster = self.routeToNewMonster
-            viewModel.turnSaved = self.turnSaved
+            viewModel.gamesUpdated = { [weak self] in self?.gamesUpdated() }
+            viewModel.signedOut = { [weak self] in self?.signedOut() }
+            viewModel.routeToNewMonster = { [weak self] in self?.routeToNewMonster() }
         }
     }
 
@@ -100,22 +99,6 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
     }
 
     func gamesUpdated() {
-        yourTurn.replaceItems(viewModel.yourTurnGames)
-        waiting.replaceItems(viewModel.waitingGames)
-
-        var indexPaths: [NSIndexPath] = []
-        for (index, _) in viewModel.yourTurnGames.enumerate() {
-            indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
-        }
-        for (index2, _) in viewModel.waitingGames.enumerate() {
-            indexPaths.append(NSIndexPath(forRow: index2, inSection: 1))
-        }
-
-        monsterCollection.insertItemsAtIndexPaths(indexPaths)
-        monsterCollection.reloadData()
-    }
-    
-    func turnSaved(index: Int) {
         yourTurn.replaceItems(viewModel.yourTurnGames)
         waiting.replaceItems(viewModel.waitingGames)
         monsterCollection.reloadData()

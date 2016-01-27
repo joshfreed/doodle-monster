@@ -98,7 +98,9 @@ class Section<Item,
             header.configure(indexPath.section)
             return header as! UICollectionReusableView
         } else {
-            let footer = footerViewFactory!.buildView(collectionView, kind: kind, atIndexPath: indexPath) as! FooterType
+            guard let factory = footerViewFactory, footer = factory.buildView(collectionView, kind: kind, atIndexPath: indexPath) as? FooterType else {
+                fatalError("Expected a footer view")
+            }
             footer.configure(indexPath.section)
             return footer as! UICollectionReusableView
         }

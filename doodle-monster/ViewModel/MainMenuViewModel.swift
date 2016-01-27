@@ -8,14 +8,13 @@
 
 import Parse
 
-protocol MainMenuViewModelProtocol {
+protocol MainMenuViewModelProtocol: class {
     var yourTurnGames: [GameViewModel] { get }
     var waitingGames: [GameViewModel] { get }
 
     var gamesUpdated: (() -> ())? { get set }
     var signedOut: (() -> ())? { get set }
     var routeToNewMonster: (() -> ())? { get set }
-    var turnSaved: ((index: Int) -> ())? { get set }
 
     init(gameService: GameService, currentPlayer: Player)
     func loadItems()
@@ -57,13 +56,26 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     var gamesUpdated: (() -> ())?
     var signedOut: (() -> ())?
     var routeToNewMonster: (() -> ())?
-    var turnSaved: ((index: Int) -> ())?
 
     private var gameModels: [Game] = []
+    private var newGameObserver: NSObjectProtocol?
+    private var turnCompleteObserver: NSObjectProtocol?
 
     required init(gameService: GameService, currentPlayer: Player) {
         self.gameService = gameService
         self.currentPlayer = currentPlayer
+        newGameObserver = NSNotificationCenter.defaultCenter().addObserverForName("NewGameStarted", object: nil, queue: nil) { [weak self] n in self?.newGameStarted(n) }
+        turnCompleteObserver = NSNotificationCenter.defaultCenter().addObserverForName("TurnComplete", object: nil, queue: nil)  { [weak self] n in self?.turnComplete(n) }
+    }
+
+    deinit {
+        print("main menu view model deinit")
+        if newGameObserver != nil {
+            NSNotificationCenter.defaultCenter().removeObserver(newGameObserver!)
+        }
+        if turnCompleteObserver != nil {
+            NSNotificationCenter.defaultCenter().removeObserver(turnCompleteObserver!)
+        }
     }
 
     func loadItems() {
@@ -81,14 +93,9 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     }
     
     func getDrawingViewModel(index: Int) -> DrawingViewModel {
-        let vm = DrawingViewModel(game: yourTurnGames[index].game)
-        vm.turnSaved = { game in
-            self.moveGameToWaiting(game)
-            self.turnSaved?(index: index)
-        }
-        return vm
+        return DrawingViewModel(game: yourTurnGames[index].game)
     }
-    
+
     private func moveGameToWaiting(game: Game) {
         var indexToMove: Int?
         for (index, vm) in yourTurnGames.enumerate() {
@@ -113,5 +120,23 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
 
     func newMonster() {
         self.routeToNewMonster?()
+    }
+
+    func newGameStarted(notification: NSNotification) {
+        guard let userInfo = notification.userInfo, game = userInfo["game"] as? Game else {
+            fatalError("Missing game in message");
+        }
+
+        self.yourTurnGames.append(GameViewModel(game: game))
+        self.gamesUpdated?()
+    }
+
+    func turnComplete(notification: NSNotification) {
+        guard let userInfo = notification.userInfo, game = userInfo["game"] as? Game else {
+            fatalError("Missing game in message");
+        }
+
+        self.moveGameToWaiting(game)
+        self.gamesUpdated?()
     }
 }
