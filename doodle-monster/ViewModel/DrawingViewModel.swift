@@ -59,7 +59,12 @@ class DrawingViewModel: NSObject {
             self.game.currentPlayerNumber = updatedGame.currentPlayerNumber
             self.game.gameOver = updatedGame.gameOver
 
-            NSNotificationCenter.defaultCenter().postNotificationName("TurnComplete", object: nil, userInfo: ["game": self.game])
+            if self.game.gameOver {
+                NSNotificationCenter.defaultCenter().postNotificationName("GameOver", object: nil, userInfo: ["game": self.game])
+            } else {
+                NSNotificationCenter.defaultCenter().postNotificationName("TurnComplete", object: nil, userInfo: ["game": self.game])
+            }
+            
             completion()
         }
     }

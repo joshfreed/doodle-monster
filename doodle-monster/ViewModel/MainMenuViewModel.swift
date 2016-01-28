@@ -60,12 +60,14 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     private var gameModels: [Game] = []
     private var newGameObserver: NSObjectProtocol?
     private var turnCompleteObserver: NSObjectProtocol?
+    private var gameOverObserver: NSObjectProtocol?
 
     required init(gameService: GameService, currentPlayer: Player) {
         self.gameService = gameService
         self.currentPlayer = currentPlayer
         newGameObserver = NSNotificationCenter.defaultCenter().addObserverForName("NewGameStarted", object: nil, queue: nil) { [weak self] n in self?.newGameStarted(n) }
         turnCompleteObserver = NSNotificationCenter.defaultCenter().addObserverForName("TurnComplete", object: nil, queue: nil)  { [weak self] n in self?.turnComplete(n) }
+        gameOverObserver = NSNotificationCenter.defaultCenter().addObserverForName("GameOver", object: nil, queue: nil)  { [weak self] n in self?.gameOver(n) }
     }
 
     deinit {
@@ -75,6 +77,9 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
         }
         if turnCompleteObserver != nil {
             NSNotificationCenter.defaultCenter().removeObserver(turnCompleteObserver!)
+        }
+        if gameOverObserver != nil {
+            NSNotificationCenter.defaultCenter().removeObserver(gameOverObserver!)
         }
     }
 
@@ -97,6 +102,11 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     }
 
     private func moveGameToWaiting(game: Game) {
+        let element = removeGameFromYourTurn(game)
+        waitingGames.append(element)
+    }
+
+    private func removeGameFromYourTurn(game: Game) -> GameViewModel {
         var indexToMove: Int?
         for (index, vm) in yourTurnGames.enumerate() {
             if vm.game.objectId == game.objectId {
@@ -104,13 +114,12 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
                 break
             }
         }
-        
+
         guard let index = indexToMove else {
             fatalError("Game not found")
         }
-        
-        let element = yourTurnGames.removeAtIndex(index)
-        waitingGames.append(element)
+
+        return yourTurnGames.removeAtIndex(index)
     }
 
     func signOut() {
@@ -137,6 +146,17 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
         }
 
         self.moveGameToWaiting(game)
+        self.gamesUpdated?()
+    }
+
+    func gameOver(notification: NSNotification) {
+        guard let userInfo = notification.userInfo, game = userInfo["game"] as? Game else {
+            fatalError("Missing game in message");
+        }
+
+        print("GAME OVER BITCHES")
+
+        self.removeGameFromYourTurn(game)
         self.gamesUpdated?()
     }
 }
