@@ -30,11 +30,7 @@ class ParseSessionService: SessionService {
         if player == nil {
             print("Initializing and fetching data for current player")
             player = Player.objectWithoutDataWithObjectId(currentUser.objectId)
-            do {
-                try player?.fetchIfNeededInBackground()
-            } catch {
-                print("Something went wrong fetching the current player: \(error)")
-            }
+            player?.fetchIfNeededInBackground()
         }
 
         return player
