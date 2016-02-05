@@ -79,7 +79,7 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "NewMonster" {
             if let vc = segue.destinationViewController as? NewMonsterViewController {
-                let currentPlayer = appDelegate.playerService.getCurrentPlayer()!
+                let currentPlayer = appDelegate.session.currentPlayer()!
                 vc.viewModel = NewMonsterViewModel(
                     currentPlayer: currentPlayer,
                     gameService: appDelegate.gameService,

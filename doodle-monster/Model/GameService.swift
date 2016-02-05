@@ -11,6 +11,7 @@ import Parse
 protocol GameService {
     func createGame(players: [Player]) -> Game
     func getActiveGames(callback: ([Game]) -> ())
+    func saveTurn(gameId: String, image: NSData, letter: String, completion: (AnyObject?, NSError?) -> ())
 }
 
 class ParseGameService: GameService {
@@ -33,6 +34,21 @@ class ParseGameService: GameService {
             if let objects = objects as? [Game] {
                 callback(objects)
             }
+        }
+    }
+
+    func saveTurn(gameId: String, image: NSData, letter: String, completion: (AnyObject?, NSError?) -> ()) {
+        let params = [
+            "gameId": gameId,
+            "monsterImage": image.base64EncodedStringWithOptions(.Encoding64CharacterLineLength),
+            "letter": letter
+        ]
+
+        PFCloud.callFunctionInBackground("saveTurn", withParameters: params) {
+            (response: AnyObject?, error: NSError?) -> Void in
+            print("RESPONSE \(response) ERROR \(error)")
+
+            completion(response, error)
         }
     }
 }

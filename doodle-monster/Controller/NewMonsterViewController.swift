@@ -49,13 +49,13 @@ class NewMonsterViewController: UIViewController {
             if let nc = segue.destinationViewController as? UINavigationController,
                 vc = nc.topViewController as? InviteByEmailViewController
             {
-                let vm = InviteByEmailViewModel(playerService: appDelegate.playerService)
+                let vm = InviteByEmailViewModel(playerService: appDelegate.playerService, session: appDelegate.session)
                 vm.playerWasSelected = viewModel.addPlayer
                 vc.viewModel = vm
             }
         } else if segue.identifier == "goToNewMonster" {
             if let vc = segue.destinationViewController as? DrawingViewController {
-                vc.viewModel = DrawingViewModel(game: newMonster!)
+                vc.viewModel = DrawingViewModel(game: newMonster!, gameService: appDelegate.gameService)
             }
         }
     }

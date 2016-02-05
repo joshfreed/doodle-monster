@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var playerService: PlayerService!
     var gameService: GameService!
+    var session: SessionService!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Player.registerSubclass()
@@ -26,12 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         playerService = ParseUserService()
         gameService = ParseGameService()
+        session = ParseSessionService()
 
-        if PFUser.currentUser() != nil {
+        if session.hasSession() {
             let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let vc = storyboard.instantiateViewControllerWithIdentifier("MainMenu") as! MainMenuViewController
-            let currentPlayer = playerService.getCurrentPlayer()!
-            vc.viewModel = MainMenuViewModel(gameService: gameService, currentPlayer: currentPlayer)
+            guard let currentPlayer = session.currentPlayer() else {
+                fatalError("Have a session but can't get the current player. What's going on?")
+            }
+            vc.viewModel = MainMenuViewModel(gameService: gameService, currentPlayer: currentPlayer, session: session)
             let nc = window?.rootViewController as! UINavigationController
             nc.pushViewController(vc, animated: false)
         }
@@ -60,8 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 
 extension UIViewController {

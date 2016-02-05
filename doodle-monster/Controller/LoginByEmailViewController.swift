@@ -37,8 +37,8 @@ class LoginByEmailViewController: UIViewController, LoginByEmailView {
             }
         } else if segue.identifier == "MainMenu" {
             if let vc = segue.destinationViewController as? MainMenuViewController,
-                currentPlayer = appDelegate.playerService.getCurrentPlayer() {
-                vc.viewModel = MainMenuViewModel(gameService: appDelegate.gameService, currentPlayer: currentPlayer)
+                currentPlayer = appDelegate.session.currentPlayer() {
+                vc.viewModel = MainMenuViewModel(gameService: appDelegate.gameService, currentPlayer: currentPlayer, session: appDelegate.session)
             }
         }
     }

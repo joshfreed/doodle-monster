@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 
 class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView {
     var viewModel: DrawingViewModel!

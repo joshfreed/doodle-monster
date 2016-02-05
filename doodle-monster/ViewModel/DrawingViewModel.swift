@@ -7,18 +7,18 @@
 //
 
 import UIKit
-import Parse
 
 protocol DrawingViewModelProtocol {
     var name: String { get }
 
-    init(game: Game)
+    init(game: Game, gameService: GameService)
     func saveImages(currentImageData: NSData, fullImageData: NSData)
     func saveTurn(letter: String)
 }
 
 class DrawingViewModel: NSObject {
     let game: Game
+    let gameService: GameService
 
     var name: String {
         return game.name
@@ -26,8 +26,9 @@ class DrawingViewModel: NSObject {
 
     private var full: NSData?
     
-    required init(game: Game) {
+    required init(game: Game, gameService: GameService) {
         self.game = game
+        self.gameService = gameService
     }
 
     func saveImages(currentImageData: NSData, fullImageData: NSData) {
@@ -39,15 +40,9 @@ class DrawingViewModel: NSObject {
             fatalError("Did not set the images before saving")
         }
 
-        let params = [
-            "gameId": game.objectId!,
-            "monsterImage": fullImageData.base64EncodedStringWithOptions(.Encoding64CharacterLineLength),
-            "letter": letter
-        ]
-        PFCloud.callFunctionInBackground("saveTurn", withParameters: params) {
-            (response: AnyObject?, error: NSError?) -> Void in
+        gameService.saveTurn(game.objectId!, image: fullImageData, letter: letter) { response, error in
             print("RESPONSE \(response) ERROR \(error)")
-            
+
             guard let updatedGame = response as? Game else {
                 fatalError("Unknown response")
             }
@@ -64,7 +59,7 @@ class DrawingViewModel: NSObject {
             } else {
                 NSNotificationCenter.defaultCenter().postNotificationName("TurnComplete", object: nil, userInfo: ["game": self.game])
             }
-            
+
             completion()
         }
     }

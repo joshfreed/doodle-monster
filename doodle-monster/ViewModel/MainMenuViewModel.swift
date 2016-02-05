@@ -6,8 +6,6 @@
 //  Copyright © 2016 BleepSmazz. All rights reserved.
 //
 
-import Parse
-
 protocol MainMenuViewModelProtocol: class {
     var yourTurnGames: [GameViewModel] { get }
     var waitingGames: [GameViewModel] { get }
@@ -16,7 +14,7 @@ protocol MainMenuViewModelProtocol: class {
     var signedOut: (() -> ())? { get set }
     var routeToNewMonster: (() -> ())? { get set }
 
-    init(gameService: GameService, currentPlayer: Player)
+    init(gameService: GameService, currentPlayer: Player, session: SessionService)
     func loadItems()
     func refresh()
     func getDrawingViewModel(index: Int) -> DrawingViewModel
@@ -51,6 +49,7 @@ struct GameViewModel {
 class MainMenuViewModel: MainMenuViewModelProtocol {
     let gameService: GameService
     let currentPlayer: Player
+    let session: SessionService
     var yourTurnGames: [GameViewModel] = []
     var waitingGames: [GameViewModel] = []
 
@@ -63,9 +62,10 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     private var turnCompleteObserver: NSObjectProtocol?
     private var gameOverObserver: NSObjectProtocol?
 
-    required init(gameService: GameService, currentPlayer: Player) {
+    required init(gameService: GameService, currentPlayer: Player, session: SessionService) {
         self.gameService = gameService
         self.currentPlayer = currentPlayer
+        self.session = session
         newGameObserver = NSNotificationCenter.defaultCenter().addObserverForName("NewGameStarted", object: nil, queue: nil) { [weak self] n in self?.newGameStarted(n) }
         turnCompleteObserver = NSNotificationCenter.defaultCenter().addObserverForName("TurnComplete", object: nil, queue: nil)  { [weak self] n in self?.turnComplete(n) }
         gameOverObserver = NSNotificationCenter.defaultCenter().addObserverForName("GameOver", object: nil, queue: nil)  { [weak self] n in self?.gameOver(n) }
@@ -105,7 +105,7 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     }
     
     func getDrawingViewModel(index: Int) -> DrawingViewModel {
-        return DrawingViewModel(game: yourTurnGames[index].game)
+        return DrawingViewModel(game: yourTurnGames[index].game, gameService: gameService)
     }
 
     private func moveGameToWaiting(game: Game) {
@@ -130,7 +130,7 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     }
 
     func signOut() {
-        PFUser.logOut()
+        session.logout()
         self.signedOut?()
     }
 

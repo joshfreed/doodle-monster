@@ -13,7 +13,6 @@ protocol PlayerService {
     func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ())
     func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ())
     func search(searchText: String, callback: (result: SearchResult) -> ())
-    func getCurrentPlayer() -> Player?
 }
 
 class ParseUserService: PlayerService {
@@ -82,23 +81,6 @@ class ParseUserService: PlayerService {
             }
             callback(result: .Success(players))
         }
-    }
-
-    func getCurrentPlayer() -> Player? {
-        guard let currentUser = PFUser.currentUser() else {
-            return nil
-        }
-
-        // TODO: this shit is slow and running on the main thread
-
-        let player = Player.objectWithoutDataWithObjectId(currentUser.objectId)
-        do {
-            try player.fetchIfNeeded()
-        } catch _ {
-
-        }
-
-        return player
     }
 }
 

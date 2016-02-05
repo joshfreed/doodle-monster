@@ -13,7 +13,7 @@ protocol InviteByEmailViewModelProtocol: class {
     var playersDidChange: ((InviteByEmailViewModelProtocol) -> ())? { get set }
     var playerWasSelected: ((Player) -> ())? { get set }
     
-    init(playerService: PlayerService)
+    init(playerService: PlayerService, session: SessionService)
     func search(text: String)
     func playerAt(index: Int) -> PlayerViewModelProtocol
     func selectPlayer(index: NSIndexPath)
@@ -28,12 +28,14 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     
     var playersDidChange: ((InviteByEmailViewModelProtocol) -> ())?
     var playerWasSelected: ((Player) -> ())?
-    
+
+    private let session: SessionService
     private let playerService: PlayerService
     private var playerModels: [Player] = []
 
-    required init(playerService: PlayerService) {
+    required init(playerService: PlayerService, session: SessionService) {
         self.playerService = playerService
+        self.session = session
     }
     
     func search(text: String) {
@@ -46,7 +48,7 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     }
 
     private func processSearchResults(players: [Player]) {
-        let currentPlayer = playerService.getCurrentPlayer()!
+        let currentPlayer = session.currentPlayer()!
         var viewModels: [PlayerViewModelProtocol] = []
         for player in players {
             if player == currentPlayer {
