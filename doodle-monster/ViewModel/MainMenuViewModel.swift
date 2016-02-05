@@ -18,6 +18,7 @@ protocol MainMenuViewModelProtocol: class {
 
     init(gameService: GameService, currentPlayer: Player)
     func loadItems()
+    func refresh()
     func getDrawingViewModel(index: Int) -> DrawingViewModel
     func signOut()
     func newMonster()
@@ -95,6 +96,12 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
             }
             self.gamesUpdated?()
         }
+    }
+    
+    func refresh() {
+        self.yourTurnGames = []
+        self.waitingGames = []
+        loadItems()
     }
     
     func getDrawingViewModel(index: Int) -> DrawingViewModel {

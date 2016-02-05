@@ -13,16 +13,15 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
 
     var monsterDataSource: SectionedArrayDataSource<GameViewModel>!
     var selectedIndex: Int?
-    
     let kHorizontalInsets: CGFloat = 10.0
     let kVerticalInsets: CGFloat = 0.0
-    
     var offscreenCells = Dictionary<String, UICollectionViewCell>()
-
     var headerViewFactory: SupplementaryViewFactory<MonsterSectionHeader>!
     var footerViewFactory: MonsterFooterViewFactory!
     var yourTurn: Section<GameViewModel, YourTurnCell, MonsterSectionHeader, MonsterSectionFooter>!
     var waiting: Section<GameViewModel, WaitingCell, MonsterSectionHeader, MonsterSectionFooter>!
+    var refreshControl: UIRefreshControl!
+    var spinner: UIActivityIndicatorView!
     
     var viewModel: MainMenuViewModelProtocol! {
         didSet {
@@ -51,10 +50,19 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
         monsterCollection.register(WaitingCell.self)
         monsterCollection.dataSource = monsterDataSource
         monsterCollection.delegate = self
+        monsterCollection.alwaysBounceVertical = true // required to make pull down refresh work when list is smaller than screen
         
         let theNib = UINib(nibName: MainMenuBottom.nibName, bundle: NSBundle(forClass: MainMenuBottom.self))
         monsterCollection.registerNib(theNib, forSupplementaryViewOfKind: "MainMenuBottom", withReuseIdentifier: MainMenuBottom.defaultReuseIdentifier)
         
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "onRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        monsterCollection.addSubview(refreshControl)
+        
+        spinner = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        
+        monsterCollection.backgroundView = spinner
+        spinner.startAnimating();
         viewModel.loadItems()
 
         navigationItem.hidesBackButton = true
@@ -99,6 +107,10 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
     }
 
     func gamesUpdated() {
+        refreshControl.endRefreshing()
+        spinner.stopAnimating();
+        monsterCollection.backgroundView = nil
+        
         yourTurn.replaceItems(viewModel.yourTurnGames)
         waiting.replaceItems(viewModel.waitingGames)
         monsterCollection.reloadData()
@@ -120,6 +132,10 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate {
         selectedIndex = indexPath.row
         
         performSegueWithIdentifier("goToGame", sender: self)
+    }
+    
+    func onRefresh(sender: UIRefreshControl!) {
+        viewModel.refresh()
     }
 
     // MARK: - UICollectionViewFlowLayout Delegate
