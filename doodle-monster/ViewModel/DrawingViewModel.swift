@@ -45,7 +45,7 @@ class DrawingViewModel: NSObject {
             case .Success(let updatedGame):
                 let wrappedGame = Wrapper<Game>(theValue: updatedGame)
 
-                if self.game.gameOver {
+                if updatedGame.gameOver {
                     NSNotificationCenter.defaultCenter().postNotificationName("GameOver", object: nil, userInfo: ["game": wrappedGame])
                 } else {
                     NSNotificationCenter.defaultCenter().postNotificationName("TurnComplete", object: nil, userInfo: ["game": wrappedGame])

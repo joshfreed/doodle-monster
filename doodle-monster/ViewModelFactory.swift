@@ -16,15 +16,27 @@ class ViewModelFactory {
         return LoginByEmailPresenter(view: view, playerService: appDelegate!.playerService)
     }
 
-    func newMonsterViewModel(currentPlayer: Player, gameService: GameService, router: NewMonsterRouter) -> NewMonsterViewModel {
-        return NewMonsterViewModel(currentPlayer: currentPlayer, gameService: gameService, router: router)
+    func newMonsterViewModel(vc: NewMonsterViewController) -> NewMonsterViewModel {
+        return NewMonsterViewModel(currentPlayer: appDelegate!.session.currentPlayer()!,
+            gameService: appDelegate!.gameService,
+            router: NewMonsterRouterImpl(vc: vc, vmFactory: self)
+        )
     }
 
     func mainMenuViewModel(vc: MainMenuViewController) -> MainMenuViewModel {
-        return MainMenuViewModel(gameService: appDelegate!.gameService,
+        return MainMenuViewModel(view: vc,
+            gameService: appDelegate!.gameService,
             currentPlayer: appDelegate!.session.currentPlayer()!,
             session: appDelegate!.session,
-            router: MainMenuRouterImpl(vc: vc)
+            router: MainMenuRouterImpl(vc: vc, vmFactory: self)
         )
+    }
+
+    func drawingViewModel(game: Game) -> DrawingViewModel {
+        return DrawingViewModel(game: game, gameService: appDelegate!.gameService)
+    }
+
+    func inviteByEmailViewModel() -> InviteByEmailViewModel {
+        return InviteByEmailViewModel(playerService: appDelegate!.playerService, session: appDelegate!.session)
     }
 }

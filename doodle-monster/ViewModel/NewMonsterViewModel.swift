@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol NewMonsterRouter {
-    func goToNewMonster(game: Game)
-}
-
 protocol NewMonsterViewModelProtocol {
     // Properties
     var players: [PlayerViewModelProtocol] { get }
@@ -29,7 +25,6 @@ protocol NewMonsterViewModelProtocol {
 }
 
 class NewMonsterViewModel: NewMonsterViewModelProtocol {
-    // Properties
     var players: [PlayerViewModelProtocol] = []
     var currentPlayer: PlayerViewModelProtocol
     var buttonHidden = true
@@ -37,6 +32,8 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
     private var _playerModels: [Player] = []
     private let gameService: GameService
     private let router: NewMonsterRouter
+
+    private var playerAddedObserver: NSObjectProtocol?
 
     // Changes
     var playerWasAdded: ((PlayerViewModelProtocol) -> ())?
@@ -49,6 +46,23 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
         self.gameService = gameService
         self.router = router
         _playerModels.append(self._currentPlayerModel)
+        playerAddedObserver = NSNotificationCenter.defaultCenter().addObserverForName("NewMonster:PlayerAdded", object: nil, queue: nil) { [weak self] n in self?.playerAdded(n) }
+    }
+
+    deinit {
+        print("NewMonsterViewModel::deinit")
+        if playerAddedObserver != nil {
+            NSNotificationCenter.defaultCenter().removeObserver(playerAddedObserver!)
+        }
+    }
+
+    func playerAdded(notification: NSNotification) {
+        guard let userInfo = notification.userInfo, wrapper = userInfo["player"] as? Wrapper<Player> else {
+            fatalError("Missing game in message");
+        }
+
+        let player = wrapper.wrappedValue
+        addPlayer(player)
     }
 
     func removePlayer(player: PlayerViewModelProtocol) {

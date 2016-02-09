@@ -11,6 +11,7 @@ import XCTest
 
 class MainMenuViewModelTests: XCTestCase {
     var vm: MainMenuViewModel!
+    var view: MainMenuViewStub!
     var gameService: GameServiceMock!
     var player: Player!
     var session: SessionMock!
@@ -18,11 +19,12 @@ class MainMenuViewModelTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        view = MainMenuViewStub()
         gameService = GameServiceMock()
         player = aPlayer("BBB")
         session = SessionMock()
         router = MainMenuRouterStub()
-        vm = MainMenuViewModel(gameService: gameService, currentPlayer: player, session: session, router: router)
+        vm = MainMenuViewModel(view: view, gameService: gameService, currentPlayer: player, session: session, router: router)
     }
     
     override func tearDown() {
@@ -43,12 +45,10 @@ class MainMenuViewModelTests: XCTestCase {
         activeModels[2].players = [aPlayer("CCC")]
         activeModels[2].currentPlayerNumber = 0
         gameService.setActiveGames(activeModels)
-        var sentGamesUpdatedMessage = false
-        vm.gamesUpdated = { sentGamesUpdatedMessage = true }
 
         vm.loadItems()
 
-        XCTAssertTrue(sentGamesUpdatedMessage, "The gamesUpdated message was not called")
+        XCTAssertTrue(view.recorder.received("updateGameList", withArguments: [:], atIndex: 0), "updateGameList was not called on the view")
         XCTAssertEqual(1, vm.yourTurnGames.count, "Unexpected number of yourTurn games")
         XCTAssertEqual(GameViewModel(game: activeModels[1]), vm.yourTurnGames[0])
         XCTAssertEqual(2, vm.waitingGames.count)
@@ -72,6 +72,32 @@ class MainMenuViewModelTests: XCTestCase {
     }
 }
 
+class StubRecorder {
+    var calls: [FunctionCall] = []
+
+    func recordCall(name: String, arguments: [String: Any]) {
+        calls.append(FunctionCall(name: name, arguments: arguments))
+    }
+
+    func received(function: String, withArguments args: [String: Any], atIndex index: Int) -> Bool{
+        guard index < calls.count else {
+            return false
+        }
+
+        let call = calls[index]
+
+        if call.name != function {
+            return false
+        }
+
+//        if call.arguments != args {
+//            return false
+//        }
+
+        return true
+    }
+}
+
 class FunctionCall {
     let name: String
     let arguments: [String: Any]
@@ -82,15 +108,17 @@ class FunctionCall {
     }
 }
 
-class GameServiceMock: GameService {
-    var calls: [FunctionCall] = []
-    var activeGames: [Game] = []
+class MainMenuViewStub: MainMenuView {
+    let recorder = StubRecorder()
 
-    // MARK: Testing Funcs
-
-    func recordCall(name: String, arguments: [String: Any]) {
-        calls.append(FunctionCall(name: name, arguments: arguments))
+    func updateGameList() {
+        recorder.recordCall("updateGameList", arguments: [:])
     }
+}
+
+class GameServiceMock: GameService {
+    let recorder = StubRecorder()
+    var activeGames: [Game] = []
 
     func setActiveGames(games: [Game]) {
         activeGames = games
@@ -99,7 +127,7 @@ class GameServiceMock: GameService {
     // MARK: GameService
 
     func createGame(players: [Player], callback: (Result<Game>) -> ()) {
-        recordCall(__FUNCTION__, arguments: ["players": players])
+        recorder.recordCall("createGame", arguments: ["players": players])
         callback(.Success(Game()))
     }
 
@@ -128,6 +156,14 @@ class SessionMock: SessionService {
 
 class MainMenuRouterStub: MainMenuRouter {
     func showNewMonsterScreen() {
+
+    }
+
+    func showDrawingScreen(game: Game) {
+
+    }
+
+    func showLoginScreen() {
 
     }
 }

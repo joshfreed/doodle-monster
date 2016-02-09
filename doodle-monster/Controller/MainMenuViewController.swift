@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainMenuViewController: UIViewController, UICollectionViewDelegate, SegueHandlerType {
+class MainMenuViewController: UIViewController, UICollectionViewDelegate, RoutedSegue, MainMenuView {
     @IBOutlet weak var monsterCollection: UICollectionView!
 
     var monsterDataSource: SectionedArrayDataSource<GameViewModel>!
@@ -23,18 +23,9 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, SegueH
     var refreshControl: UIRefreshControl!
     var spinner: UIActivityIndicatorView!
 
-    enum SegueIdentifier: String {
-        case NewMonster
-        case goToGame
-        case ShowLoginScreen
-    }
+    var segues: [String: Segue] = [:]
 
-    var viewModel: MainMenuViewModelProtocol! {
-        didSet {
-            viewModel.gamesUpdated = { [weak self] in self?.gamesUpdated() }
-            viewModel.signedOut = { [weak self] in self?.signedOut() }
-        }
-    }
+    var viewModel: MainMenuViewModelProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,39 +73,9 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, SegueH
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        guard let identifier = segue.identifier, segueIdentifier = SegueIdentifier(rawValue: identifier) else {
-            fatalError("Invalid segue identifier \(segue.identifier).")
-        }
-
-        switch segueIdentifier {
-        case .NewMonster:
-            guard let vc = segue.destinationViewController as? NewMonsterViewController else {
-                return
-            }
-
-            guard let currentPlayer = appDelegate.session.currentPlayer() else {
-                return
-            }
-
-            vc.viewModel = appDelegate.viewModelFactory.newMonsterViewModel(currentPlayer,
-                gameService: appDelegate.gameService,
-                router: vc
-            )
-        case .goToGame:
-            guard let vc = segue.destinationViewController as? DrawingViewController else {
-                return
-            }
-
-            guard let selectedIndex = self.selectedIndex else {
-                return
-            }
-
-            vc.viewModel = viewModel.getDrawingViewModel(selectedIndex)
-        case .ShowLoginScreen: break
-        }
-
+        prepare(segue, sender: sender)
     }
-    
+
     @IBAction func unwindToMainMenu(segue: UIStoryboardSegue) {
     }
 
@@ -122,7 +83,7 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, SegueH
         viewModel.signOut()
     }
 
-    func gamesUpdated() {
+    func updateGameList() {
         refreshControl.endRefreshing()
         spinner.stopAnimating();
         monsterCollection.backgroundView = nil
@@ -132,18 +93,12 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, SegueH
         monsterCollection.reloadData()
     }
 
-    func signedOut() {
-        performSegueWithIdentifier(.ShowLoginScreen, sender: self)
-    }
-
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 {
             return
         }
-        
-        selectedIndex = indexPath.row
-        
-        performSegueWithIdentifier(.goToGame, sender: self)
+
+        viewModel.selectGame(indexPath.row)
     }
     
     func onRefresh(sender: UIRefreshControl!) {

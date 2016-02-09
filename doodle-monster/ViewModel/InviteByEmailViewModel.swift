@@ -11,8 +11,7 @@ import UIKit
 protocol InviteByEmailViewModelProtocol: class {
     var players: [PlayerViewModelProtocol] { get }
     var playersDidChange: ((InviteByEmailViewModelProtocol) -> ())? { get set }
-    var playerWasSelected: ((Player) -> ())? { get set }
-    
+
     init(playerService: PlayerService, session: SessionService)
     func search(text: String)
     func playerAt(index: Int) -> PlayerViewModelProtocol
@@ -27,7 +26,6 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     }
     
     var playersDidChange: ((InviteByEmailViewModelProtocol) -> ())?
-    var playerWasSelected: ((Player) -> ())?
 
     private let session: SessionService
     private let playerService: PlayerService
@@ -66,6 +64,7 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     }
 
     func selectPlayer(index: NSIndexPath) {
-        playerWasSelected?(playerModels[index.row])
+        let wrapped = Wrapper<Player>(theValue: playerModels[index.row])
+        NSNotificationCenter.defaultCenter().postNotificationName("NewMonster:PlayerAdded", object: nil, userInfo: ["player": wrapped])
     }
 }

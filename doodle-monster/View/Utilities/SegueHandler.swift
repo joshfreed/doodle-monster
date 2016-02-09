@@ -12,8 +12,7 @@ protocol SegueHandlerType {
     typealias SegueIdentifier: RawRepresentable
 }
 
-extension SegueHandlerType where Self: UIViewController, SegueIdentifier.RawValue == String
-{
+extension SegueHandlerType where Self: UIViewController, SegueIdentifier.RawValue == String {
     func performSegueWithIdentifier(segueIdentifier: SegueIdentifier, sender: AnyObject?) {
         performSegueWithIdentifier(segueIdentifier.rawValue, sender: sender)
     }
@@ -25,5 +24,36 @@ extension SegueHandlerType where Self: UIViewController, SegueIdentifier.RawValu
         }
         
         return segueIdentifier
+    }
+}
+
+
+
+protocol RoutedSegue {
+    var segues: [String: Segue] { get set }
+}
+
+extension RoutedSegue where Self: UIViewController {
+    func prepare(segue: UIStoryboardSegue, sender: AnyObject?) {
+        guard let identifier = segue.identifier, segueAction = segues[identifier] else {
+            print("Segue \(segue.identifier) was not configured")
+            return
+        }
+
+        segueAction.run(segue.destinationViewController)
+    }
+}
+
+struct Segue {
+    let action: (UIViewController, [String: Any]) -> ()
+    let arguments: [String: Any]
+
+    init(action: (UIViewController, [String: Any]) -> (), arguments: [String: Any]) {
+        self.action = action
+        self.arguments = arguments
+    }
+
+    func run(vc: UIViewController) {
+        action(vc, arguments)
     }
 }

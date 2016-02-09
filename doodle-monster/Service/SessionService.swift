@@ -29,19 +29,14 @@ class ParseSessionService: SessionService {
         }
 
         if player == nil {
-            print("Initializing and fetching data for current player")
             player = playerTranslator.parseToModel(currentUser)
-//            let parsePlayer = PFObject(withoutDataWithClassName: "User", objectId: currentUser.objectId)
-//            let parsePlayer = ParsePlayer.objectWithoutDataWithObjectId(currentUser.objectId)
-//            parsePlayer.fetchIfNeededInBackgroundWithBlock { (object, error) in
-//                
-//            }
         }
 
         return player
     }
 
     func logout() {
+        player = nil
         PFUser.logOut()
     }
 }

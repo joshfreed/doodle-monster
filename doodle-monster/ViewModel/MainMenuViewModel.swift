@@ -6,77 +6,54 @@
 //  Copyright © 2016 BleepSmazz. All rights reserved.
 //
 
+protocol MainMenuView {
+    func updateGameList()
+}
+
 protocol MainMenuViewModelProtocol: class {
     var yourTurnGames: [GameViewModel] { get }
     var waitingGames: [GameViewModel] { get }
 
-    var gamesUpdated: (() -> ())? { get set }
-    var signedOut: (() -> ())? { get set }
-
-    init(gameService: GameService, currentPlayer: Player, session: SessionService, router: MainMenuRouter)
+    init(view: MainMenuView, gameService: GameService, currentPlayer: Player, session: SessionService, router: MainMenuRouter)
     func loadItems()
     func refresh()
-    func getDrawingViewModel(index: Int) -> DrawingViewModel
     func signOut()
     func newMonster()
-}
-
-struct GameViewModel: Equatable {
-    let game: Game
-    
-    var currentPlayerName: String {
-        return "Waiting on " + game.currentPlayerName
-    }
-
-    var monsterName: String {
-        return game.name ?? ""
-    }
-    
-    var lastTurnText: String {
-        return "Last turn " + game.friendlyLastTurnText()
-    }
-    
-    var playerInfo: String {
-        return "\(game.players.count) doodlers"
-    }
-
-    init(game: Game) {
-        self.game = game
-    }
-}
-
-func ==(lhs: GameViewModel, rhs: GameViewModel) -> Bool {
-    return lhs.game.id == rhs.game.id
+    func selectGame(index: Int)
 }
 
 class MainMenuViewModel: MainMenuViewModelProtocol {
+    // Dependencies
+    let view: MainMenuView
     let gameService: GameService
     let currentPlayer: Player
     let session: SessionService
     let router: MainMenuRouter
+
+    // Observables
     var yourTurnGames: [GameViewModel] = []
     var waitingGames: [GameViewModel] = []
 
-    var gamesUpdated: (() -> ())?
-    var signedOut: (() -> ())?
-
+    // Private properties
     private var games: [String: Game] = [:]
     private var newGameObserver: NSObjectProtocol?
     private var turnCompleteObserver: NSObjectProtocol?
     private var gameOverObserver: NSObjectProtocol?
 
-    required init(gameService: GameService, currentPlayer: Player, session: SessionService, router: MainMenuRouter) {
+    required init(view: MainMenuView, gameService: GameService, currentPlayer: Player, session: SessionService, router: MainMenuRouter) {
+        self.view = view
         self.gameService = gameService
         self.currentPlayer = currentPlayer
         self.session = session
         self.router = router
+
         newGameObserver = NSNotificationCenter.defaultCenter().addObserverForName("NewGameStarted", object: nil, queue: nil) { [weak self] n in self?.newGameStarted(n) }
         turnCompleteObserver = NSNotificationCenter.defaultCenter().addObserverForName("TurnComplete", object: nil, queue: nil)  { [weak self] n in self?.turnComplete(n) }
         gameOverObserver = NSNotificationCenter.defaultCenter().addObserverForName("GameOver", object: nil, queue: nil)  { [weak self] n in self?.gameOver(n) }
     }
 
     deinit {
-        print("main menu view model deinit")
+        print("MainMenuViewModel::deinit")
         if newGameObserver != nil {
             NSNotificationCenter.defaultCenter().removeObserver(newGameObserver!)
         }
@@ -88,30 +65,13 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
         }
     }
 
-    func loadItems() {
-        gameService.getActiveGames() { games in
-            self.games = self.arrayToDict(games)
-
-            for game in games {
-                if game.isCurrentTurn(self.currentPlayer) {
-                    self.yourTurnGames.append(GameViewModel(game: game))
-                } else if game.isWaitingForAnotherPlayer(self.currentPlayer) {
-                    self.waitingGames.append(GameViewModel(game: game))
-                }
-            }
-
-            self.gamesUpdated?()
+    // TODO: move to Array extension
+    private func arrayToDict(games: [Game]) -> [String: Game] {
+        var result: [String: Game] = [:]
+        for game in games {
+            result[game.id!] = game
         }
-    }
-    
-    func refresh() {
-        self.yourTurnGames = []
-        self.waitingGames = []
-        loadItems()
-    }
-    
-    func getDrawingViewModel(index: Int) -> DrawingViewModel {
-        return DrawingViewModel(game: yourTurnGames[index].game, gameService: gameService)
+        return result
     }
 
     private func moveGameToWaiting(game: Game) {
@@ -137,37 +97,28 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
         return yourTurnGames.removeAtIndex(index)
     }
 
-    func signOut() {
-        session.logout()
-        self.signedOut?()
-    }
-
-    func newMonster() {
-        router.showNewMonsterScreen()
-    }
-
     func newGameStarted(notification: NSNotification) {
         guard let userInfo = notification.userInfo, wrapper = userInfo["game"] as? Wrapper<Game> else {
             fatalError("Missing game in message");
         }
-        
+
         let game = wrapper.wrappedValue
 
         games[game.id!] = game
         self.yourTurnGames.append(GameViewModel(game: game))
-        self.gamesUpdated?()
+        view.updateGameList()
     }
 
     func turnComplete(notification: NSNotification) {
         guard let userInfo = notification.userInfo, wrapper = userInfo["game"] as? Wrapper<Game> else {
             fatalError("Missing game in message");
         }
-        
+
         let game = wrapper.wrappedValue
 
         games[game.id!] = game
         self.moveGameToWaiting(game)
-        self.gamesUpdated?()
+        view.updateGameList()
     }
 
     func gameOver(notification: NSNotification) {
@@ -179,17 +130,73 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
 
         games[game.id!] = game
         self.removeGameFromYourTurn(game)
-        self.gamesUpdated?()
+        view.updateGameList()
     }
 
+    // MARK: - MainMenuViewModelProtocol
 
+    func loadItems() {
+        gameService.getActiveGames() { games in
+            self.games = self.arrayToDict(games)
 
-    // TODO: move to Array extension
-    private func arrayToDict(games: [Game]) -> [String: Game] {
-        var result: [String: Game] = [:]
-        for game in games {
-            result[game.id!] = game
+            for game in games {
+                if game.isCurrentTurn(self.currentPlayer) {
+                    self.yourTurnGames.append(GameViewModel(game: game))
+                } else if game.isWaitingForAnotherPlayer(self.currentPlayer) {
+                    self.waitingGames.append(GameViewModel(game: game))
+                }
+            }
+
+            self.view.updateGameList()
         }
-        return result
     }
+    
+    func refresh() {
+        self.yourTurnGames = []
+        self.waitingGames = []
+        loadItems()
+    }
+    
+    func signOut() {
+        session.logout()
+        router.showLoginScreen()
+    }
+
+    func newMonster() {
+        router.showNewMonsterScreen()
+    }
+
+    func selectGame(index: Int) {
+        let vm = yourTurnGames[index]
+        let game = vm.game
+        router.showDrawingScreen(game)
+    }
+}
+
+struct GameViewModel: Equatable {
+    let game: Game
+
+    var currentPlayerName: String {
+        return "Waiting on " + game.currentPlayerName
+    }
+
+    var monsterName: String {
+        return game.name ?? ""
+    }
+
+    var lastTurnText: String {
+        return "Last turn " + game.friendlyLastTurnText()
+    }
+
+    var playerInfo: String {
+        return "\(game.players.count) doodlers"
+    }
+
+    init(game: Game) {
+        self.game = game
+    }
+}
+
+func ==(lhs: GameViewModel, rhs: GameViewModel) -> Bool {
+    return lhs.game.id == rhs.game.id
 }

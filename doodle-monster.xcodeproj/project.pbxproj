@@ -66,6 +66,7 @@
 		53EE34F51C32E2B000C70635 /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53EE34F41C32E2B000C70635 /* PlayerView.xib */; };
 		53EE34F71C345E8600C70635 /* NewMonsterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE34F61C345E8600C70635 /* NewMonsterTests.swift */; };
 		53EE34F91C38697F00C70635 /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE34F81C38697F00C70635 /* GameService.swift */; };
+		E9AFC51983D84DE39E50E75E /* NewMonsterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC6092A7C3B7BAA904FE6 /* NewMonsterRouter.swift */; };
 		E9AFCA6DCF18C5A84BADF8BB /* StructWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC642685D2FFD6F9211FA /* StructWrapper.swift */; };
 		E9AFCA7E8618B15DD20156E9 /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFCF547B9DC798F5A0A998 /* ViewModelFactory.swift */; };
 /* End PBXBuildFile section */
@@ -156,6 +157,7 @@
 		53EE34F61C345E8600C70635 /* NewMonsterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMonsterTests.swift; sourceTree = "<group>"; };
 		53EE34F81C38697F00C70635 /* GameService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameService.swift; path = Model/GameService.swift; sourceTree = "<group>"; };
 		53EE34FA1C386F6C00C70635 /* doodle-monster-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "doodle-monster-Bridging-Header.h"; sourceTree = "<group>"; };
+		E9AFC6092A7C3B7BAA904FE6 /* NewMonsterRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMonsterRouter.swift; sourceTree = "<group>"; };
 		E9AFC642685D2FFD6F9211FA /* StructWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StructWrapper.swift; sourceTree = "<group>"; };
 		E9AFCF547B9DC798F5A0A998 /* ViewModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -399,6 +401,7 @@
 			isa = PBXGroup;
 			children = (
 				533599741C6916E000F50FAB /* MainMenuRouter.swift */,
+				E9AFC6092A7C3B7BAA904FE6 /* NewMonsterRouter.swift */,
 			);
 			path = Routing;
 			sourceTree = "<group>";
@@ -582,6 +585,7 @@
 				E9AFCA7E8618B15DD20156E9 /* ViewModelFactory.swift in Sources */,
 				5335997B1C69249E00F50FAB /* ParseGameService.swift in Sources */,
 				E9AFCA6DCF18C5A84BADF8BB /* StructWrapper.swift in Sources */,
+				E9AFC51983D84DE39E50E75E /* NewMonsterRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
