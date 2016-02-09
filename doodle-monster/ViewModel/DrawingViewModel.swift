@@ -21,7 +21,7 @@ class DrawingViewModel: NSObject {
     let gameService: GameService
 
     var name: String {
-        return game.name
+        return game.name ?? ""
     }
 
     private var full: NSData?
@@ -40,27 +40,21 @@ class DrawingViewModel: NSObject {
             fatalError("Did not set the images before saving")
         }
 
-        gameService.saveTurn(game.objectId!, image: fullImageData, letter: letter) { response, error in
-            print("RESPONSE \(response) ERROR \(error)")
+        gameService.saveTurn(game.id!, image: fullImageData, letter: letter) { result in
+            switch result {
+            case .Success(let updatedGame):
+                let wrappedGame = Wrapper<Game>(theValue: updatedGame)
 
-            guard let updatedGame = response as? Game else {
-                fatalError("Unknown response")
+                if self.game.gameOver {
+                    NSNotificationCenter.defaultCenter().postNotificationName("GameOver", object: nil, userInfo: ["game": wrappedGame])
+                } else {
+                    NSNotificationCenter.defaultCenter().postNotificationName("TurnComplete", object: nil, userInfo: ["game": wrappedGame])
+                }
+
+                completion()
+            case .Failure(let error):
+                fatalError("Failed to save turn")
             }
-
-            self.game.thumbnail = updatedGame.thumbnail
-            self.game.imageFile = updatedGame.imageFile
-            self.game.name = updatedGame.name
-            self.game.lastTurn = updatedGame.lastTurn
-            self.game.currentPlayerNumber = updatedGame.currentPlayerNumber
-            self.game.gameOver = updatedGame.gameOver
-
-            if self.game.gameOver {
-                NSNotificationCenter.defaultCenter().postNotificationName("GameOver", object: nil, userInfo: ["game": self.game])
-            } else {
-                NSNotificationCenter.defaultCenter().postNotificationName("TurnComplete", object: nil, userInfo: ["game": self.game])
-            }
-
-            completion()
         }
     }
 }

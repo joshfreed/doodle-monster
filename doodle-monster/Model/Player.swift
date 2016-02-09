@@ -2,21 +2,18 @@
 //  Player.swift
 //  doodle-monster
 //
-//  Created by Josh Freed on 12/24/15.
-//  Copyright © 2015 BleepSmazz. All rights reserved.
+//  Created by Josh Freed on 2/8/16.
+//  Copyright © 2016 BleepSmazz. All rights reserved.
 //
 
-import Parse
+import UIKit
 
-class Player: PFUser {
-    @NSManaged var displayName: String
+struct Player: Equatable {
+    var id: String?
+    var username: String?
+    var displayName: String?
+}
 
-    override class func initialize() {
-        struct Static {
-            static var onceToken : dispatch_once_t = 0;
-        }
-        dispatch_once(&Static.onceToken) {
-            self.registerSubclass()
-        }
-    }
+func ==(lhs: Player, rhs: Player) -> Bool {
+    return lhs.id == rhs.id
 }

@@ -17,6 +17,7 @@ protocol SessionService {
 
 class ParseSessionService: SessionService {
     private(set) var player: Player?
+    let playerTranslator = ParsePlayerTranslator()
 
     func hasSession() -> Bool {
         return PFUser.currentUser() != nil
@@ -29,8 +30,12 @@ class ParseSessionService: SessionService {
 
         if player == nil {
             print("Initializing and fetching data for current player")
-            player = Player.objectWithoutDataWithObjectId(currentUser.objectId)
-            player?.fetchIfNeededInBackground()
+            player = playerTranslator.parseToModel(currentUser)
+//            let parsePlayer = PFObject(withoutDataWithClassName: "User", objectId: currentUser.objectId)
+//            let parsePlayer = ParsePlayer.objectWithoutDataWithObjectId(currentUser.objectId)
+//            parsePlayer.fetchIfNeededInBackgroundWithBlock { (object, error) in
+//                
+//            }
         }
 
         return player

@@ -13,20 +13,20 @@ import Parse
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var viewModelFactory: ViewModelFactory!
     var playerService: PlayerService!
     var gameService: GameService!
     var session: SessionService!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        Player.registerSubclass()
-        Game.registerSubclass()
         Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
 //        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
         UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), forBarMetrics: .Default)
 
+        viewModelFactory = ViewModelFactory(appDelegate: self)
         playerService = ParseUserService()
-        gameService = ParseGameService()
+        gameService = ParseGameService(parsePlayerService: playerService as! ParseUserService)
         session = ParseSessionService()
 
         if session.hasSession() {
@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard let currentPlayer = session.currentPlayer() else {
                 fatalError("Have a session but can't get the current player. What's going on?")
             }
-            vc.viewModel = MainMenuViewModel(gameService: gameService, currentPlayer: currentPlayer, session: session)
+            vc.viewModel = viewModelFactory.mainMenuViewModel(vc)
             let nc = window?.rootViewController as! UINavigationController
             nc.pushViewController(vc, animated: false)
         }
@@ -74,4 +74,11 @@ extension UIViewController {
     }
 }
 
+enum Result<T> {
+    case Success(T)
+    case Failure(ErrorType)
+}
 
+enum UserError: ErrorType {
+    case NoData
+}

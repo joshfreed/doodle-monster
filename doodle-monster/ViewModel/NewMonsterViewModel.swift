@@ -84,9 +84,17 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
     }
 
     func startGame() {
-        let newGame = gameService.createGame(_playerModels)
-        NSNotificationCenter.defaultCenter().postNotificationName("NewGameStarted", object: nil, userInfo: ["game": newGame])
-        router.goToNewMonster(newGame)
+        gameService.createGame(_playerModels) { result in
+            switch result {
+            case .Success(let newGame):
+                let wrappedGame = Wrapper<Game>(theValue: newGame)
+                NSNotificationCenter.defaultCenter().postNotificationName("NewGameStarted", object: nil, userInfo: ["game": wrappedGame])
+                self.router.goToNewMonster(newGame)
+            case .Failure(let error):
+                print("Game failed to start \(error)")
+                break
+            }
+        }
     }
 }
 
@@ -107,7 +115,7 @@ struct PlayerViewModel: PlayerViewModelProtocol {
         }
     }
     var displayName: String {
-        return player.displayName
+        return player.displayName ?? ""
     }
 
     private let player: Player

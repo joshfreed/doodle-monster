@@ -11,11 +11,11 @@ import XCTest
 
 class StrokeHistoryTests: XCTestCase {
     let canvas = TestCanvas()
-    let sut = StrokeHistory(canvas: canvas, undoLimit: 3)
+    var sut: StrokeHistory!
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        sut = StrokeHistory(canvas: canvas, undoLimit: 3)
     }
     
     override func tearDown() {

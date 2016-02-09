@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "LoginByEmail" {
             if let vc = segue.destinationViewController as? LoginByEmailViewController {
-                vc.presenter = LoginByEmailPresenter(view: vc, playerService: appDelegate.playerService)
+                vc.presenter = appDelegate.viewModelFactory.loginByEmailPresenter(vc)
             }
         }
     }

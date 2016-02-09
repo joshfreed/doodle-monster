@@ -8,10 +8,15 @@
 
 import UIKit
 
-class LoginByEmailViewController: UIViewController, LoginByEmailView {
+class LoginByEmailViewController: UIViewController, LoginByEmailView, SegueHandlerType {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
+
+    enum SegueIdentifier: String {
+        case CreateAccount
+        case MainMenu
+    }
+
     var presenter: LoginByEmailViewPresenter!
     var username: String?
     var password: String?
@@ -31,14 +36,18 @@ class LoginByEmailViewController: UIViewController, LoginByEmailView {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "CreateAccount" {
+        guard let identifier = segue.identifier, segueIdentifier = SegueIdentifier(rawValue: identifier) else {
+            fatalError("Invalid segue identifier \(segue.identifier).")
+        }
+
+        switch segueIdentifier {
+        case .CreateAccount:
             if let vc = segue.destinationViewController as? CreateAccountViewController {
                 vc.presenter = CreateAccountPresenter(view: vc, playerService: appDelegate.playerService, username: username!, password: password!)
             }
-        } else if segue.identifier == "MainMenu" {
-            if let vc = segue.destinationViewController as? MainMenuViewController,
-                currentPlayer = appDelegate.session.currentPlayer() {
-                vc.viewModel = MainMenuViewModel(gameService: appDelegate.gameService, currentPlayer: currentPlayer, session: appDelegate.session)
+        case .MainMenu:
+            if let vc = segue.destinationViewController as? MainMenuViewController, currentPlayer = appDelegate.session.currentPlayer() {
+                vc.viewModel = appDelegate.viewModelFactory.mainMenuViewModel(vc)
             }
         }
     }
@@ -64,13 +73,13 @@ class LoginByEmailViewController: UIViewController, LoginByEmailView {
     // MARK: - LoginByEmail
     
     func goToMainMenu() {
-        performSegueWithIdentifier("MainMenu", sender: self)
+        performSegueWithIdentifier(.MainMenu, sender: self)
     }
     
     func goToCreateAccount(username: String, password: String) {
         self.username = username
         self.password = password
-        self.performSegueWithIdentifier("CreateAccount", sender: self)
+        self.performSegueWithIdentifier(.CreateAccount, sender: self)
     }
     
     func showError() {
