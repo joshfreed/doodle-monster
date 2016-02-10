@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		531602AB1C529C600023C19E /* MonsterSectionFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531602AA1C529C600023C19E /* MonsterSectionFooter.swift */; };
 		531602AD1C52DA7D0023C19E /* SaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531602AC1C52DA7D0023C19E /* SaveViewController.swift */; };
+		5326473F1C6A9AFE00819296 /* InMemoryServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5326473E1C6A9AFE00819296 /* InMemoryServices.swift */; };
 		532800931BA0ECF6005AD59C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800921BA0ECF6005AD59C /* AppDelegate.swift */; };
 		532800951BA0ECF6005AD59C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800941BA0ECF6005AD59C /* LoginViewController.swift */; };
 		532800981BA0ECF6005AD59C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 532800961BA0ECF6005AD59C /* Main.storyboard */; };
 		5328009A1BA0ECF6005AD59C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 532800991BA0ECF6005AD59C /* Assets.xcassets */; };
 		5328009D1BA0ECF6005AD59C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5328009B1BA0ECF6005AD59C /* LaunchScreen.storyboard */; };
-		532800B31BA0ECF6005AD59C /* doodle_monsterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800B21BA0ECF6005AD59C /* doodle_monsterUITests.swift */; };
+		532800B31BA0ECF6005AD59C /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532800B21BA0ECF6005AD59C /* LoginTests.swift */; };
 		533599751C6916E000F50FAB /* MainMenuRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533599741C6916E000F50FAB /* MainMenuRouter.swift */; };
 		533599781C69182E00F50FAB /* MainMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533599771C69182E00F50FAB /* MainMenuViewModelTests.swift */; };
 		5335997B1C69249E00F50FAB /* ParseGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5335997A1C69249E00F50FAB /* ParseGameService.swift */; };
@@ -36,6 +37,7 @@
 		536D6C5C1C4D994800BF5EBC /* MonsterSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C5B1C4D994800BF5EBC /* MonsterSectionHeader.swift */; };
 		536D6C5E1C4D995D00BF5EBC /* MainMenuBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C5D1C4D995D00BF5EBC /* MainMenuBottom.swift */; };
 		53AA70E41C4DA81600EB238B /* MainMenuBottom.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AA70E31C4DA81600EB238B /* MainMenuBottom.xib */; };
+		53B162831C6B8E8000663485 /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B162821C6B8E8000663485 /* Pages.swift */; };
 		53B60DEB1C4301F900AF0E09 /* YourTurnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B60DEA1C4301F900AF0E09 /* YourTurnCell.xib */; };
 		53B60DED1C43020100AF0E09 /* WaitingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B60DEC1C43020100AF0E09 /* WaitingCell.xib */; };
 		53B60DEF1C43047900AF0E09 /* WaitingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B60DEE1C43047900AF0E09 /* WaitingCell.swift */; };
@@ -47,7 +49,7 @@
 		53C8D3F31C2B11340052A9ED /* NewMonsterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3F21C2B11340052A9ED /* NewMonsterViewController.swift */; };
 		53C8D3F61C2B13840052A9ED /* InviteByEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3F51C2B13840052A9ED /* InviteByEmailViewController.swift */; };
 		53C8D3F81C2B15B30052A9ED /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3F71C2B15B30052A9ED /* PlayerTableViewCell.swift */; };
-		53C8D3FC1C2C72890052A9ED /* ParsePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3FB1C2C72890052A9ED /* ParsePlayer.swift */; };
+		53C8D3FC1C2C72890052A9ED /* ParsePlayerTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3FB1C2C72890052A9ED /* ParsePlayerTranslator.swift */; };
 		53C8D3FE1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3FD1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift */; };
 		53CED4BA1C1F4AE200B5BEEF /* LoginByEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4B91C1F4AE200B5BEEF /* LoginByEmailViewController.swift */; };
 		53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4BB1C1F4B4000B5BEEF /* CreateAccountViewController.swift */; };
@@ -91,6 +93,7 @@
 /* Begin PBXFileReference section */
 		531602AA1C529C600023C19E /* MonsterSectionFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonsterSectionFooter.swift; path = View/MainMenu/MonsterSectionFooter.swift; sourceTree = "<group>"; };
 		531602AC1C52DA7D0023C19E /* SaveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaveViewController.swift; path = Controller/SaveViewController.swift; sourceTree = "<group>"; };
+		5326473E1C6A9AFE00819296 /* InMemoryServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InMemoryServices.swift; path = InMemory/InMemoryServices.swift; sourceTree = "<group>"; };
 		5328008F1BA0ECF6005AD59C /* doodle-monster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "doodle-monster.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		532800921BA0ECF6005AD59C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		532800941BA0ECF6005AD59C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controller/LoginViewController.swift; sourceTree = "<group>"; };
@@ -101,7 +104,7 @@
 		532800A31BA0ECF6005AD59C /* doodle-monsterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "doodle-monsterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		532800A91BA0ECF6005AD59C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		532800AE1BA0ECF6005AD59C /* doodle-monsterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "doodle-monsterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		532800B21BA0ECF6005AD59C /* doodle_monsterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = doodle_monsterUITests.swift; sourceTree = "<group>"; };
+		532800B21BA0ECF6005AD59C /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		532800B41BA0ECF6005AD59C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		533599741C6916E000F50FAB /* MainMenuRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuRouter.swift; path = ../MainMenu/MainMenuRouter.swift; sourceTree = "<group>"; };
 		533599771C69182E00F50FAB /* MainMenuViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewModelTests.swift; path = ViewModel/MainMenuViewModelTests.swift; sourceTree = "<group>"; };
@@ -123,6 +126,7 @@
 		536D6C5B1C4D994800BF5EBC /* MonsterSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonsterSectionHeader.swift; path = View/MainMenu/MonsterSectionHeader.swift; sourceTree = "<group>"; };
 		536D6C5D1C4D995D00BF5EBC /* MainMenuBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuBottom.swift; path = View/MainMenu/MainMenuBottom.swift; sourceTree = "<group>"; };
 		53AA70E31C4DA81600EB238B /* MainMenuBottom.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenuBottom.xib; path = View/Game/MainMenuBottom.xib; sourceTree = "<group>"; };
+		53B162821C6B8E8000663485 /* Pages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pages.swift; sourceTree = "<group>"; };
 		53B60DEA1C4301F900AF0E09 /* YourTurnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = YourTurnCell.xib; path = View/YourTurnCell.xib; sourceTree = "<group>"; };
 		53B60DEC1C43020100AF0E09 /* WaitingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitingCell.xib; sourceTree = "<group>"; };
 		53B60DEE1C43047900AF0E09 /* WaitingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaitingCell.swift; path = View/WaitingCell.swift; sourceTree = "<group>"; };
@@ -134,7 +138,7 @@
 		53C8D3F21C2B11340052A9ED /* NewMonsterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewMonsterViewController.swift; path = Controller/NewMonsterViewController.swift; sourceTree = "<group>"; };
 		53C8D3F51C2B13840052A9ED /* InviteByEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InviteByEmailViewController.swift; path = Controller/InviteByEmailViewController.swift; sourceTree = "<group>"; };
 		53C8D3F71C2B15B30052A9ED /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerTableViewCell.swift; path = View/PlayerTableViewCell.swift; sourceTree = "<group>"; };
-		53C8D3FB1C2C72890052A9ED /* ParsePlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParsePlayer.swift; path = Parse/ParsePlayer.swift; sourceTree = "<group>"; };
+		53C8D3FB1C2C72890052A9ED /* ParsePlayerTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParsePlayerTranslator.swift; path = Parse/ParsePlayerTranslator.swift; sourceTree = "<group>"; };
 		53C8D3FD1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InviteByEmailViewModel.swift; path = ViewModel/InviteByEmailViewModel.swift; sourceTree = "<group>"; };
 		53CED4B91C1F4AE200B5BEEF /* LoginByEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginByEmailViewController.swift; path = Controller/LoginByEmailViewController.swift; sourceTree = "<group>"; };
 		53CED4BB1C1F4B4000B5BEEF /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = Controller/CreateAccountViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +197,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5326473D1C6A9ACC00819296 /* InMemory */ = {
+			isa = PBXGroup;
+			children = (
+				5326473E1C6A9AFE00819296 /* InMemoryServices.swift */,
+			);
+			name = InMemory;
+			sourceTree = "<group>";
+		};
 		532800861BA0ECF6005AD59C = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +231,7 @@
 		532800911BA0ECF6005AD59C /* doodle-monster */ = {
 			isa = PBXGroup;
 			children = (
+				5326473D1C6A9ACC00819296 /* InMemory */,
 				533599791C69247200F50FAB /* Parse */,
 				534965C91C585C8D009552CC /* Service */,
 				53C8D3EC1C2A00350052A9ED /* Model */,
@@ -249,8 +262,9 @@
 		532800B11BA0ECF6005AD59C /* doodle-monsterUITests */ = {
 			isa = PBXGroup;
 			children = (
-				532800B21BA0ECF6005AD59C /* doodle_monsterUITests.swift */,
+				532800B21BA0ECF6005AD59C /* LoginTests.swift */,
 				532800B41BA0ECF6005AD59C /* Info.plist */,
+				53B162821C6B8E8000663485 /* Pages.swift */,
 			);
 			path = "doodle-monsterUITests";
 			sourceTree = "<group>";
@@ -266,7 +280,7 @@
 		533599791C69247200F50FAB /* Parse */ = {
 			isa = PBXGroup;
 			children = (
-				53C8D3FB1C2C72890052A9ED /* ParsePlayer.swift */,
+				53C8D3FB1C2C72890052A9ED /* ParsePlayerTranslator.swift */,
 				53E5BBBF1C3EF7F90035504F /* ParseGame.swift */,
 				5335997A1C69249E00F50FAB /* ParseGameService.swift */,
 				5335997E1C69254400F50FAB /* ParsePlayerService.swift */,
@@ -562,7 +576,7 @@
 				531602AB1C529C600023C19E /* MonsterSectionFooter.swift in Sources */,
 				5335997D1C69251100F50FAB /* Game.swift in Sources */,
 				534965CB1C585CA5009552CC /* DateService.swift in Sources */,
-				53C8D3FC1C2C72890052A9ED /* ParsePlayer.swift in Sources */,
+				53C8D3FC1C2C72890052A9ED /* ParsePlayerTranslator.swift in Sources */,
 				533599751C6916E000F50FAB /* MainMenuRouter.swift in Sources */,
 				536D6C511C46DA7200BF5EBC /* StrokeHistory.swift in Sources */,
 				536D6C4F1C44482A00BF5EBC /* YourTurnCell.swift in Sources */,
@@ -584,6 +598,7 @@
 				53CED4D21C1F8F2800B5BEEF /* CreateAccountPresenter.swift in Sources */,
 				E9AFCA7E8618B15DD20156E9 /* ViewModelFactory.swift in Sources */,
 				5335997B1C69249E00F50FAB /* ParseGameService.swift in Sources */,
+				5326473F1C6A9AFE00819296 /* InMemoryServices.swift in Sources */,
 				E9AFCA6DCF18C5A84BADF8BB /* StructWrapper.swift in Sources */,
 				E9AFC51983D84DE39E50E75E /* NewMonsterRouter.swift in Sources */,
 			);
@@ -603,7 +618,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				532800B31BA0ECF6005AD59C /* doodle_monsterUITests.swift in Sources */,
+				53B162831C6B8E8000663485 /* Pages.swift in Sources */,
+				532800B31BA0ECF6005AD59C /* LoginTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

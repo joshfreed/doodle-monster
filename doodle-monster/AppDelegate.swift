@@ -19,16 +19,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var session: SessionService!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
-//        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        if NSProcessInfo.processInfo().arguments.contains("TESTING") {
+            print("Put the app in testing mode")
+            PFUser.logOut()
+            session = MemorySessionService()
+            playerService = MemoryPlayerService(session: session as! MemorySessionService)
+            gameService = MemoryGameService()
+            
+            var player1 = Player()
+            player1.id = "12345"
+            player1.username = "jeffery@bleepsmazz.com"
+            player1.password = "bleep"
+            player1.displayName = "Jeffery"
+            (playerService as! MemoryPlayerService).players.append(player1)
+        } else {
+            Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
+//            PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+            
+            playerService = ParseUserService()
+            gameService = ParseGameService(parsePlayerService: playerService as! ParseUserService)
+            session = ParseSessionService()
+        }
         
-        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), forBarMetrics: .Default)
-
         viewModelFactory = ViewModelFactory(appDelegate: self)
-        playerService = ParseUserService()
-        gameService = ParseGameService(parsePlayerService: playerService as! ParseUserService)
-        session = ParseSessionService()
 
+        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), forBarMetrics: .Default)
+        
         if session.hasSession() {
             let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let vc = storyboard.instantiateViewControllerWithIdentifier("MainMenu") as! MainMenuViewController
@@ -39,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let nc = window?.rootViewController as! UINavigationController
             nc.pushViewController(vc, animated: false)
         }
+        
         
         return true
     }

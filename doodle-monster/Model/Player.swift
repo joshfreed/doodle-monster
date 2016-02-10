@@ -11,6 +11,7 @@ import UIKit
 struct Player: Equatable {
     var id: String?
     var username: String?
+    var password: String?
     var displayName: String?
 }
 

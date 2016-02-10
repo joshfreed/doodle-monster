@@ -46,7 +46,7 @@ class LoginByEmailViewController: UIViewController, LoginByEmailView, SegueHandl
                 vc.presenter = CreateAccountPresenter(view: vc, playerService: appDelegate.playerService, username: username!, password: password!)
             }
         case .MainMenu:
-            if let vc = segue.destinationViewController as? MainMenuViewController, currentPlayer = appDelegate.session.currentPlayer() {
+            if let vc = segue.destinationViewController as? MainMenuViewController {
                 vc.viewModel = appDelegate.viewModelFactory.mainMenuViewModel(vc)
             }
         }
