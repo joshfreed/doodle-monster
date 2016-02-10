@@ -21,7 +21,7 @@ class NewMonsterRouterImpl: NewMonsterRouter {
     }
 
     func goToNewMonster(game: Game) {
-        vc.segues["goToGame"] = Segue(action: segueToDrawingViewController, arguments: ["game": game])
+        vc.segues["goToNewMonster"] = Segue(action: segueToDrawingViewController, arguments: ["game": game])
         vc.performSegueWithIdentifier("goToNewMonster", sender: vc)
     }
 

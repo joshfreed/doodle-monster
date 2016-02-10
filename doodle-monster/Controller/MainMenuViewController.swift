@@ -47,6 +47,8 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, Routed
         monsterCollection.dataSource = monsterDataSource
         monsterCollection.delegate = self
         monsterCollection.alwaysBounceVertical = true // required to make pull down refresh work when list is smaller than screen
+        monsterCollection.accessibilityActivate()
+        monsterCollection.accessibilityIdentifier = "monsterCollection"
         
         let theNib = UINib(nibName: MainMenuBottom.nibName, bundle: NSBundle(forClass: MainMenuBottom.self))
         monsterCollection.registerNib(theNib, forSupplementaryViewOfKind: "MainMenuBottom", withReuseIdentifier: MainMenuBottom.defaultReuseIdentifier)

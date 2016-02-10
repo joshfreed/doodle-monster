@@ -38,6 +38,7 @@
 		536D6C5E1C4D995D00BF5EBC /* MainMenuBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C5D1C4D995D00BF5EBC /* MainMenuBottom.swift */; };
 		53AA70E41C4DA81600EB238B /* MainMenuBottom.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AA70E31C4DA81600EB238B /* MainMenuBottom.xib */; };
 		53B162831C6B8E8000663485 /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B162821C6B8E8000663485 /* Pages.swift */; };
+		53B162851C6BC28B00663485 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B162841C6BC28B00663485 /* GameTests.swift */; };
 		53B60DEB1C4301F900AF0E09 /* YourTurnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B60DEA1C4301F900AF0E09 /* YourTurnCell.xib */; };
 		53B60DED1C43020100AF0E09 /* WaitingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B60DEC1C43020100AF0E09 /* WaitingCell.xib */; };
 		53B60DEF1C43047900AF0E09 /* WaitingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B60DEE1C43047900AF0E09 /* WaitingCell.swift */; };
@@ -127,6 +128,7 @@
 		536D6C5D1C4D995D00BF5EBC /* MainMenuBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuBottom.swift; path = View/MainMenu/MainMenuBottom.swift; sourceTree = "<group>"; };
 		53AA70E31C4DA81600EB238B /* MainMenuBottom.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenuBottom.xib; path = View/Game/MainMenuBottom.xib; sourceTree = "<group>"; };
 		53B162821C6B8E8000663485 /* Pages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pages.swift; sourceTree = "<group>"; };
+		53B162841C6BC28B00663485 /* GameTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
 		53B60DEA1C4301F900AF0E09 /* YourTurnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = YourTurnCell.xib; path = View/YourTurnCell.xib; sourceTree = "<group>"; };
 		53B60DEC1C43020100AF0E09 /* WaitingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitingCell.xib; sourceTree = "<group>"; };
 		53B60DEE1C43047900AF0E09 /* WaitingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaitingCell.swift; path = View/WaitingCell.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				532800B21BA0ECF6005AD59C /* LoginTests.swift */,
 				532800B41BA0ECF6005AD59C /* Info.plist */,
 				53B162821C6B8E8000663485 /* Pages.swift */,
+				53B162841C6BC28B00663485 /* GameTests.swift */,
 			);
 			path = "doodle-monsterUITests";
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53B162851C6BC28B00663485 /* GameTests.swift in Sources */,
 				53B162831C6B8E8000663485 /* Pages.swift in Sources */,
 				532800B31BA0ECF6005AD59C /* LoginTests.swift in Sources */,
 			);

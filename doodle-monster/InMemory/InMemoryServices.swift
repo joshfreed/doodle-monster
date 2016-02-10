@@ -52,21 +52,59 @@ class MemoryPlayerService: PlayerService {
     }
     
     func search(searchText: String, callback: (result: SearchResult) -> ()) {
-        
+        print("Searching for \(searchText)")
+        var matches: [Player] = []
+        for player in players {
+            print("Checking \(player.username)")
+            if player.username != nil && player.username!.containsString(searchText) {
+                matches.append(player)
+            }
+        }
+        callback(result: .Success(matches))
     }
 }
 
 class MemoryGameService: GameService {
+    var games: [Game] = []
+    let session: MemorySessionService
+    var nextId = 0
+    
+    init(session: MemorySessionService) {
+        self.session = session
+    }
+    
     func createGame(players: [Player], callback: (Result<Game>) -> ()) {
-        
+        nextId = nextId + 1
+        var game = Game()
+        game.id = String(nextId)
+        game.name = ""
+        game.players = players
+        games.append(game)
+        callback(.Success(game))
     }
     
     func getActiveGames(callback: ([Game]) -> ()) {
-        
+        callback(games)
     }
     
     func saveTurn(gameId: String, image: NSData, letter: String, completion: (Result<Game>) -> ()) {
+        var game = getGame(gameId)
+        if game != nil {
+            game!.name = (game!.name ?? "") + letter
+            return completion(.Success(game!))
+        }
         
+        completion(.Failure(NSError(domain: "Game not found", code: 0, userInfo: nil)))
+    }
+    
+    func getGame(gameId: String) -> Game? {
+        for game in games {
+            if game.id == gameId {
+                return game
+            }
+        }
+        
+        return nil
     }
 }
 

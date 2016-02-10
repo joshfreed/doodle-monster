@@ -20,18 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         if NSProcessInfo.processInfo().arguments.contains("TESTING") {
-            print("Put the app in testing mode")
-            PFUser.logOut()
-            session = MemorySessionService()
-            playerService = MemoryPlayerService(session: session as! MemorySessionService)
-            gameService = MemoryGameService()
-            
-            var player1 = Player()
-            player1.id = "12345"
-            player1.username = "jeffery@bleepsmazz.com"
-            player1.password = "bleep"
-            player1.displayName = "Jeffery"
-            (playerService as! MemoryPlayerService).players.append(player1)
+            prepareTestData()
         } else {
             Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
 //            PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
@@ -80,6 +69,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    private func prepareTestData() {
+        print("Put the app in testing mode")
+        PFUser.logOut()
+        session = MemorySessionService()
+        playerService = MemoryPlayerService(session: session as! MemorySessionService)
+        gameService = MemoryGameService(session: session as! MemorySessionService)
+        
+        var player1 = Player()
+        player1.id = "11111"
+        player1.username = "jeffery@bleepsmazz.com"
+        player1.password = "bleep"
+        player1.displayName = "Jeffery"
+        (playerService as! MemoryPlayerService).players.append(player1)
+        
+        var player2 = Player()
+        player2.id = "22222"
+        player2.username = "jerry@bleepsmazz.com"
+        player2.password = "bleep"
+        player2.displayName = "Jerry"
+        (playerService as! MemoryPlayerService).players.append(player2)
+        
+        print(NSProcessInfo.processInfo().environment["CURRENT_USER"])
+        if let currentPlayerId = NSProcessInfo.processInfo().environment["CURRENT_USER"] {
+            for player in (playerService as! MemoryPlayerService).players {
+                if player.id == currentPlayerId {
+                    (session as! MemorySessionService).setCurrentPlayer(player)
+                }
+            }
+        }
     }
 }
 

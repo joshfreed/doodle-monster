@@ -47,6 +47,8 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
         scrollView.delaysContentTouches = false
         scrollView.delegate = self
         scrollView.drawingDelegate = self
+        scrollView.accessibilityActivate()
+        scrollView.accessibilityIdentifier = "drawingScrollView"
 
         if let previousMonsterFile = viewModel.game.imageFile {
             previousMonsterFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
