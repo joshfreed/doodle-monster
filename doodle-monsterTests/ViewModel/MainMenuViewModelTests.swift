@@ -11,18 +11,20 @@ import XCTest
 
 class MainMenuViewModelTests: XCTestCase {
     var vm: MainMenuViewModel!
-    var view: MainMenuViewStub!
+    var view: MainMenuViewMock!
     var gameService: GameServiceMock!
     var session: SessionMock!
-    var router: MainMenuRouterStub!
+    var router: MainMenuRouterMock!
+    var listener: MainMenuViewModelListenerMock!
 
     override func setUp() {
         super.setUp()
-        view = MainMenuViewStub()
+        view = MainMenuViewMock()
         gameService = GameServiceMock()
         session = SessionMock()
-        router = MainMenuRouterStub()
-        vm = MainMenuViewModel(view: view, gameService: gameService, session: session, router: router)
+        router = MainMenuRouterMock()
+        listener = MainMenuViewModelListenerMock()
+        vm = MainMenuViewModel(view: view, gameService: gameService, session: session, router: router, listener: listener)
     }
     
     override func tearDown() {
@@ -52,200 +54,87 @@ class MainMenuViewModelTests: XCTestCase {
         XCTAssertEqual(expectedVm2, vm.yourTurnGames[0])
         XCTAssertEqual(expectedVm1, vm.waitingGames[0])
         XCTAssertEqual(expectedVm3, vm.waitingGames[1])
-        XCTAssertTrue(view.recorder.received("updateGameList", withArguments: [:], atIndex: 0), "updateGameList was not called on the view")
+        XCTAssertTrue(view.gameListWasUpdated)
     }
 
+    func test_newGameStarted_addsGameViewModelToYourTurnCollection() {
+        let newGame = GameBuilder.aGame().build()
 
+        vm.newGameStarted(newGame)
 
-
-    private func aPlayer(id: String) -> Player {
-        var player = Player()
-        player.id = id
-        return player
+        XCTAssertEqual(1, vm.yourTurnGames.count)
+        XCTAssertEqual(GameViewModel(game: newGame), vm.yourTurnGames[0])
     }
 
-    private func aGame(id: String) -> Game {
-        var game = Game()
-        game.id = id
-        return game
-    }
-}
+    func test_newGameStarted_updatesTheView() {
+        let newGame = GameBuilder.aGame().build()
 
-class StubRecorder {
-    var calls: [FunctionCall] = []
+        vm.newGameStarted(newGame)
 
-    func recordCall(name: String, arguments: [String: Any]) {
-        calls.append(FunctionCall(name: name, arguments: arguments))
+        XCTAssertTrue(view.gameListWasUpdated)
     }
 
-    func received(function: String, withArguments args: [String: Any], atIndex index: Int) -> Bool{
-        guard index < calls.count else {
-            return false
-        }
+    func test_turnComplete_addsGameViewModelToYourTurnCollection() {
+        let game = GameBuilder.aGame().build()
+        vm.yourTurnGames.append(GameViewModel(game: game))
 
-        let call = calls[index]
+        vm.turnComplete(game)
 
-        if call.name != function {
-            return false
-        }
-
-//        if call.arguments != args {
-//            return false
-//        }
-
-        return true
-    }
-}
-
-class FunctionCall {
-    let name: String
-    let arguments: [String: Any]
-
-    init(name: String, arguments: [String: Any]) {
-        self.name = name
-        self.arguments = arguments
-    }
-}
-
-class MainMenuViewStub: MainMenuView {
-    let recorder = StubRecorder()
-
-    func updateGameList() {
-        recorder.recordCall("updateGameList", arguments: [:])
-    }
-}
-
-class GameServiceMock: GameService {
-    let recorder = StubRecorder()
-    var activeGames: [Game] = []
-
-    func setActiveGames(games: [Game]) {
-        activeGames = games
+        XCTAssertEqual(0, vm.yourTurnGames.count)
+        XCTAssertEqual(1, vm.waitingGames.count)
+        XCTAssertEqual(GameViewModel(game: game), vm.waitingGames[0])
     }
 
-    // MARK: GameService
+    func test_turnComplete_updatesTheView() {
+        let game = GameBuilder.aGame().build()
+        vm.yourTurnGames.append(GameViewModel(game: game))
 
-    func createGame(players: [Player], callback: (Result<Game>) -> ()) {
-        recorder.recordCall("createGame", arguments: ["players": players])
-        callback(.Success(Game()))
+        vm.turnComplete(game)
+
+        XCTAssertTrue(view.gameListWasUpdated)
     }
 
-    func getActiveGames(callback: ([Game]) -> ()) {
-        callback(activeGames)
+    func test_gameOver_addsGameViewModelToYourTurnCollection() {
+        let game = GameBuilder.aGame().build()
+        vm.yourTurnGames.append(GameViewModel(game: game))
+
+        vm.gameOver(game)
+
+        XCTAssertEqual(0, vm.yourTurnGames.count)
+        XCTAssertEqual(0, vm.waitingGames.count)
     }
 
-    func saveTurn(gameId: String, image: NSData, letter: String, completion: (Result<Game>) -> ()) {
+    func test_gameOver_updatesTheView() {
+        let game = GameBuilder.aGame().build()
+        vm.yourTurnGames.append(GameViewModel(game: game))
 
+        vm.gameOver(game)
+
+        XCTAssertTrue(view.gameListWasUpdated)
+    }
+
+    func test_signOut_logsOutOfTheSession() {
+        vm.signOut()
+        XCTAssertTrue(session.loggedOut)
+    }
+
+    func test_signOut_routesToTheLoginScreen() {
+        vm.signOut()
+        XCTAssertTrue(router.showedLoginScreen)
+    }
+
+    func test_newMonster_routesToTheNewMonsterScreen() {
+        vm.newMonster()
+        XCTAssertTrue(router.showedNewMonsterScreen)
+    }
+
+    func test_selectGame_routesToTheGameDrawingScreen() {
+        let game = GameBuilder.aGame().build()
+        vm.yourTurnGames.append(GameViewModel(game: game))
+
+        vm.selectGame(0)
+
+        XCTAssertEqual(game, router.showedGame)
     }
 }
 
-class SessionMock: SessionService {
-    var currentPlayer: Player?
-
-    func hasSession() -> Bool {
-        return false
-    }
-
-    func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ()) {
-        
-    }
-
-    func logout() {
-
-    }
-    
-    func resume() {
-        
-    }
-}
-
-class MainMenuRouterStub: MainMenuRouter {
-    func showNewMonsterScreen() {
-
-    }
-
-    func showDrawingScreen(game: Game) {
-
-    }
-
-    func showLoginScreen() {
-
-    }
-}
-
-protocol Builder {
-    typealias Entity
-    func build() -> Entity
-}
-
-extension Builder {
-    func generateId() -> String {
-        return randomStringWithLength(6) as! String
-    }
-
-    func randomStringWithLength(len: Int) -> NSString {
-        let letters: NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-
-        var randomString: NSMutableString = NSMutableString(capacity: len)
-
-        for (var i=0; i < len; i++){
-            var length = UInt32 (letters.length)
-            var rand = arc4random_uniform(length)
-            randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
-        }
-
-        return randomString
-    }
-}
-
-class GameBuilder: Builder {
-    var gameId: String?
-    var playerBuilders: [PlayerBuilder] = []
-
-    static func aGame() -> GameBuilder {
-        return GameBuilder()
-    }
-
-    func build() -> Game {
-        var game = Game()
-        game.id = gameId ?? generateId()
-        game.currentPlayerNumber = 0
-
-        var players: [Player] = []
-        for builder in playerBuilders {
-            players.append(builder.build())
-        }
-        game.players = players
-
-        return game
-    }
-
-    func withId(_ id: String) -> GameBuilder {
-        gameId = id
-        return self
-    }
-
-    func withPlayers(_ players: [PlayerBuilder]) -> GameBuilder {
-        playerBuilders = players
-        return self
-    }
-}
-
-class PlayerBuilder: Builder {
-    var playerId: String?
-
-    static func aPlayer() -> PlayerBuilder {
-        return PlayerBuilder()
-    }
-
-    func build() -> Player {
-        var player = Player()
-        player.id = playerId ?? generateId()
-        return player
-    }
-
-    func withId(_ id: String) -> PlayerBuilder {
-        playerId = id
-        return self
-    }
-}

@@ -27,7 +27,8 @@ class ViewModelFactory {
         return MainMenuViewModel(view: vc,
             gameService: appDelegate!.gameService,
             session: appDelegate!.session,
-            router: MainMenuRouterImpl(vc: vc, vmFactory: self)
+            router: MainMenuRouterImpl(vc: vc, vmFactory: self),
+            listener: MainMenuViewModelListener()
         )
     }
 

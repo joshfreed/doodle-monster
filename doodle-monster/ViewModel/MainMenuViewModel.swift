@@ -14,7 +14,11 @@ protocol MainMenuViewModelProtocol: class {
     var yourTurnGames: [GameViewModel] { get }
     var waitingGames: [GameViewModel] { get }
 
-    init(view: MainMenuView, gameService: GameService, session: SessionService, router: MainMenuRouter)
+    init(view: MainMenuView,
+         gameService: GameService,
+         session: SessionService,
+         router: MainMenuRouter,
+         listener: MainMenuViewModelListener)
     func loadItems()
     func refresh()
     func signOut()
@@ -23,44 +27,49 @@ protocol MainMenuViewModelProtocol: class {
 }
 
 class MainMenuViewModel: MainMenuViewModelProtocol {
-    // Dependencies
     let view: MainMenuView
     let gameService: GameService
     let session: SessionService
     let router: MainMenuRouter
+    let listener: MainMenuViewModelListener
 
     // Observables
     var yourTurnGames: [GameViewModel] = []
     var waitingGames: [GameViewModel] = []
 
-    // Private properties
-    private var games: [String: Game] = [:]
-    private var newGameObserver: NSObjectProtocol?
-    private var turnCompleteObserver: NSObjectProtocol?
-    private var gameOverObserver: NSObjectProtocol?
-
-    required init(view: MainMenuView, gameService: GameService, session: SessionService, router: MainMenuRouter) {
+    required init(view: MainMenuView,
+                  gameService: GameService,
+                  session: SessionService,
+                  router: MainMenuRouter,
+                  listener: MainMenuViewModelListener) {
         self.view = view
         self.gameService = gameService
         self.session = session
         self.router = router
-
-        newGameObserver = NSNotificationCenter.defaultCenter().addObserverForName("NewGameStarted", object: nil, queue: nil) { [weak self] n in self?.newGameStarted(n) }
-        turnCompleteObserver = NSNotificationCenter.defaultCenter().addObserverForName("TurnComplete", object: nil, queue: nil)  { [weak self] n in self?.turnComplete(n) }
-        gameOverObserver = NSNotificationCenter.defaultCenter().addObserverForName("GameOver", object: nil, queue: nil)  { [weak self] n in self?.gameOver(n) }
+        self.listener = listener
+        self.listener.viewModel = self
+        self.listener.startListening()
     }
 
     deinit {
         print("MainMenuViewModel::deinit")
-        if newGameObserver != nil {
-            NSNotificationCenter.defaultCenter().removeObserver(newGameObserver!)
-        }
-        if turnCompleteObserver != nil {
-            NSNotificationCenter.defaultCenter().removeObserver(turnCompleteObserver!)
-        }
-        if gameOverObserver != nil {
-            NSNotificationCenter.defaultCenter().removeObserver(gameOverObserver!)
-        }
+        self.listener.stopListening()
+    }
+
+    func newGameStarted(game: Game) {
+        yourTurnGames.append(GameViewModel(game: game))
+        view.updateGameList()
+    }
+
+    func turnComplete(game: Game) {
+        removeGameFromYourTurn(game)
+        waitingGames.append(GameViewModel(game: game))
+        view.updateGameList()
+    }
+
+    func gameOver(game: Game) {
+        removeGameFromYourTurn(game)
+        view.updateGameList()
     }
 
     // TODO: move to Array extension
@@ -72,14 +81,9 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
         return result
     }
 
-    private func moveGameToWaiting(game: Game) {
-        removeGameFromYourTurn(game)
-        waitingGames.append(GameViewModel(game: game))
-    }
-
     // TODO: move to array extension
     // TODO: remove GameViewModel
-    private func removeGameFromYourTurn(game: Game) -> GameViewModel {
+    private func removeGameFromYourTurn(game: Game) {
         var indexToMove: Int?
         for (index, vm) in yourTurnGames.enumerate() {
             if vm.game.id == game.id {
@@ -89,46 +93,11 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
         }
 
         guard let index = indexToMove else {
-            fatalError("Game not found")
+            print("Game not found \(game)")
+            return
         }
 
-        return yourTurnGames.removeAtIndex(index)
-    }
-
-    func newGameStarted(notification: NSNotification) {
-        guard let userInfo = notification.userInfo, wrapper = userInfo["game"] as? Wrapper<Game> else {
-            fatalError("Missing game in message");
-        }
-
-        let game = wrapper.wrappedValue
-
-        games[game.id!] = game
-        self.yourTurnGames.append(GameViewModel(game: game))
-        view.updateGameList()
-    }
-
-    func turnComplete(notification: NSNotification) {
-        guard let userInfo = notification.userInfo, wrapper = userInfo["game"] as? Wrapper<Game> else {
-            fatalError("Missing game in message");
-        }
-
-        let game = wrapper.wrappedValue
-
-        games[game.id!] = game
-        self.moveGameToWaiting(game)
-        view.updateGameList()
-    }
-
-    func gameOver(notification: NSNotification) {
-        guard let userInfo = notification.userInfo, wrapper = userInfo["game"] as? Wrapper<Game> else {
-            fatalError("Missing game in message");
-        }
-
-        let game = wrapper.wrappedValue
-
-        games[game.id!] = game
-        self.removeGameFromYourTurn(game)
-        view.updateGameList()
+        yourTurnGames.removeAtIndex(index)
     }
 
     // MARK: - MainMenuViewModelProtocol
@@ -139,8 +108,6 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
         }
 
         gameService.getActiveGames() { games in
-            self.games = self.arrayToDict(games)
-
             for game in games {
                 if game.isCurrentTurn(currentPlayer) {
                     self.yourTurnGames.append(GameViewModel(game: game))
@@ -169,8 +136,7 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     }
 
     func selectGame(index: Int) {
-        let vm = yourTurnGames[index]
-        let game = vm.game
+        let game = yourTurnGames[index].game
         router.showDrawingScreen(game)
     }
 }
@@ -201,4 +167,55 @@ struct GameViewModel: Equatable {
 
 func ==(lhs: GameViewModel, rhs: GameViewModel) -> Bool {
     return lhs.game.id == rhs.game.id
+}
+
+class MainMenuViewModelListener {
+    weak var viewModel: MainMenuViewModel?
+
+    private var newGameObserver: NSObjectProtocol?
+    private var turnCompleteObserver: NSObjectProtocol?
+    private var gameOverObserver: NSObjectProtocol?
+
+    func startListening() {
+        let center = NSNotificationCenter.defaultCenter()
+        newGameObserver = center.addObserverForName("NewGameStarted", object: nil, queue: nil) { [weak self] n in self?.newGameStarted(n) }
+        turnCompleteObserver = center.addObserverForName("TurnComplete", object: nil, queue: nil)  { [weak self] n in self?.turnComplete(n) }
+        gameOverObserver = center.addObserverForName("GameOver", object: nil, queue: nil)  { [weak self] n in self?.gameOver(n) }
+    }
+
+    func stopListening() {
+        if newGameObserver != nil {
+            NSNotificationCenter.defaultCenter().removeObserver(newGameObserver!)
+        }
+        if turnCompleteObserver != nil {
+            NSNotificationCenter.defaultCenter().removeObserver(turnCompleteObserver!)
+        }
+        if gameOverObserver != nil {
+            NSNotificationCenter.defaultCenter().removeObserver(gameOverObserver!)
+        }
+    }
+
+    func newGameStarted(notification: NSNotification) {
+        guard let userInfo = notification.userInfo, wrapper = userInfo["game"] as? Wrapper<Game> else {
+            fatalError("Missing game in message");
+        }
+
+        viewModel?.newGameStarted(wrapper.wrappedValue)
+    }
+
+    func turnComplete(notification: NSNotification) {
+        guard let userInfo = notification.userInfo, wrapper = userInfo["game"] as? Wrapper<Game> else {
+            fatalError("Missing game in message");
+        }
+
+        viewModel?.turnComplete(wrapper.wrappedValue)
+    }
+
+    func gameOver(notification: NSNotification) {
+        guard let userInfo = notification.userInfo, wrapper = userInfo["game"] as? Wrapper<Game> else {
+            fatalError("Missing game in message");
+        }
+
+        viewModel?.gameOver(wrapper.wrappedValue)
+    }
 }
