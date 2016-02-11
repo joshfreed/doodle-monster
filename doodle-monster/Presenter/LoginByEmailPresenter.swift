@@ -15,21 +15,21 @@ protocol LoginByEmailView {
 }
 
 protocol LoginByEmailViewPresenter {
-    init(view: LoginByEmailView, playerService: PlayerService)
+    init(view: LoginByEmailView, session: SessionService)
     func login(username: String, password: String)
 }
 
 class LoginByEmailPresenter: LoginByEmailViewPresenter {
     let view: LoginByEmailView
-    let playerService: PlayerService
+    let session: SessionService
     
-    required init(view: LoginByEmailView, playerService: PlayerService) {
+    required init(view: LoginByEmailView, session: SessionService) {
         self.view = view
-        self.playerService = playerService
+        self.session = session
     }
     
     func login(username: String, password: String) {
-        playerService.tryToLogIn(username, password: password) { result in
+        session.tryToLogIn(username, password: password) { result in
             switch result {
             case .Success: self.view.goToMainMenu()
             case .NoSuchUser: self.view.goToCreateAccount(username, password: password)

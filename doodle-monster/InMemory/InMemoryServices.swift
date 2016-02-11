@@ -17,28 +17,6 @@ class MemoryPlayerService: PlayerService {
         self.session = session
     }
     
-    func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ()) {
-        var foundPlayer = false
-        for player in players {
-            if player.username == username {
-                foundPlayer = true
-                break
-            }
-        }
-        if !foundPlayer {
-            return callback(result: .NoSuchUser)
-        }
-        
-        for player in players {
-            if player.username == username && player.password == password {
-                session.setCurrentPlayer(player)
-                return callback(result: .Success)
-            }
-        }
-        
-        callback(result: .Error)
-    }
-    
     func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ()) {
         nextId = nextId + 1
         var player = Player()
@@ -47,7 +25,7 @@ class MemoryPlayerService: PlayerService {
         player.password = password
         player.displayName = displayName
         players.append(player)
-        session.setCurrentPlayer(player)
+        session.currentPlayer = player
         callback(result: .Success)
     }
     
@@ -109,21 +87,40 @@ class MemoryGameService: GameService {
 }
 
 class MemorySessionService: SessionService {
-    private(set) var curPlayer: Player?
+    var currentPlayer: Player?
+    var playerService: MemoryPlayerService!
     
-    func setCurrentPlayer(player: Player) {
-        curPlayer = player
+    func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ()) {
+        var foundPlayer = false
+        for player in playerService.players {
+            if player.username == username {
+                foundPlayer = true
+                break
+            }
+        }
+        if !foundPlayer {
+            return callback(result: .NoSuchUser)
+        }
+        
+        for player in playerService.players {
+            if player.username == username && player.password == password {
+                currentPlayer = player
+                return callback(result: .Success)
+            }
+        }
+        
+        callback(result: .Error)
     }
     
     func hasSession() -> Bool {
-        return curPlayer != nil
-    }
-    
-    func currentPlayer() -> Player? {
-        return curPlayer
+        return currentPlayer != nil
     }
     
     func logout() {
-        curPlayer = nil
+        currentPlayer = nil
+    }
+    
+    func resume() {
+        
     }
 }

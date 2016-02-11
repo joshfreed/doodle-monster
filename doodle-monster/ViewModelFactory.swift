@@ -13,11 +13,11 @@ class ViewModelFactory {
     }
 
     func loginByEmailPresenter(view: LoginByEmailView) -> LoginByEmailPresenter {
-        return LoginByEmailPresenter(view: view, playerService: appDelegate!.playerService)
+        return LoginByEmailPresenter(view: view, session: appDelegate!.session)
     }
 
     func newMonsterViewModel(vc: NewMonsterViewController) -> NewMonsterViewModel {
-        return NewMonsterViewModel(currentPlayer: appDelegate!.session.currentPlayer()!,
+        return NewMonsterViewModel(currentPlayer: appDelegate!.session.currentPlayer!,
             gameService: appDelegate!.gameService,
             router: NewMonsterRouterImpl(vc: vc, vmFactory: self)
         )
@@ -26,7 +26,6 @@ class ViewModelFactory {
     func mainMenuViewModel(vc: MainMenuViewController) -> MainMenuViewModel {
         return MainMenuViewModel(view: vc,
             gameService: appDelegate!.gameService,
-            currentPlayer: appDelegate!.session.currentPlayer()!,
             session: appDelegate!.session,
             router: MainMenuRouterImpl(vc: vc, vmFactory: self)
         )

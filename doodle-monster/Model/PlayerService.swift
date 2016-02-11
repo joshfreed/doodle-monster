@@ -9,7 +9,6 @@
 import UIKit
 
 protocol PlayerService {
-    func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ())
     func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ())
     func search(searchText: String, callback: (result: SearchResult) -> ())
 }

@@ -34,10 +34,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), forBarMetrics: .Default)
         
+        session.resume()
+        
         if session.hasSession() {
             let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let vc = storyboard.instantiateViewControllerWithIdentifier("MainMenu") as! MainMenuViewController
-            guard let currentPlayer = session.currentPlayer() else {
+            guard let _ = session.currentPlayer else {
                 fatalError("Have a session but can't get the current player. What's going on?")
             }
             vc.viewModel = viewModelFactory.mainMenuViewModel(vc)
@@ -77,6 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         session = MemorySessionService()
         playerService = MemoryPlayerService(session: session as! MemorySessionService)
         gameService = MemoryGameService(session: session as! MemorySessionService)
+        (session as! MemorySessionService).playerService = playerService as! MemoryPlayerService
         
         var player1 = Player()
         player1.id = "11111"
@@ -96,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let currentPlayerId = NSProcessInfo.processInfo().environment["CURRENT_USER"] {
             for player in (playerService as! MemoryPlayerService).players {
                 if player.id == currentPlayerId {
-                    (session as! MemorySessionService).setCurrentPlayer(player)
+                    (session as! MemorySessionService).currentPlayer = player
                 }
             }
         }

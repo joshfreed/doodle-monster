@@ -13,7 +13,6 @@ class MainMenuViewModelTests: XCTestCase {
     var vm: MainMenuViewModel!
     var view: MainMenuViewStub!
     var gameService: GameServiceMock!
-    var player: Player!
     var session: SessionMock!
     var router: MainMenuRouterStub!
 
@@ -21,10 +20,9 @@ class MainMenuViewModelTests: XCTestCase {
         super.setUp()
         view = MainMenuViewStub()
         gameService = GameServiceMock()
-        player = aPlayer("BBB")
         session = SessionMock()
         router = MainMenuRouterStub()
-        vm = MainMenuViewModel(view: view, gameService: gameService, currentPlayer: player, session: session, router: router)
+        vm = MainMenuViewModel(view: view, gameService: gameService, session: session, router: router)
     }
     
     override func tearDown() {
@@ -32,28 +30,29 @@ class MainMenuViewModelTests: XCTestCase {
         super.tearDown()
     }
     
-    func testLoadItems() {
-        var activeModels = [
-            aGame("999"),
-            aGame("888"),
-            aGame("777"),
-        ]
-        activeModels[0].players = [aPlayer("AAA")]
-        activeModels[0].currentPlayerNumber = 0
-        activeModels[1].players = [aPlayer("BBB")]
-        activeModels[1].currentPlayerNumber = 0
-        activeModels[2].players = [aPlayer("CCC")]
-        activeModels[2].currentPlayerNumber = 0
-        gameService.setActiveGames(activeModels)
+    func test_LoadItems_LoadsActiveGamesAndDistributesBetweenYourTurnAndWaiting() {
+        let player1 = PlayerBuilder.aPlayer()
+        let player2 = PlayerBuilder.aPlayer().withId("BBB")
+        let player3 = PlayerBuilder.aPlayer()
+        let player4 = PlayerBuilder.aPlayer()
+        let game1 = GameBuilder.aGame().withPlayers([player1, player2]).build()
+        let game2 = GameBuilder.aGame().withPlayers([player2, player3]).build()
+        let game3 = GameBuilder.aGame().withPlayers([player3, player4]).build()
+        gameService.setActiveGames([game1, game2, game3])
+        session.currentPlayer = player2.build()
+
+        let expectedVm1 = GameViewModel(game: game1)
+        let expectedVm2 = GameViewModel(game: game2)
+        let expectedVm3 = GameViewModel(game: game3)
 
         vm.loadItems()
 
-        XCTAssertTrue(view.recorder.received("updateGameList", withArguments: [:], atIndex: 0), "updateGameList was not called on the view")
-        XCTAssertEqual(1, vm.yourTurnGames.count, "Unexpected number of yourTurn games")
-        XCTAssertEqual(GameViewModel(game: activeModels[1]), vm.yourTurnGames[0])
+        XCTAssertEqual(1, vm.yourTurnGames.count)
         XCTAssertEqual(2, vm.waitingGames.count)
-        XCTAssertEqual(GameViewModel(game: activeModels[0]), vm.waitingGames[0])
-        XCTAssertEqual(GameViewModel(game: activeModels[2]), vm.waitingGames[1])
+        XCTAssertEqual(expectedVm2, vm.yourTurnGames[0])
+        XCTAssertEqual(expectedVm1, vm.waitingGames[0])
+        XCTAssertEqual(expectedVm3, vm.waitingGames[1])
+        XCTAssertTrue(view.recorder.received("updateGameList", withArguments: [:], atIndex: 0), "updateGameList was not called on the view")
     }
 
 
@@ -141,16 +140,22 @@ class GameServiceMock: GameService {
 }
 
 class SessionMock: SessionService {
+    var currentPlayer: Player?
+
     func hasSession() -> Bool {
         return false
     }
 
-    func currentPlayer() -> Player? {
-        return nil
+    func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ()) {
+        
     }
 
     func logout() {
 
+    }
+    
+    func resume() {
+        
     }
 }
 
@@ -165,5 +170,82 @@ class MainMenuRouterStub: MainMenuRouter {
 
     func showLoginScreen() {
 
+    }
+}
+
+protocol Builder {
+    typealias Entity
+    func build() -> Entity
+}
+
+extension Builder {
+    func generateId() -> String {
+        return randomStringWithLength(6) as! String
+    }
+
+    func randomStringWithLength(len: Int) -> NSString {
+        let letters: NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+        var randomString: NSMutableString = NSMutableString(capacity: len)
+
+        for (var i=0; i < len; i++){
+            var length = UInt32 (letters.length)
+            var rand = arc4random_uniform(length)
+            randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
+        }
+
+        return randomString
+    }
+}
+
+class GameBuilder: Builder {
+    var gameId: String?
+    var playerBuilders: [PlayerBuilder] = []
+
+    static func aGame() -> GameBuilder {
+        return GameBuilder()
+    }
+
+    func build() -> Game {
+        var game = Game()
+        game.id = gameId ?? generateId()
+        game.currentPlayerNumber = 0
+
+        var players: [Player] = []
+        for builder in playerBuilders {
+            players.append(builder.build())
+        }
+        game.players = players
+
+        return game
+    }
+
+    func withId(_ id: String) -> GameBuilder {
+        gameId = id
+        return self
+    }
+
+    func withPlayers(_ players: [PlayerBuilder]) -> GameBuilder {
+        playerBuilders = players
+        return self
+    }
+}
+
+class PlayerBuilder: Builder {
+    var playerId: String?
+
+    static func aPlayer() -> PlayerBuilder {
+        return PlayerBuilder()
+    }
+
+    func build() -> Player {
+        var player = Player()
+        player.id = playerId ?? generateId()
+        return player
+    }
+
+    func withId(_ id: String) -> PlayerBuilder {
+        playerId = id
+        return self
     }
 }

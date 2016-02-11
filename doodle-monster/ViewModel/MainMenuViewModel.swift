@@ -14,7 +14,7 @@ protocol MainMenuViewModelProtocol: class {
     var yourTurnGames: [GameViewModel] { get }
     var waitingGames: [GameViewModel] { get }
 
-    init(view: MainMenuView, gameService: GameService, currentPlayer: Player, session: SessionService, router: MainMenuRouter)
+    init(view: MainMenuView, gameService: GameService, session: SessionService, router: MainMenuRouter)
     func loadItems()
     func refresh()
     func signOut()
@@ -26,7 +26,6 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     // Dependencies
     let view: MainMenuView
     let gameService: GameService
-    let currentPlayer: Player
     let session: SessionService
     let router: MainMenuRouter
 
@@ -40,10 +39,9 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     private var turnCompleteObserver: NSObjectProtocol?
     private var gameOverObserver: NSObjectProtocol?
 
-    required init(view: MainMenuView, gameService: GameService, currentPlayer: Player, session: SessionService, router: MainMenuRouter) {
+    required init(view: MainMenuView, gameService: GameService, session: SessionService, router: MainMenuRouter) {
         self.view = view
         self.gameService = gameService
-        self.currentPlayer = currentPlayer
         self.session = session
         self.router = router
 
@@ -136,13 +134,17 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     // MARK: - MainMenuViewModelProtocol
 
     func loadItems() {
+        guard let currentPlayer = session.currentPlayer else {
+            fatalError("Tried to load games but no one is logged in")
+        }
+
         gameService.getActiveGames() { games in
             self.games = self.arrayToDict(games)
 
             for game in games {
-                if game.isCurrentTurn(self.currentPlayer) {
+                if game.isCurrentTurn(currentPlayer) {
                     self.yourTurnGames.append(GameViewModel(game: game))
-                } else if game.isWaitingForAnotherPlayer(self.currentPlayer) {
+                } else if game.isWaitingForAnotherPlayer(currentPlayer) {
                     self.waitingGames.append(GameViewModel(game: game))
                 }
             }

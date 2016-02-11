@@ -46,7 +46,7 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     }
 
     private func processSearchResults(players: [Player]) {
-        let currentPlayer = session.currentPlayer()!
+        let currentPlayer = session.currentPlayer!
         var viewModels: [PlayerViewModelProtocol] = []
         for player in players {
             if player == currentPlayer {
