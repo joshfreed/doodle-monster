@@ -62,42 +62,15 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     }
 
     func turnComplete(game: Game) {
-        removeGameFromYourTurn(game)
-        waitingGames.append(GameViewModel(game: game))
+        let vm = GameViewModel(game: game)
+        yourTurnGames.remove(vm)
+        waitingGames.append(vm)
         view.updateGameList()
     }
 
     func gameOver(game: Game) {
-        removeGameFromYourTurn(game)
+        yourTurnGames.remove(GameViewModel(game: game))
         view.updateGameList()
-    }
-
-    // TODO: move to Array extension
-    private func arrayToDict(games: [Game]) -> [String: Game] {
-        var result: [String: Game] = [:]
-        for game in games {
-            result[game.id!] = game
-        }
-        return result
-    }
-
-    // TODO: move to array extension
-    // TODO: remove GameViewModel
-    private func removeGameFromYourTurn(game: Game) {
-        var indexToMove: Int?
-        for (index, vm) in yourTurnGames.enumerate() {
-            if vm.game.id == game.id {
-                indexToMove = index
-                break
-            }
-        }
-
-        guard let index = indexToMove else {
-            print("Game not found \(game)")
-            return
-        }
-
-        yourTurnGames.removeAtIndex(index)
     }
 
     // MARK: - MainMenuViewModelProtocol
