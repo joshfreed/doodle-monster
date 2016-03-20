@@ -40,7 +40,7 @@ class NewMonsterRouterImpl: NewMonsterRouter {
         if let nc = destinationViewController as? UINavigationController,
             vc = nc.topViewController as? InviteByEmailViewController
         {
-            vc.viewModel = viewModelFactory.inviteByEmailViewModel()
+            vc.viewModel = viewModelFactory.inviteByEmailViewModel(vc)
         }
     }
 }

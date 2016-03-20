@@ -17,9 +17,10 @@ class ViewModelFactory {
     }
 
     func newMonsterViewModel(vc: NewMonsterViewController) -> NewMonsterViewModel {
-        return NewMonsterViewModel(currentPlayer: appDelegate!.session.currentPlayer!,
-            gameService: appDelegate!.gameService,
-            router: NewMonsterRouterImpl(vc: vc, vmFactory: self)
+        return NewMonsterViewModel(view: vc,
+            session: appDelegate!.session,
+            router: NewMonsterRouterImpl(vc: vc, vmFactory: self),
+            applicationLayer: appDelegate!.doodleMonsterApp
         )
     }
 
@@ -28,7 +29,8 @@ class ViewModelFactory {
             gameService: appDelegate!.gameService,
             session: appDelegate!.session,
             router: MainMenuRouterImpl(vc: vc, vmFactory: self),
-            listener: MainMenuViewModelListener()
+            listener: MainMenuViewModelListener(),
+            applicationLayer: appDelegate!.doodleMonsterApp
         )
     }
 
@@ -36,7 +38,7 @@ class ViewModelFactory {
         return DrawingViewModel(game: game, gameService: appDelegate!.gameService)
     }
 
-    func inviteByEmailViewModel() -> InviteByEmailViewModel {
-        return InviteByEmailViewModel(playerService: appDelegate!.playerService, session: appDelegate!.session)
+    func inviteByEmailViewModel(vc: InviteByEmailViewController) -> InviteByEmailViewModel {
+        return InviteByEmailViewModel(view: vc, playerService: appDelegate!.playerService, session: appDelegate!.session, applicationLayer: appDelegate!.doodleMonsterApp)
     }
 }

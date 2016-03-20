@@ -60,7 +60,7 @@ class ParseUserService: PlayerService {
         user["displayName"] = displayName
         user.signUpInBackgroundWithBlock { (succeeded, error) -> Void in
             if let error = error {
-                let errorString = error.userInfo["error"] as? NSString
+                _ = error.userInfo["error"] as? NSString
                 callback(result: .Error)
             } else {
                 callback(result: .Success)
@@ -87,5 +87,15 @@ class ParseUserService: PlayerService {
             }
             callback(result: .Success(players))
         }
+    }
+
+    func playerBy(id: String) -> Player? {
+        for object in parseObjects {
+            if object.objectId == id {
+                return playerTranslator.parseToModel(object)
+            }
+        }
+
+        return nil
     }
 }

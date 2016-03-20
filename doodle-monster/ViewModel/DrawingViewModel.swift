@@ -52,7 +52,7 @@ class DrawingViewModel: NSObject {
                 }
 
                 completion()
-            case .Failure(let error):
+            case .Failure( _):
                 fatalError("Failed to save turn")
             }
         }

@@ -32,17 +32,17 @@ class GameBuilder: Builder {
         return game
     }
 
-    func withId(_ id: String) -> GameBuilder {
+    func withId(id: String) -> GameBuilder {
         gameId = id
         return self
     }
 
-    func withPlayers(_ players: [PlayerBuilder]) -> GameBuilder {
+    func withPlayers(players: [PlayerBuilder]) -> GameBuilder {
         playerBuilders = players
         return self
     }
 
-    func withPlayers(_ players: [Player]) -> GameBuilder {
+    func withPlayers(players: [Player]) -> GameBuilder {
         self.players = players
         return self
     }

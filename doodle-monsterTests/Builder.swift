@@ -12,18 +12,18 @@ protocol Builder {
 
 extension Builder {
     func generateId() -> String {
-        return randomStringWithLength(6) as! String
+        return randomStringWithLength(6)
     }
 
-    func randomStringWithLength(len: Int) -> NSString {
-        let letters: NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    func randomStringWithLength(len: Int) -> String {
+        let letters: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-        var randomString: NSMutableString = NSMutableString(capacity: len)
+        var randomString: String = ""
 
-        for (var i=0; i < len; i++){
-            var length = UInt32 (letters.length)
-            var rand = arc4random_uniform(length)
-            randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
+        for (var i = 0; i < len; i++){
+            let length = UInt32(letters.characters.count)
+            let rand = arc4random_uniform(length)
+            randomString += String(letters.characters[letters.startIndex.advancedBy(Int(rand))])
         }
 
         return randomString

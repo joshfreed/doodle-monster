@@ -11,6 +11,7 @@ import UIKit
 protocol PlayerService {
     func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ())
     func search(searchText: String, callback: (result: SearchResult) -> ())
+    func playerBy(id: String) -> Player?
 }
 
 enum LoginResult {

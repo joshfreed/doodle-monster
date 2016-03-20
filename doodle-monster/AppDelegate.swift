@@ -17,8 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var playerService: PlayerService!
     var gameService: GameService!
     var session: SessionService!
+    var doodleMonsterApp: DoodleMonster!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
         if NSProcessInfo.processInfo().arguments.contains("TESTING") {
             prepareTestData()
         } else {
@@ -29,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             gameService = ParseGameService(parsePlayerService: playerService as! ParseUserService)
             session = ParseSessionService()
         }
+        
+        doodleMonsterApp = DoodleMonsterApp(gameService: gameService, session: session)
         
         viewModelFactory = ViewModelFactory(appDelegate: self)
 

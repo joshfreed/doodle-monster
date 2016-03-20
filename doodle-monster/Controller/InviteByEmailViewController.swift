@@ -8,22 +8,19 @@
 
 import UIKit
 
-class InviteByEmailViewController: UIViewController {
+class InviteByEmailViewController: UIViewController, InviteByEmailView {
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var playersTable: UITableView!
     
-    var viewModel: InviteByEmailViewModelProtocol! {
-        didSet {
-            self.viewModel.playersDidChange = { viewModel in
-                self.playersTable.reloadData()
-            }
-        }
-    }
+    var viewModel: InviteByEmailViewModelProtocol!
+    var dataSource: ArrayDataSource<PlayerTableViewCell, PlayerViewModel>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        playersTable.dataSource = self
+        dataSource = ArrayDataSource<PlayerTableViewCell, PlayerViewModel>(items: [], cellIdentifier: "PlayerCell")
+
+        playersTable.dataSource = dataSource
         playersTable.delegate = self
         searchTextField.addTarget(self, action: "searchTextDidChange", forControlEvents: .EditingChanged)
         searchTextField.becomeFirstResponder()
@@ -38,24 +35,20 @@ class InviteByEmailViewController: UIViewController {
         viewModel.search(searchTextField.text!)
     }
 
+    func displaySearchResults() {
+        dataSource.replaceItems(viewModel.players)
+        playersTable.reloadData()
+    }
+    
+    func displaySearchError() {
+        
+    }
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
-    }
-}
-
-// MARK: - UITableViewDataSource
-extension InviteByEmailViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.players.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PlayerCell") as! PlayerTableViewCell
-        cell.configure(viewModel.playerAt(indexPath.row))
-        return cell
     }
 }
 

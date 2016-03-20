@@ -8,6 +8,7 @@ import UIKit
 
 class PlayerBuilder: Builder {
     var playerId: String?
+    var displayName: String?
 
     static func aPlayer() -> PlayerBuilder {
         return PlayerBuilder()
@@ -16,11 +17,17 @@ class PlayerBuilder: Builder {
     func build() -> Player {
         var player = Player()
         player.id = playerId ?? generateId()
+        player.displayName = displayName
         return player
     }
 
-    func withId(_ id: String) -> PlayerBuilder {
+    func withId(id: String) -> PlayerBuilder {
         playerId = id
+        return self
+    }
+
+    func withName(name: String) -> PlayerBuilder {
+        displayName = name
         return self
     }
 }

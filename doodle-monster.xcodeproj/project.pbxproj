@@ -36,6 +36,9 @@
 		536D6C5A1C49ABCD00BF5EBC /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C591C49ABCD00BF5EBC /* ReusableViews.swift */; };
 		536D6C5C1C4D994800BF5EBC /* MonsterSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C5B1C4D994800BF5EBC /* MonsterSectionHeader.swift */; };
 		536D6C5E1C4D995D00BF5EBC /* MainMenuBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C5D1C4D995D00BF5EBC /* MainMenuBottom.swift */; };
+		539EF5101C86334F00883314 /* EmitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539EF50F1C86334F00883314 /* EmitterKit.framework */; };
+		539EF5121C86355C00883314 /* EmitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539EF50F1C86334F00883314 /* EmitterKit.framework */; };
+		539EF5181C864A0700883314 /* NewMonsterAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539EF5171C864A0700883314 /* NewMonsterAppTests.swift */; };
 		53AA70E41C4DA81600EB238B /* MainMenuBottom.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AA70E31C4DA81600EB238B /* MainMenuBottom.xib */; };
 		53B162831C6B8E8000663485 /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B162821C6B8E8000663485 /* Pages.swift */; };
 		53B162851C6BC28B00663485 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B162841C6BC28B00663485 /* GameTests.swift */; };
@@ -76,6 +79,8 @@
 		E9AFC31A6E97F82B4AFB516E /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFCE1BD4E7AA34D8271601 /* Mocks.swift */; };
 		E9AFC51983D84DE39E50E75E /* NewMonsterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC6092A7C3B7BAA904FE6 /* NewMonsterRouter.swift */; };
 		E9AFC57BDBD56C6E161DF7E2 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFCDE73393BA3497B4A0AA /* Builder.swift */; };
+		E9AFC6D8B0D1F10845B9CBBC /* InviteByEmailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC5A9BC2FB2FB2AEC5827 /* InviteByEmailViewModelTests.swift */; };
+		E9AFC75B7D95D3D1D46990FD /* DoodleMonsterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC21BF57F4D2C4013A9BB /* DoodleMonsterApp.swift */; };
 		E9AFCA6DCF18C5A84BADF8BB /* StructWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC642685D2FFD6F9211FA /* StructWrapper.swift */; };
 		E9AFCA7E8618B15DD20156E9 /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFCF547B9DC798F5A0A998 /* ViewModelFactory.swift */; };
 /* End PBXBuildFile section */
@@ -132,6 +137,8 @@
 		536D6C591C49ABCD00BF5EBC /* ReusableViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReusableViews.swift; path = View/Utilities/ReusableViews.swift; sourceTree = "<group>"; };
 		536D6C5B1C4D994800BF5EBC /* MonsterSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonsterSectionHeader.swift; path = View/MainMenu/MonsterSectionHeader.swift; sourceTree = "<group>"; };
 		536D6C5D1C4D995D00BF5EBC /* MainMenuBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuBottom.swift; path = View/MainMenu/MainMenuBottom.swift; sourceTree = "<group>"; };
+		539EF50F1C86334F00883314 /* EmitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EmitterKit.framework; path = Carthage/Build/iOS/EmitterKit.framework; sourceTree = "<group>"; };
+		539EF5171C864A0700883314 /* NewMonsterAppTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewMonsterAppTests.swift; path = Application/NewMonsterAppTests.swift; sourceTree = "<group>"; };
 		53AA70E31C4DA81600EB238B /* MainMenuBottom.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenuBottom.xib; path = View/Game/MainMenuBottom.xib; sourceTree = "<group>"; };
 		53B162821C6B8E8000663485 /* Pages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pages.swift; sourceTree = "<group>"; };
 		53B162841C6BC28B00663485 /* GameTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
@@ -171,7 +178,9 @@
 		53EE34F81C38697F00C70635 /* GameService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameService.swift; path = Model/GameService.swift; sourceTree = "<group>"; };
 		53EE34FA1C386F6C00C70635 /* doodle-monster-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "doodle-monster-Bridging-Header.h"; sourceTree = "<group>"; };
 		E9AFC14B83C787BA6E9FA967 /* PlayerBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerBuilder.swift; sourceTree = "<group>"; };
+		E9AFC21BF57F4D2C4013A9BB /* DoodleMonsterApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoodleMonsterApp.swift; sourceTree = "<group>"; };
 		E9AFC4F97913FC798BDB66CC /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
+		E9AFC5A9BC2FB2FB2AEC5827 /* InviteByEmailViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteByEmailViewModelTests.swift; sourceTree = "<group>"; };
 		E9AFC6092A7C3B7BAA904FE6 /* NewMonsterRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMonsterRouter.swift; sourceTree = "<group>"; };
 		E9AFC642685D2FFD6F9211FA /* StructWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StructWrapper.swift; sourceTree = "<group>"; };
 		E9AFCDCDC769A8EAF0EA94B1 /* GameBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBuilder.swift; sourceTree = "<group>"; };
@@ -185,6 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				539EF5101C86334F00883314 /* EmitterKit.framework in Frameworks */,
 				53CED4CF1C1F6DE000B5BEEF /* SystemConfiguration.framework in Frameworks */,
 				53CED4C71C1F6D5600B5BEEF /* AudioToolbox.framework in Frameworks */,
 				53CED4C51C1F6D4000B5BEEF /* libsqlite3.tbd in Frameworks */,
@@ -197,6 +207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				539EF5121C86355C00883314 /* EmitterKit.framework in Frameworks */,
 				536D6C541C46E83800BF5EBC /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +270,7 @@
 				53EE34FA1C386F6C00C70635 /* doodle-monster-Bridging-Header.h */,
 				E9AFC0B23B2E1CADB171FBAE /* Routing */,
 				E9AFC5F9746844D2BDE0E2B3 /* Extensions */,
+				E9AFC4511DD86197F4C4ABB6 /* Application */,
 			);
 			path = "doodle-monster";
 			sourceTree = "<group>";
@@ -266,6 +278,7 @@
 		532800A61BA0ECF6005AD59C /* doodle-monsterTests */ = {
 			isa = PBXGroup;
 			children = (
+				539EF5161C8649EE00883314 /* Application */,
 				533599761C69181300F50FAB /* ViewModel */,
 				532800A91BA0ECF6005AD59C /* Info.plist */,
 				53EE34F61C345E8600C70635 /* NewMonsterTests.swift */,
@@ -294,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				533599771C69182E00F50FAB /* MainMenuViewModelTests.swift */,
+				E9AFC5A9BC2FB2FB2AEC5827 /* InviteByEmailViewModelTests.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -355,6 +369,14 @@
 			name = Game;
 			sourceTree = "<group>";
 		};
+		539EF5161C8649EE00883314 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				539EF5171C864A0700883314 /* NewMonsterAppTests.swift */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
 		53C8D3EC1C2A00350052A9ED /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,6 +431,7 @@
 		53CED4C31C1F6BD200B5BEEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				539EF50F1C86334F00883314 /* EmitterKit.framework */,
 				53CED4CE1C1F6DE000B5BEEF /* SystemConfiguration.framework */,
 				53CED4CC1C1F6DD300B5BEEF /* Security.framework */,
 				53CED4CA1C1F6DB300B5BEEF /* libz.tbd */,
@@ -449,6 +472,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		E9AFC4511DD86197F4C4ABB6 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				E9AFC21BF57F4D2C4013A9BB /* DoodleMonsterApp.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		E9AFC5F9746844D2BDE0E2B3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -467,6 +498,7 @@
 				5328008B1BA0ECF6005AD59C /* Sources */,
 				5328008C1BA0ECF6005AD59C /* Frameworks */,
 				5328008D1BA0ECF6005AD59C /* Resources */,
+				539EF5151C8637CC00883314 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -589,6 +621,23 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		539EF5151C8637CC00883314 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/EmitterKit.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5328008B1BA0ECF6005AD59C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -639,6 +688,7 @@
 				E9AFCA6DCF18C5A84BADF8BB /* StructWrapper.swift in Sources */,
 				E9AFC51983D84DE39E50E75E /* NewMonsterRouter.swift in Sources */,
 				E9AFC17D03315853177E65FC /* ArrayExtensions.swift in Sources */,
+				E9AFC75B7D95D3D1D46990FD /* DoodleMonsterApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,9 +701,11 @@
 				53EE34F71C345E8600C70635 /* NewMonsterTests.swift in Sources */,
 				53B162891C6E58FB00663485 /* ArrayExtensionTests.swift in Sources */,
 				53B162861C6D33EB00663485 /* GameBuilder.swift in Sources */,
+				539EF5181C864A0700883314 /* NewMonsterAppTests.swift in Sources */,
 				E9AFC57BDBD56C6E161DF7E2 /* Builder.swift in Sources */,
 				53B162871C6D33EE00663485 /* PlayerBuilder.swift in Sources */,
 				E9AFC31A6E97F82B4AFB516E /* Mocks.swift in Sources */,
+				E9AFC6D8B0D1F10845B9CBBC /* InviteByEmailViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,6 +845,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "doodle-monster/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -810,6 +863,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "doodle-monster/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -826,6 +880,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/**",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "doodle-monsterTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -844,6 +900,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/**",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "doodle-monsterTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

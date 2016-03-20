@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArrayDataSource<T: CellProtocol, Item where T.ItemType == Item>: NSObject, UICollectionViewDataSource {
+class ArrayDataSource<T: CellProtocol, Item where T.ItemType == Item>: NSObject, UICollectionViewDataSource, UITableViewDataSource {
     var items: [Item]
     let identifier: String
     
@@ -17,7 +17,17 @@ class ArrayDataSource<T: CellProtocol, Item where T.ItemType == Item>: NSObject,
         self.items = items
         self.identifier = cellIdentifier
     }
-    
+
+    func getItemAtIndex(indexPath: NSIndexPath) -> Item {
+        return items[indexPath.row]
+    }
+
+    func replaceItems(items: [Item]) {
+        self.items = items
+    }
+
+    // MARK: - UICollectionViewDataSource
+
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
@@ -27,13 +37,17 @@ class ArrayDataSource<T: CellProtocol, Item where T.ItemType == Item>: NSObject,
         cell.configure(getItemAtIndex(indexPath))
         return cell as! UICollectionViewCell
     }
-    
-    func getItemAtIndex(indexPath: NSIndexPath) -> Item {
-        return items[indexPath.row]
+
+    // MARK: - UITableViewDataSource
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
     }
-    
-    func replaceItems(items: [Item]) {
-        self.items = items
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(identifier) as! T
+        cell.configure(items[indexPath.row])
+        return cell as! UITableViewCell
     }
 }
 

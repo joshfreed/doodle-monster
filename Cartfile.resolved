@@ -1,2 +1,3 @@
 github "BoltsFramework/Bolts-iOS" "1.6.0"
+github "aleclarson/emitter-kit" "4.0.1"
 github "ParsePlatform/parse-sdk-ios-osx" "1.12.0"

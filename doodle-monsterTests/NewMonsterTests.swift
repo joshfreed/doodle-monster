@@ -69,7 +69,7 @@ class NewMonsterTests: XCTestCase {
     }
     
     func testRemovePlayerCanRemoveAnArbitraryPlayer() {
-        var removed: PlayerViewModelProtocol?
+        var removed: PlayerViewModel?
         vm.playerWasRemoved = { vm in
             removed = vm
         }

@@ -6,6 +6,8 @@
 //  Copyright © 2016 BleepSmazz. All rights reserved.
 //
 
+import EmitterKit
+
 protocol MainMenuView {
     func updateGameList()
 }
@@ -18,7 +20,8 @@ protocol MainMenuViewModelProtocol: class {
          gameService: GameService,
          session: SessionService,
          router: MainMenuRouter,
-         listener: MainMenuViewModelListener)
+         listener: MainMenuViewModelListener,
+         applicationLayer: DoodleMonster)
     func loadItems()
     func refresh()
     func signOut()
@@ -32,23 +35,30 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     let session: SessionService
     let router: MainMenuRouter
     let listener: MainMenuViewModelListener
+    let appLayer: DoodleMonster
 
     // Observables
     var yourTurnGames: [GameViewModel] = []
     var waitingGames: [GameViewModel] = []
+    
+    private var listeners: [Listener] = []
 
     required init(view: MainMenuView,
                   gameService: GameService,
                   session: SessionService,
                   router: MainMenuRouter,
-                  listener: MainMenuViewModelListener) {
+                  listener: MainMenuViewModelListener,
+                  applicationLayer: DoodleMonster) {
         self.view = view
         self.gameService = gameService
         self.session = session
         self.router = router
         self.listener = listener
+        self.appLayer = applicationLayer
         self.listener.viewModel = self
         self.listener.startListening()
+                    
+        listeners += self.appLayer.newGameStarted.on { [weak self] n in self?.newGameStarted(n) }
     }
 
     deinit {
@@ -105,6 +115,7 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     }
 
     func newMonster() {
+        appLayer.createLobby()
         router.showNewMonsterScreen()
     }
 

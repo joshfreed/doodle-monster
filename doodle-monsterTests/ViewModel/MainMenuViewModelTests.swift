@@ -16,6 +16,7 @@ class MainMenuViewModelTests: XCTestCase {
     var session: SessionMock!
     var router: MainMenuRouterMock!
     var listener: MainMenuViewModelListenerMock!
+    var app: DoodleMonsterMock!
 
     override func setUp() {
         super.setUp()
@@ -24,7 +25,8 @@ class MainMenuViewModelTests: XCTestCase {
         session = SessionMock()
         router = MainMenuRouterMock()
         listener = MainMenuViewModelListenerMock()
-        vm = MainMenuViewModel(view: view, gameService: gameService, session: session, router: router, listener: listener)
+        app = DoodleMonsterMock()
+        vm = MainMenuViewModel(view: view, gameService: gameService, session: session, router: router, listener: listener, applicationLayer: app)
     }
     
     override func tearDown() {

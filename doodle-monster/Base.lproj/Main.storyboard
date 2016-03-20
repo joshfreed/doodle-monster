@@ -390,7 +390,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ym2-Wf-Cij">
-                                            <rect key="frame" x="279.5" y="14.5" width="42" height="20.5"/>
+                                            <rect key="frame" x="279" y="15" width="42" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -658,16 +658,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="311" height="312"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name this monster!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cvj-QA-XOk">
-                                        <rect key="frame" x="0.0" y="64" width="311" height="33.5"/>
+                                        <rect key="frame" x="0.0" y="64" width="311" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IW2-ph-72m" userLabel="Monster Name Container">
-                                        <rect key="frame" x="115" y="129" width="81" height="25.5"/>
+                                        <rect key="frame" x="115" y="129" width="81" height="26"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAx-Yh-u93" userLabel="Monster Name">
-                                                <rect key="frame" x="0.0" y="0.0" width="51.5" height="25.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="52" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -696,7 +696,7 @@
                                         <rect key="frame" x="20" y="175" width="271" height="46"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ArP-VJ-lJV">
-                                                <rect key="frame" x="0.0" y="0.0" width="135.5" height="46"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="136" height="46"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="saveTurn" label="Save turn"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                                 <state key="normal" title="Save"/>
@@ -705,7 +705,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PuG-iM-4Sg">
-                                                <rect key="frame" x="135.5" y="0.0" width="135.5" height="46"/>
+                                                <rect key="frame" x="136" y="0.0" width="135" height="46"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <state key="normal" title="Cancel"/>
                                                 <connections>
@@ -794,7 +794,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="435"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Players" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="laU-1v-hxX">
-                                                <rect key="frame" x="8" y="8" width="584" height="20.5"/>
+                                                <rect key="frame" x="8" y="8" width="584" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -806,13 +806,13 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="584" height="45"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Display name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fEQ-cZ-pfx">
-                                                                <rect key="frame" x="0.0" y="0.0" width="127" height="25.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="127" height="26"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2n-xF-RML">
-                                                                <rect key="frame" x="0.0" y="25" width="38" height="19.5"/>
+                                                                <rect key="frame" x="0.0" y="25" width="38" height="20"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -822,7 +822,7 @@
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invite Players" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYu-mD-1Up">
-                                                <rect key="frame" x="8" y="89" width="584" height="20.5"/>
+                                                <rect key="frame" x="8" y="89" width="584" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -846,7 +846,7 @@
                                                                 </connections>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BU1-nR-2xg">
-                                                                <rect key="frame" x="32" y="138" width="74.5" height="42"/>
+                                                                <rect key="frame" x="32" y="138" width="75" height="42"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -1129,6 +1129,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="1oS-iW-VAh"/>
-        <segue reference="rza-KZ-eL7"/>
+        <segue reference="6R0-mk-g1C"/>
     </inferredMetricsTieBreakers>
 </document>

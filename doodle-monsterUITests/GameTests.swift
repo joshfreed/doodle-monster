@@ -27,6 +27,31 @@ class GameTests: XCTestCase {
     
     func test_StartingANewGame() {
         let app = XCUIApplication()
+        
+        app.collectionViews.buttons["New Monster"].tap()
+        
+        let elementsQuery = app.scrollViews.otherElements
+        elementsQuery.buttons["email button"].tap()
+        app.textFields["SearchText"].typeText("jerry")
+        app.tables.staticTexts["jerry@bleepsmazz.com"].tap()
+        elementsQuery.buttons["Start!"].tap()
+        
+        let scrollView = app.scrollViews["drawingScrollView"]
+        let exists = NSPredicate(format: "exists == 1")
+        expectationForPredicate(exists, evaluatedWithObject: scrollView, handler: nil)
+        waitForExpectationsWithTimeout(5, handler: nil)
+        
+        app.buttons["cancel drawing"].tap()
+        
+        let monsterCollection = app.collectionViews["monsterCollection"]
+        XCTAssert(monsterCollection.exists)
+        XCTAssertEqual(1, monsterCollection.cells.count)
+        
+//        XCTAssertTrue(app.collectionViews["monsterCollection"].cells.otherElements.containingType(.StaticText, identifier:"").element.hittable)
+    }
+    
+    func test_StartingANewGameAndTakingTheFirstTurn() {
+        let app = XCUIApplication()
 
         app.collectionViews.buttons["New Monster"].tap()
         

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlayerTableViewCell: UITableViewCell {
+class PlayerTableViewCell: UITableViewCell, CellProtocol {
     @IBOutlet weak var displayName: UILabel!
     @IBOutlet weak var emailAddress: UILabel!
 
@@ -23,8 +23,8 @@ class PlayerTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configure(viewModel: PlayerViewModelProtocol) {
-        self.displayName.text = viewModel.displayName
-        self.emailAddress.text = viewModel.email
+    func configure(item: PlayerViewModel) {
+        self.displayName.text = item.displayName
+        self.emailAddress.text = item.email
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewMonsterViewController: UIViewController, RoutedSegue {
+class NewMonsterViewController: UIViewController, RoutedSegue, NewMonsterView {
     @IBOutlet weak var currentPlayersLabel: UILabel!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var startButton: UIButton!
@@ -20,13 +20,7 @@ class NewMonsterViewController: UIViewController, RoutedSegue {
     var segues: [String: Segue] = [:]
     var playerViews: [PlayerView] = []
 
-    var viewModel: NewMonsterViewModelProtocol! {
-        didSet {
-            self.viewModel.playerWasAdded = self.addPlayerView
-            self.viewModel.playerWasRemoved = self.removePlayerView
-            self.viewModel.buttonVisibilityChanged = self.updateStartButton
-        }
-    }
+    var viewModel: NewMonsterViewModelProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,26 +55,26 @@ class NewMonsterViewController: UIViewController, RoutedSegue {
     @IBAction func start(sender: UIButton) {
         viewModel.startGame()
     }
-    
-    // MARK: Views or whatever
-    
-    private func addPlayerView(playerViewModel: PlayerViewModelProtocol) {
+
+    // MARK: - NewMonsterView
+
+    func displayPlayer(player: PlayerViewModel) {
         let playerView = PlayerView.loadFromNib()
-        playerView.configure(self.viewModel, playerViewModel: playerViewModel)
-        self.stackView.addArrangedSubview(playerView)
-        self.playerViews.append(playerView)
+        playerView.configure(viewModel, playerViewModel: player)
+        stackView.addArrangedSubview(playerView)
+        playerViews.append(playerView)
     }
-    
-    private func removePlayerView(playerViewModel: PlayerViewModelProtocol) {
-        for playerView in self.playerViews {
-            if playerView.playerViewModel.isEqualTo(playerViewModel) {
-                self.stackView.removeArrangedSubview(playerView)
+
+    func removePlayer(player: PlayerViewModel) {
+        for playerView in playerViews {
+            if playerView.playerViewModel == player {
+                stackView.removeArrangedSubview(playerView)
                 playerView.removeFromSuperview()
             }
         }
     }
 
-    private func updateStartButton() {
+    func updateStartButton() {
         startButton.hidden = viewModel.buttonHidden
     }
 }

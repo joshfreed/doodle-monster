@@ -7,120 +7,87 @@
 //
 
 import UIKit
+import EmitterKit
+
+protocol NewMonsterView {
+    func displayPlayer(player: PlayerViewModel)
+    func removePlayer(player: PlayerViewModel)
+    func updateStartButton()
+}
 
 protocol NewMonsterViewModelProtocol {
-    // Properties
-    var players: [PlayerViewModelProtocol] { get }
-    var currentPlayer: PlayerViewModelProtocol { get }
+    var players: [PlayerViewModel] { get }
+    var currentPlayer: PlayerViewModel { get }
     var buttonHidden: Bool { get }
-    // Changes
-    var playerWasAdded: ((PlayerViewModelProtocol) -> ())? { get set }
-    var playerWasRemoved: ((PlayerViewModelProtocol) -> ())? { get set }
-    var buttonVisibilityChanged: (() -> ())? { get set }
 
-    init(currentPlayer: Player, gameService: GameService, router: NewMonsterRouter)
-    func addPlayer(player: Player)
-    func removePlayer(player: PlayerViewModelProtocol)
+    init(view: NewMonsterView, session: SessionService, router: NewMonsterRouter, applicationLayer: DoodleMonster)
+    func removePlayer(player: PlayerViewModel)
     func startGame()
 }
 
 class NewMonsterViewModel: NewMonsterViewModelProtocol {
-    var players: [PlayerViewModelProtocol] = []
-    var currentPlayer: PlayerViewModelProtocol
+    var players: [PlayerViewModel] = []
+    var currentPlayer: PlayerViewModel
     var buttonHidden = true
-    private let _currentPlayerModel: Player
-    private var _playerModels: [Player] = []
-    private let gameService: GameService
+
+    private let view: NewMonsterView
+    private let session: SessionService
     private let router: NewMonsterRouter
+    private let appLayer: DoodleMonster
+    private var listeners: [Listener] = []
 
-    private var playerAddedObserver: NSObjectProtocol?
-
-    // Changes
-    var playerWasAdded: ((PlayerViewModelProtocol) -> ())?
-    var playerWasRemoved: ((PlayerViewModelProtocol) -> ())?
-    var buttonVisibilityChanged: (() -> ())?
-
-    required init(currentPlayer: Player, gameService: GameService, router: NewMonsterRouter) {
-        self._currentPlayerModel = currentPlayer
-        self.currentPlayer = PlayerViewModel(player: currentPlayer)
-        self.gameService = gameService
+    required init(view: NewMonsterView, session: SessionService, router: NewMonsterRouter, applicationLayer: DoodleMonster) {
+        self.view = view
+        self.session = session
         self.router = router
-        _playerModels.append(self._currentPlayerModel)
-        playerAddedObserver = NSNotificationCenter.defaultCenter().addObserverForName("NewMonster:PlayerAdded", object: nil, queue: nil) { [weak self] n in self?.playerAdded(n) }
+        self.appLayer = applicationLayer
+
+        self.currentPlayer = PlayerViewModel(player: session.currentPlayer!)
+        
+        listeners += appLayer.playerAdded.on { [weak self] n in self?.playerAdded(n) }
+        listeners += appLayer.playerRemoved.on { [weak self] n in self?.playerRemoved(n) }
+        listeners += appLayer.newGameStarted.on { [weak self] n in self?.router.goToNewMonster(n) }
     }
 
     deinit {
         print("NewMonsterViewModel::deinit")
-        if playerAddedObserver != nil {
-            NSNotificationCenter.defaultCenter().removeObserver(playerAddedObserver!)
-        }
     }
 
-    func playerAdded(notification: NSNotification) {
-        guard let userInfo = notification.userInfo, wrapper = userInfo["player"] as? Wrapper<Player> else {
-            fatalError("Missing game in message");
-        }
-
-        let player = wrapper.wrappedValue
-        addPlayer(player)
-    }
-
-    func removePlayer(player: PlayerViewModelProtocol) {
-        guard let index = players.indexOf({ (p) -> Bool in return p.isEqualTo(player) }) else {
-            return
-        }
-
-        players.removeAtIndex(index)
-        self.playerWasRemoved?(player)
+    func playerAdded(player: Player) {
+        let playerVm = PlayerViewModel(player: player)
+        players.append(playerVm)
+        view.displayPlayer(playerVm)
         validateGame()
     }
     
-    func addPlayer(player: Player) {
-        guard !_playerModels.contains(player) else {
-            return
-        }
-
-        _playerModels.append(player)
-        let playerVm = PlayerViewModel(player: player)
-        players.append(playerVm)
-        self.playerWasAdded?(playerVm)
+    func playerRemoved(player: Player) {
+        let vm = PlayerViewModel(player: player)
+        players.remove(vm)
+        view.removePlayer(vm)
         validateGame()
     }
 
     func validateGame() {
-        if players.count > 0 {
-            buttonHidden = false
-        } else {
-            buttonHidden = true
-        }
+        buttonHidden = !appLayer.canStartGame()
+        view.updateStartButton()
+    }
 
-        buttonVisibilityChanged?()
+    // MARK: - NewMonsterViewModelProtocol
+
+    func removePlayer(vm: PlayerViewModel) {
+        appLayer.removePlayer(vm.id)
     }
 
     func startGame() {
-        gameService.createGame(_playerModels) { result in
-            switch result {
-            case .Success(let newGame):
-                let wrappedGame = Wrapper<Game>(theValue: newGame)
-                NSNotificationCenter.defaultCenter().postNotificationName("NewGameStarted", object: nil, userInfo: ["game": wrappedGame])
-                self.router.goToNewMonster(newGame)
-            case .Failure(let error):
-                print("Game failed to start \(error)")
-                break
-            }
-        }
+        appLayer.startGame()
     }
 }
 
-protocol PlayerViewModelProtocol {
-    var email: String { get }
-    var displayName: String { get }
+struct PlayerViewModel: Equatable {
+    var id: String {
+        return player.id!
+    }
 
-    init(player: Player)
-    func isEqualTo(other: PlayerViewModelProtocol) -> Bool
-}
-
-struct PlayerViewModel: PlayerViewModelProtocol {
     var email: String {
         if let un = player.username {
             return un
@@ -128,6 +95,7 @@ struct PlayerViewModel: PlayerViewModelProtocol {
             return ""
         }
     }
+
     var displayName: String {
         return player.displayName ?? ""
     }
@@ -137,10 +105,8 @@ struct PlayerViewModel: PlayerViewModelProtocol {
     init(player: Player) {
         self.player = player
     }
-
-    func isEqualTo(other: PlayerViewModelProtocol) -> Bool {
-        return self.displayName == other.displayName && self.email == other.email
-    }
 }
 
-
+func ==(lhs: PlayerViewModel, rhs: PlayerViewModel) -> Bool {
+    return lhs.player.id == rhs.player.id
+}

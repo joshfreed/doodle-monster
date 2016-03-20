@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import EmitterKit
 @testable import doodle_monster
 
 class MainMenuViewMock: MainMenuView {
@@ -14,8 +15,23 @@ class MainMenuViewMock: MainMenuView {
     }
 }
 
+class InviteByEmailViewMock: InviteByEmailView {
+    var calledDisplayedSearchResults = false
+    var calledSearchError = false
+    
+    func displaySearchResults() {
+        calledDisplayedSearchResults = true
+    }
+    
+    func displaySearchError() {
+        calledSearchError = true
+    }
+}
+
 class GameServiceMock: GameService {
     var activeGames: [Game] = []
+    var createGameResult: Result<Game>?
+    var calledCreateGame = false
 
     func setActiveGames(games: [Game]) {
         activeGames = games
@@ -24,7 +40,11 @@ class GameServiceMock: GameService {
     // MARK: GameService
 
     func createGame(players: [Player], callback: (Result<Game>) -> ()) {
-        callback(.Success(GameBuilder.aGame().withPlayers(players).build()))
+        calledCreateGame = true
+        guard let result = createGameResult else {
+            return
+        }
+        callback(result);
     }
 
     func getActiveGames(callback: ([Game]) -> ()) {
@@ -83,4 +103,65 @@ class MainMenuViewModelListenerMock: MainMenuViewModelListener {
     override func stopListening() {
 
     }
+}
+
+class PlayerServiceMock: PlayerService {
+    var lastSearchedFor: String?
+    var nextResult: SearchResult?
+    var players: [Player] = []
+
+    func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ()) {
+
+    }
+
+    func search(searchText: String, callback: (result: SearchResult) -> ()) {
+        lastSearchedFor = searchText
+        callback(result: nextResult!)
+    }
+
+    func playerBy(id: String) -> Player? {
+        for player in players {
+            if player.id == id {
+                return player
+            }
+        }
+        
+        return nil
+    }
+}
+
+class DoodleMonsterMock: DoodleMonster {
+    var lastPlayerAdded: Player?
+    
+    // MARK:  Actions
+    
+    func createLobby() {
+        
+    }
+    
+    func cancelLobby() {
+        
+    }
+    
+    func addPlayer(player: Player) {
+        lastPlayerAdded = player
+    }
+    
+    func removePlayer(playerId: String) {
+        
+    }
+    
+    func startGame() {
+        
+    }
+    
+    func canStartGame() -> Bool {
+        return false
+    }
+    
+    // MARK: Events
+    
+    let playerAdded = Event<Player>()
+    let playerRemoved = Event<Player>()
+    let newGameStarted = Event<Game>()
 }

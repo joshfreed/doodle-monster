@@ -40,6 +40,16 @@ class MemoryPlayerService: PlayerService {
         }
         callback(result: .Success(matches))
     }
+
+    func playerBy(id: String) -> Player? {
+        for player in players {
+            if player.id == id {
+                return player
+            }
+        }
+
+        return nil
+    }
 }
 
 class MemoryGameService: GameService {
