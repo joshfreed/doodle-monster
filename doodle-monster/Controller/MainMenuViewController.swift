@@ -54,7 +54,7 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, Routed
         monsterCollection.registerNib(theNib, forSupplementaryViewOfKind: "MainMenuBottom", withReuseIdentifier: MainMenuBottom.defaultReuseIdentifier)
         
         refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "onRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: #selector(MainMenuViewController.onRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         monsterCollection.addSubview(refreshControl)
         
         spinner = UIActivityIndicatorView(activityIndicatorStyle: .Gray)

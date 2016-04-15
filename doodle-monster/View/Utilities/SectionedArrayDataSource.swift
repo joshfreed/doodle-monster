@@ -40,7 +40,7 @@ class SectionedArrayDataSource<Item>: NSObject, UICollectionViewDataSource {
 }
 
 protocol CollectionViewCell: NibLoadableView {
-    typealias Item
+    associatedtype Item
     func configure(item: Item)
 }
 

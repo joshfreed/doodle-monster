@@ -22,7 +22,7 @@ class InviteByEmailViewController: UIViewController, InviteByEmailView {
 
         playersTable.dataSource = dataSource
         playersTable.delegate = self
-        searchTextField.addTarget(self, action: "searchTextDidChange", forControlEvents: .EditingChanged)
+        searchTextField.addTarget(self, action: #selector(InviteByEmailViewController.searchTextDidChange), forControlEvents: .EditingChanged)
         searchTextField.becomeFirstResponder()
     }
 

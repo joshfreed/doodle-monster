@@ -21,8 +21,8 @@ class SaveViewController: UIViewController, UITextFieldDelegate {
         monsterName.text = viewModel.name
 
         nextLetterInput.delegate = self
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SaveViewController.keyboardWillShowNotification(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SaveViewController.keyboardWillHideNotification(_:)), name: UIKeyboardWillHideNotification, object: nil)
         nextLetterInput.becomeFirstResponder()
     }
 

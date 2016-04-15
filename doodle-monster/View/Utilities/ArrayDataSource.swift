@@ -52,7 +52,7 @@ class ArrayDataSource<T: CellProtocol, Item where T.ItemType == Item>: NSObject,
 }
 
 protocol CellProtocol {
-    typealias ItemType
+    associatedtype ItemType
     
     func configure(item: ItemType)
 }

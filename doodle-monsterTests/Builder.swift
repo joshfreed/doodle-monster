@@ -6,7 +6,7 @@
 import UIKit
 
 protocol Builder {
-    typealias Entity
+    associatedtype Entity
     func build() -> Entity
 }
 
@@ -20,7 +20,7 @@ extension Builder {
 
         var randomString: String = ""
 
-        for (var i = 0; i < len; i++){
+        for _ in 0..<len {
             let length = UInt32(letters.characters.count)
             let rand = arc4random_uniform(length)
             randomString += String(letters.characters[letters.startIndex.advancedBy(Int(rand))])
