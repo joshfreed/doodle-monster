@@ -165,3 +165,132 @@ class DoodleMonsterMock: DoodleMonster {
     let playerRemoved = Event<Player>()
     let newGameStarted = Event<Game>()
 }
+
+class GraphicsContextMock: GraphicsContextService {
+    var fullImageData: NSData? {
+        return nil
+    }
+    
+    var currentImage: UIImage? {
+        return nil
+    }
+    
+    func setImageData(imageData: NSData) {
+        
+    }
+    
+    func startDrawingLine(fromPoint: CGPoint, _ toPoint: CGPoint) {
+        
+    }
+    
+    func setNormalStroke() {
+        
+    }
+    
+    func setClearStroke() {
+        
+    }
+    
+    func endDrawingLine() {
+        
+    }
+}
+
+class StrokeHistoryMock: StrokeHistoryProtocol {
+    var strokes: [Stroke] = []
+    
+    func addStroke(stroke: Stroke) {
+        strokes.append(stroke)
+    }
+    
+    func undo() {
+        
+    }
+    
+    func redo() {
+        
+    }
+}
+
+class FakeStroke: Stroke {
+    var image: UIImage {
+        return UIImage()
+    }
+}
+
+class DrawingViewMock: DrawingView {
+    var calledGoToMainMenu = false
+    var calledShowCancelConfirmation = false
+    
+    func allowPanningAndZooming() -> Bool {
+        return false
+    }
+    
+    func switchToDrawMode() {
+        
+    }
+    
+    func switchToEraseMode() {
+        
+    }
+    
+    func showCancelConfirmation() {
+        calledShowCancelConfirmation = true
+    }
+    
+    func goToMainMenu() {
+        calledGoToMainMenu = true
+    }
+}
+
+class DrawingServiceMock: DrawingServiceProtocol {
+    var wasChanged = false
+    
+    var fullImageData: NSData? {
+        return nil
+    }
+    
+    var drawingMode: DrawingMode
+    
+    init() {
+        drawingMode = .Draw
+    }
+    
+    func setImageData(imageData: NSData) {
+        
+    }
+    func startDraw(currentPoint: CGPoint) {
+        
+    }
+    func movePencilTo(currentPoint: CGPoint) {
+        
+    }
+    func endDraw() {
+        
+    }
+    func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
+        
+    }
+    func abortLine() {
+        
+    }
+    func saveCurrentToHistory() {
+        
+    }
+    func allowPanningAndZooming() -> Bool {
+        return false
+    }
+    func hasMadeChanges() -> Bool {
+        return wasChanged
+    }
+    func undo() {
+        
+    }
+    func redo() {
+        
+    }
+}
+
+
+
+

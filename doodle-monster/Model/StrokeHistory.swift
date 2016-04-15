@@ -16,7 +16,15 @@ protocol Canvas {
     var currentStroke: Stroke? { get set }
 }
 
-class StrokeHistory: NSObject {
+protocol StrokeHistoryProtocol {
+    var strokes: [Stroke] { get }
+    
+    func addStroke(stroke: Stroke)
+    func undo()
+    func redo()
+}
+
+class StrokeHistory: StrokeHistoryProtocol {
     let undoLimit: Int
     
     private var canvas: Canvas

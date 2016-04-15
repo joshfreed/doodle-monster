@@ -34,8 +34,8 @@ class ViewModelFactory {
         )
     }
 
-    func drawingViewModel(game: Game) -> DrawingViewModel {
-        return DrawingViewModel(game: game, gameService: appDelegate!.gameService)
+    func drawingViewModel(game: Game, view: DrawingView) -> DrawingViewModel {
+        return DrawingViewModel(view: view, game: game, gameService: appDelegate!.gameService)
     }
 
     func inviteByEmailViewModel(vc: InviteByEmailViewController) -> InviteByEmailViewModel {

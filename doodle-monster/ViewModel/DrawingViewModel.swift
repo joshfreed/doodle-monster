@@ -11,27 +11,52 @@ import UIKit
 protocol DrawingViewModelProtocol {
     var name: String { get }
 
-    init(game: Game, gameService: GameService)
-    func saveImages(currentImageData: NSData, fullImageData: NSData)
+    init(view: DrawingView, game: Game, gameService: GameService)
+    func saveImages(fullImageData: NSData)
     func saveTurn(letter: String)
+    func enterDrawMode()
+    func enterEraseMode()
+    func cancelDrawing()
 }
 
 class DrawingViewModel: NSObject {
+    let view: DrawingView
     let game: Game
     let gameService: GameService
 
+    var drawingService: DrawingServiceProtocol!
+    
     var name: String {
         return game.name ?? ""
     }
 
     private var full: NSData?
+    private var drawingMode: DrawingMode = .Draw
     
-    required init(game: Game, gameService: GameService) {
+    required init(view: DrawingView, game: Game, gameService: GameService) {
+        self.view = view
         self.game = game
         self.gameService = gameService
     }
 
-    func saveImages(currentImageData: NSData, fullImageData: NSData) {
+    func loadPreviousTurns() {
+        if let previousMonsterFile = game.imageFile {
+            previousMonsterFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
+                if error == nil {
+                    if let imageData = imageData {
+                        self.drawingService.setImageData(imageData)
+                    }
+                } else {
+                    // TODO: display an error or whatever
+                }
+            }
+        }
+    }
+    
+    func saveImages() {
+        guard let fullImageData = drawingService.fullImageData else {
+            fatalError("Can't get the image data")
+        }
         full = fullImageData
     }
 
@@ -55,6 +80,60 @@ class DrawingViewModel: NSObject {
             case .Failure( _):
                 fatalError("Failed to save turn")
             }
+        }
+    }
+    
+    func enterDrawMode() {
+        guard drawingMode != .Draw else {
+            return
+        }
+        
+        drawingMode = .Draw
+        drawingService.drawingMode = .Draw
+        
+        view.switchToDrawMode()
+    }
+    
+    func enterEraseMode() {
+        guard drawingMode != .Erase else {
+            return
+        }
+
+        drawingMode = .Erase
+        drawingService.drawingMode = .Erase
+        
+        view.switchToEraseMode()
+    }
+    
+    func undo() {
+        drawingService.undo()
+    }
+    
+    func redo() {
+        drawingService.redo()
+    }
+    
+    func startDraw(point: CGPoint) {
+        drawingService.startDraw(point)
+    }
+    
+    func movePencilTo(point: CGPoint) {
+        drawingService.movePencilTo(point)
+    }
+    
+    func endDraw() {
+        drawingService.endDraw()
+    }
+    
+    func abortLine() {
+        drawingService.abortLine()
+    }
+    
+    func cancelDrawing() {
+        if drawingService.hasMadeChanges() {
+            view.showCancelConfirmation()
+        } else {
+            view.goToMainMenu()
         }
     }
 }

@@ -24,20 +24,6 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
     @IBOutlet weak var eraserSelectedConstraint: NSLayoutConstraint!
     @IBOutlet weak var eraserNotSelectedConstraint: NSLayoutConstraint!
     
-    let pencilConstantOffset: Double = 0.0
-    var drawingMode: DrawingMode = .Draw
-    var strokeHistory: StrokeHistory!
-    
-    var startPoint = CGPoint.zero
-    var lastPoint = CGPoint.zero
-    var red: CGFloat = 0.0
-    var green: CGFloat = 0.0
-    var blue: CGFloat = 0.0
-    var brushWidth: CGFloat = 2.0
-    var eraserWidth: CGFloat = 10.0
-    var opacity: CGFloat = 1.0
-    var swiped = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,20 +35,17 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
         scrollView.drawingDelegate = self
         scrollView.accessibilityActivate()
         scrollView.accessibilityIdentifier = "drawingScrollView"
-
-        if let previousMonsterFile = viewModel.game.imageFile {
-            previousMonsterFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
-                if error == nil {
-                    if let imageData = imageData {
-                        let image = UIImage(data: imageData)
-                        self.previousTurnsImageView.image = image
-                    }
-                }
-            }
-        }
         
-        strokeHistory = StrokeHistory(canvas: currentTurnImageView)
-        saveCurrentToHistory()
+        let uiDrawingService = UIDrawingService(
+            currentTurnImageView: self.currentTurnImageView,
+            previousTurnImageView: self.previousTurnsImageView
+        )
+        viewModel.drawingService = DrawingService(
+            uiDrawingService: uiDrawingService,
+            strokeHistory: StrokeHistory(canvas: uiDrawingService.currentTurnImageView)
+        )
+        
+        viewModel.loadPreviousTurns()
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,35 +92,33 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
     // MARK: - Actions
     
     @IBAction func touchedSave(sender: UIButton) {
-        UIGraphicsBeginImageContext(currentTurnImageView.frame.size)
-        previousTurnsImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height), blendMode: CGBlendMode.Normal, alpha: 1.0)
-        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height), blendMode: CGBlendMode.Normal, alpha: opacity)
-        previousTurnsImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        guard let newFullImage = previousTurnsImageView.image else {
-            return
-        }
-        guard let fullImageData = UIImagePNGRepresentation(newFullImage) else {
-            return
-        }
-
-        guard let currentTurnImage = currentTurnImageView.image else {
-            return
-        }
-        guard let currentTurnImageData = UIImagePNGRepresentation(currentTurnImage) else {
-            return
-        }
-        viewModel.saveImages(currentTurnImageData, fullImageData: fullImageData)
-
+        viewModel.saveImages()
         performSegueWithIdentifier("SaveDrawing", sender: self)
     }
     
     @IBAction func touchedPencil(sender: UIButton) {
-        guard drawingMode != .Draw else {
-            return
-        }
-        
+        viewModel.enterDrawMode()
+    }
+    
+    @IBAction func touchedEraser(sender: UIButton) {
+        viewModel.enterEraseMode()
+    }
+    
+    @IBAction func touchedCancel(sender: UIButton) {
+        viewModel.cancelDrawing()
+    }
+    
+    @IBAction func undo(sender: UIButton) {
+        viewModel.undo()
+    }
+    
+    @IBAction func redo(sender: UIButton) {
+        viewModel.redo()
+    }
+    
+    // MARK: - View Commands
+    
+    func switchToDrawMode() {
         pencilButton.setImage(UIImage(named: "pencil-selected"), forState: .Normal)
         eraserButton.setImage(UIImage(named: "eraser"), forState: .Normal)
         
@@ -151,15 +132,9 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
         UIView.animateWithDuration(0.5) { () -> Void in
             self.view.layoutIfNeeded()
         }
-        
-        drawingMode = .Draw
     }
     
-    @IBAction func touchedEraser(sender: UIButton) {
-        guard drawingMode != .Erase else {
-            return
-        }
-        
+    func switchToEraseMode() {
         pencilButton.setImage(UIImage(named: "pencil"), forState: .Normal)
         eraserButton.setImage(UIImage(named: "eraser-selected"), forState: .Normal)
         
@@ -173,122 +148,42 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
         UIView.animateWithDuration(0.5) { () -> Void in
             self.view.layoutIfNeeded()
         }
-        
-        drawingMode = .Erase
     }
     
-    @IBAction func touchedCancel(sender: UIButton) {
-        
+    func showCancelConfirmation() {
+        performSegueWithIdentifier("ConfirmCancelDrawing", sender: self)
     }
     
-    @IBAction func undo(sender: UIButton) {
-        strokeHistory.undo()
-    }
-    
-    @IBAction func redo(sender: UIButton) {
-        strokeHistory.redo()
+    func goToMainMenu() {
+        performSegueWithIdentifier("cancelDrawing", sender: self)
     }
     
     // MARK: - Touches
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
-            startDraw(touch.locationInView(imageContainer))
+            viewModel.startDraw(touch.locationInView(imageContainer))
         }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
-            movePencilTo(touch.locationInView(imageContainer))
+            viewModel.movePencilTo(touch.locationInView(imageContainer))
         }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        endDraw()
+        viewModel.endDraw()
     }
     
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        abortLine()
+        viewModel.abortLine()
     }
     
     // MARK: - DrawingView
     
     func allowPanningAndZooming() -> Bool {
-        if startPoint != CGPoint.zero {
-            let xDist = lastPoint.x - startPoint.x
-            let yDist = lastPoint.y - startPoint.y
-            let distance = sqrt((xDist * xDist) + (yDist * yDist))
-            print("Distance: \(distance)")
-            
-            // 8 seems like an okay number of my iPhone 6
-            // If your finger has moved more than 8, then don't allow panning and zooming - continue drawing
-            // If less than 8, then cancel the stroke - erase it, and allow panning and zooming
-            return distance < 8
-        }
-        
-        return true
-    }
-    
-    // MARK: - Drawing
-    
-    func startDraw(currentPoint: CGPoint) {
-        swiped = false
-        lastPoint = currentPoint
-        startPoint = currentPoint
-    }
-    
-    func movePencilTo(currentPoint: CGPoint) {
-        swiped = true
-        drawLineFrom(lastPoint, toPoint: currentPoint)
-        lastPoint = currentPoint
-    }
-    
-    func endDraw() {
-        if !swiped {
-            drawLineFrom(lastPoint, toPoint: lastPoint)
-        }
-
-        startPoint = CGPoint.zero
-        
-        saveCurrentToHistory()
-    }
-    
-    func abortLine() {
-        saveCurrentToHistory()
-        strokeHistory.undo()
-    }
-    
-    func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
-        UIGraphicsBeginImageContext(currentTurnImageView.frame.size)
-        let context = UIGraphicsGetCurrentContext()
-        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height))
-        
-        CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
-        CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
-        CGContextSetLineCap(context, CGLineCap.Round)
-        
-        if drawingMode == .Draw {
-            CGContextSetLineWidth(context, brushWidth)
-            CGContextSetRGBStrokeColor(context, red, green, blue, 1.0)
-            CGContextSetBlendMode(context, CGBlendMode.Normal)
-        } else if drawingMode == .Erase {
-            CGContextSetLineWidth(context, eraserWidth)
-            CGContextSetBlendMode(context, CGBlendMode.Clear)
-        }
-        
-        CGContextStrokePath(context)
-        
-        currentTurnImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        currentTurnImageView.alpha = opacity
-        UIGraphicsEndImageContext()
-    }
-
-    func saveCurrentToHistory() {
-        guard let image = currentTurnImageView.image else {
-            return
-        }
-        
-        strokeHistory.addStroke(image)
+        return viewModel.drawingService.allowPanningAndZooming()
     }
 }
 

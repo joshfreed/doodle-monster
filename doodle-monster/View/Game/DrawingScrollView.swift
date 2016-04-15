@@ -10,6 +10,10 @@ import UIKit
 
 protocol DrawingView {
     func allowPanningAndZooming() -> Bool
+    func switchToDrawMode()
+    func switchToEraseMode()
+    func showCancelConfirmation()
+    func goToMainMenu()
 }
 
 class DrawingScrollView: UIScrollView {

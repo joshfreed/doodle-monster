@@ -52,10 +52,13 @@ class MainMenuRouterImpl: MainMenuRouter {
         guard let vc = destinationViewController as? DrawingViewController else {
             fatalError("Unexpected view controller type")
         }
+        guard let drawingView = destinationViewController as? DrawingView else {
+            fatalError("Unexpected view controller type")
+        }
         guard let game = arguments["game"] as? Game else {
             fatalError("No game in arguments")
         }
 
-        vc.viewModel = viewModelFactory.drawingViewModel(game)
+        vc.viewModel = viewModelFactory.drawingViewModel(game, view: drawingView)
     }
 }

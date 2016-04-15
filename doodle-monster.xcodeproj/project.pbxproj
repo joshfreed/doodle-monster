@@ -58,6 +58,10 @@
 		53C8D3F81C2B15B30052A9ED /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3F71C2B15B30052A9ED /* PlayerTableViewCell.swift */; };
 		53C8D3FC1C2C72890052A9ED /* ParsePlayerTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3FB1C2C72890052A9ED /* ParsePlayerTranslator.swift */; };
 		53C8D3FE1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C8D3FD1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift */; };
+		53CC6F341CA7155A00EF8E5F /* DrawingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CC6F331CA7155A00EF8E5F /* DrawingServiceTests.swift */; };
+		53CC6F361CA718D300EF8E5F /* UIDrawingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CC6F351CA718D300EF8E5F /* UIDrawingService.swift */; };
+		53CC6F381CA7224E00EF8E5F /* DrawingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CC6F371CA7224E00EF8E5F /* DrawingViewModelTests.swift */; };
+		53CC6F3A1CA727F300EF8E5F /* ConfirmCancelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CC6F391CA727F300EF8E5F /* ConfirmCancelViewController.swift */; };
 		53CED4BA1C1F4AE200B5BEEF /* LoginByEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4B91C1F4AE200B5BEEF /* LoginByEmailViewController.swift */; };
 		53CED4BC1C1F4B4000B5BEEF /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4BB1C1F4B4000B5BEEF /* CreateAccountViewController.swift */; };
 		53CED4BE1C1F691200B5BEEF /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 53CED4BD1C1F691200B5BEEF /* Cartfile */; };
@@ -67,6 +71,7 @@
 		53CED4C71C1F6D5600B5BEEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4C61C1F6D5600B5BEEF /* AudioToolbox.framework */; };
 		53CED4CF1C1F6DE000B5BEEF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4CE1C1F6DE000B5BEEF /* SystemConfiguration.framework */; };
 		53CED4D21C1F8F2800B5BEEF /* CreateAccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4D11C1F8F2800B5BEEF /* CreateAccountPresenter.swift */; };
+		53E379D21C9F52CB0055A2D7 /* DrawingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E379D11C9F52CB0055A2D7 /* DrawingService.swift */; };
 		53E5BBBE1C3EF5EB0035504F /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E5BBBD1C3EF5EB0035504F /* MainMenuViewModel.swift */; };
 		53E5BBC01C3EF7F90035504F /* ParseGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E5BBBF1C3EF7F90035504F /* ParseGame.swift */; };
 		53E5BBC31C3F1BFA0035504F /* ArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E5BBC21C3F1BFA0035504F /* ArrayDataSource.swift */; };
@@ -156,6 +161,10 @@
 		53C8D3F71C2B15B30052A9ED /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerTableViewCell.swift; path = View/PlayerTableViewCell.swift; sourceTree = "<group>"; };
 		53C8D3FB1C2C72890052A9ED /* ParsePlayerTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParsePlayerTranslator.swift; path = Parse/ParsePlayerTranslator.swift; sourceTree = "<group>"; };
 		53C8D3FD1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InviteByEmailViewModel.swift; path = ViewModel/InviteByEmailViewModel.swift; sourceTree = "<group>"; };
+		53CC6F331CA7155A00EF8E5F /* DrawingServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawingServiceTests.swift; path = Service/DrawingServiceTests.swift; sourceTree = "<group>"; };
+		53CC6F351CA718D300EF8E5F /* UIDrawingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIDrawingService.swift; path = Service/UIDrawingService.swift; sourceTree = "<group>"; };
+		53CC6F371CA7224E00EF8E5F /* DrawingViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawingViewModelTests.swift; path = ViewModel/DrawingViewModelTests.swift; sourceTree = "<group>"; };
+		53CC6F391CA727F300EF8E5F /* ConfirmCancelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfirmCancelViewController.swift; path = Controller/ConfirmCancelViewController.swift; sourceTree = "<group>"; };
 		53CED4B91C1F4AE200B5BEEF /* LoginByEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginByEmailViewController.swift; path = Controller/LoginByEmailViewController.swift; sourceTree = "<group>"; };
 		53CED4BB1C1F4B4000B5BEEF /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = Controller/CreateAccountViewController.swift; sourceTree = "<group>"; };
 		53CED4BD1C1F691200B5BEEF /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -168,6 +177,7 @@
 		53CED4CC1C1F6DD300B5BEEF /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		53CED4CE1C1F6DE000B5BEEF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		53CED4D11C1F8F2800B5BEEF /* CreateAccountPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountPresenter.swift; path = Presenter/CreateAccountPresenter.swift; sourceTree = "<group>"; };
+		53E379D11C9F52CB0055A2D7 /* DrawingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawingService.swift; path = Service/DrawingService.swift; sourceTree = "<group>"; };
 		53E5BBBD1C3EF5EB0035504F /* MainMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewModel.swift; path = ViewModel/MainMenuViewModel.swift; sourceTree = "<group>"; };
 		53E5BBBF1C3EF7F90035504F /* ParseGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseGame.swift; path = Parse/ParseGame.swift; sourceTree = "<group>"; };
 		53E5BBC21C3F1BFA0035504F /* ArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayDataSource.swift; path = View/Utilities/ArrayDataSource.swift; sourceTree = "<group>"; };
@@ -278,6 +288,7 @@
 		532800A61BA0ECF6005AD59C /* doodle-monsterTests */ = {
 			isa = PBXGroup;
 			children = (
+				53CC6F321CA7154000EF8E5F /* Service */,
 				539EF5161C8649EE00883314 /* Application */,
 				533599761C69181300F50FAB /* ViewModel */,
 				532800A91BA0ECF6005AD59C /* Info.plist */,
@@ -308,6 +319,7 @@
 			children = (
 				533599771C69182E00F50FAB /* MainMenuViewModelTests.swift */,
 				E9AFC5A9BC2FB2FB2AEC5827 /* InviteByEmailViewModelTests.swift */,
+				53CC6F371CA7224E00EF8E5F /* DrawingViewModelTests.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -328,6 +340,8 @@
 			children = (
 				534965CA1C585CA5009552CC /* DateService.swift */,
 				53B90A831C65217900217362 /* SessionService.swift */,
+				53E379D11C9F52CB0055A2D7 /* DrawingService.swift */,
+				53CC6F351CA718D300EF8E5F /* UIDrawingService.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -365,6 +379,7 @@
 				536D6C4A1C44424300BF5EBC /* DrawingViewController.swift */,
 				536D6C551C4809A300BF5EBC /* DrawingScrollView.swift */,
 				531602AC1C52DA7D0023C19E /* SaveViewController.swift */,
+				53CC6F391CA727F300EF8E5F /* ConfirmCancelViewController.swift */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -416,6 +431,14 @@
 				53EE34F41C32E2B000C70635 /* PlayerView.xib */,
 			);
 			name = NewMonster;
+			sourceTree = "<group>";
+		};
+		53CC6F321CA7154000EF8E5F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				53CC6F331CA7155A00EF8E5F /* DrawingServiceTests.swift */,
+			);
+			name = Service;
 			sourceTree = "<group>";
 		};
 		53CED4B81C1F4AA000B5BEEF /* Login */ = {
@@ -661,15 +684,18 @@
 				53B60DEF1C43047900AF0E09 /* WaitingCell.swift in Sources */,
 				531602AB1C529C600023C19E /* MonsterSectionFooter.swift in Sources */,
 				5335997D1C69251100F50FAB /* Game.swift in Sources */,
+				53E379D21C9F52CB0055A2D7 /* DrawingService.swift in Sources */,
 				534965CB1C585CA5009552CC /* DateService.swift in Sources */,
 				53C8D3FC1C2C72890052A9ED /* ParsePlayerTranslator.swift in Sources */,
 				533599751C6916E000F50FAB /* MainMenuRouter.swift in Sources */,
 				536D6C511C46DA7200BF5EBC /* StrokeHistory.swift in Sources */,
 				536D6C4F1C44482A00BF5EBC /* YourTurnCell.swift in Sources */,
 				53C8D3E91C29E57F0052A9ED /* LoginByEmailPresenter.swift in Sources */,
+				53CC6F3A1CA727F300EF8E5F /* ConfirmCancelViewController.swift in Sources */,
 				536D6C561C4809A300BF5EBC /* DrawingScrollView.swift in Sources */,
 				536D6C581C49A93A00BF5EBC /* SectionedArrayDataSource.swift in Sources */,
 				53C8D3FE1C2C7CAF0052A9ED /* InviteByEmailViewModel.swift in Sources */,
+				53CC6F361CA718D300EF8E5F /* UIDrawingService.swift in Sources */,
 				533599811C69257C00F50FAB /* Player.swift in Sources */,
 				532800931BA0ECF6005AD59C /* AppDelegate.swift in Sources */,
 				53E5BBC01C3EF7F90035504F /* ParseGame.swift in Sources */,
@@ -701,10 +727,12 @@
 				53EE34F71C345E8600C70635 /* NewMonsterTests.swift in Sources */,
 				53B162891C6E58FB00663485 /* ArrayExtensionTests.swift in Sources */,
 				53B162861C6D33EB00663485 /* GameBuilder.swift in Sources */,
+				53CC6F381CA7224E00EF8E5F /* DrawingViewModelTests.swift in Sources */,
 				539EF5181C864A0700883314 /* NewMonsterAppTests.swift in Sources */,
 				E9AFC57BDBD56C6E161DF7E2 /* Builder.swift in Sources */,
 				53B162871C6D33EE00663485 /* PlayerBuilder.swift in Sources */,
 				E9AFC31A6E97F82B4AFB516E /* Mocks.swift in Sources */,
+				53CC6F341CA7155A00EF8E5F /* DrawingServiceTests.swift in Sources */,
 				E9AFC6D8B0D1F10845B9CBBC /* InviteByEmailViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
