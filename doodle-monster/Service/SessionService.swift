@@ -54,7 +54,8 @@ class ParseSessionService: SessionService {
                 // todo handle errors
 
                 guard let user = user else {
-                    fatalError("what what what?")
+                    callback(result: .Failed)
+                    return
                 }
 
                 self.currentPlayer = self.playerTranslator.parseToModel(user)

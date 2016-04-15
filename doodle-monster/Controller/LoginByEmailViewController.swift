@@ -83,6 +83,8 @@ class LoginByEmailViewController: UIViewController, LoginByEmailView, SegueHandl
     }
     
     func showError() {
-        
+        let alert = UIAlertController(title: "Error", message: "Could not log you in.", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+        presentViewController(alert, animated: true, completion: nil)
     }
 }

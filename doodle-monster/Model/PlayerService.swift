@@ -17,6 +17,7 @@ protocol PlayerService {
 enum LoginResult {
     case Success
     case NoSuchUser
+    case Failed
     case Error
 }
 

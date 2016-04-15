@@ -33,6 +33,7 @@ class LoginByEmailPresenter: LoginByEmailViewPresenter {
             switch result {
             case .Success: self.view.goToMainMenu()
             case .NoSuchUser: self.view.goToCreateAccount(username, password: password)
+            case .Failed: self.view.showError()
             case .Error: self.view.showError()
             }
         }
