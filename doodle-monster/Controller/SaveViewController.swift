@@ -14,6 +14,7 @@ class SaveViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 
     var viewModel: DrawingViewModel!
+    let loadingSpinner = LoadingSpinner()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +48,12 @@ class SaveViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func saveMonster(sender: AnyObject) {
+        if let nc = navigationController {
+            loadingSpinner.show(inView: nc.view)
+        }
+        
         viewModel.saveTurn(nextLetterInput.text!) {
+            self.loadingSpinner.hide()
             self.performSegueWithIdentifier("GoToMainMenu", sender: self)
         }
     }

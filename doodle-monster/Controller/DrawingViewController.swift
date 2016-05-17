@@ -44,17 +44,16 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
             uiDrawingService: uiDrawingService,
             strokeHistory: StrokeHistory(canvas: uiDrawingService.currentTurnImageView)
         )
-        
-        viewModel.loadPreviousTurns()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     override func viewDidAppear(animated: Bool) {
         updateZoom()
+        viewModel.loadPreviousTurns()
     }
 
     @IBAction func unwindToDrawing(segue: UIStoryboardSegue) {

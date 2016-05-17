@@ -12,6 +12,8 @@ protocol LoginByEmailView {
     func goToMainMenu()
     func goToCreateAccount(username: String, password: String)
     func showError()
+    func showLoading()
+    func hideLoading()
 }
 
 protocol LoginByEmailViewPresenter {
@@ -29,7 +31,11 @@ class LoginByEmailPresenter: LoginByEmailViewPresenter {
     }
     
     func login(username: String, password: String) {
+        view.showLoading()
+        
         session.tryToLogIn(username, password: password) { result in
+            self.view.hideLoading()
+            
             switch result {
             case .Success: self.view.goToMainMenu()
             case .NoSuchUser: self.view.goToCreateAccount(username, password: password)

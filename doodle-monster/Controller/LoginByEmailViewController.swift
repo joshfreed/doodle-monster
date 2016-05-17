@@ -20,6 +20,7 @@ class LoginByEmailViewController: UIViewController, LoginByEmailView, SegueHandl
     var presenter: LoginByEmailViewPresenter!
     var username: String?
     var password: String?
+    let loadingSpinner = LoadingSpinner()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,5 +87,15 @@ class LoginByEmailViewController: UIViewController, LoginByEmailView, SegueHandl
         let alert = UIAlertController(title: "Error", message: "Could not log you in.", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func showLoading() {
+        if let nc = navigationController {
+            loadingSpinner.show(inView: nc.view)
+        }
+    }
+    
+    func hideLoading() {
+        loadingSpinner.hide()
     }
 }
