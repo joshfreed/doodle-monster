@@ -71,8 +71,8 @@ class MemoryGameService: GameService {
         callback(.Success(game))
     }
     
-    func getActiveGames(callback: ([Game]) -> ()) {
-        callback(games)
+    func getActiveGames(callback: (Result<[Game]>) -> ()) {
+        callback(.Success(games))
     }
     
     func saveTurn(gameId: String, image: NSData, letter: String, completion: (Result<Game>) -> ()) {
@@ -98,6 +98,7 @@ class MemoryGameService: GameService {
 
 class MemorySessionService: SessionService {
     var currentPlayer: Player?
+    var token: String?
     var playerService: MemoryPlayerService!
     
     func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ()) {
@@ -131,6 +132,10 @@ class MemorySessionService: SessionService {
     }
     
     func resume() {
+        
+    }
+    
+    func setAuthToken(token: String, andPlayer playerDict: NSDictionary) {
         
     }
 }

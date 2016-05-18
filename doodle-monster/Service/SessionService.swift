@@ -11,15 +11,18 @@ import Parse
 
 protocol SessionService {
     var currentPlayer: Player? { get }
+    var token: String? { get }
 
     func hasSession() -> Bool
     func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ())
     func logout()
     func resume()
+    func setAuthToken(token: String, andPlayer playerDict: NSDictionary)
 }
 
 class ParseSessionService: SessionService {
     var currentPlayer: Player?
+    var token: String?
 
     private(set) var player: Player?
     let playerTranslator = ParsePlayerTranslator()
@@ -74,5 +77,9 @@ class ParseSessionService: SessionService {
         if let currentUser = PFUser.currentUser() {
             currentPlayer = playerTranslator.parseToModel(currentUser)
         }
+    }
+    
+    func setAuthToken(token: String, andPlayer playerDict: NSDictionary) {
+        
     }
 }

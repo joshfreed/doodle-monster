@@ -90,17 +90,25 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
             fatalError("Tried to load games but no one is logged in")
         }
 
-        gameService.getActiveGames() { games in
-            for game in games {
-                if game.isCurrentTurn(currentPlayer) {
-                    self.yourTurnGames.append(GameViewModel(game: game))
-                } else if game.isWaitingForAnotherPlayer(currentPlayer) {
-                    self.waitingGames.append(GameViewModel(game: game))
+        gameService.getActiveGames() { result in
+            switch result {
+            case .Success(let games):
+                for game in games {
+                    if game.isCurrentTurn(currentPlayer) {
+                        self.yourTurnGames.append(GameViewModel(game: game))
+                    } else if game.isWaitingForAnotherPlayer(currentPlayer) {
+                        self.waitingGames.append(GameViewModel(game: game))
+                    }
                 }
+                break
+            case .Failure(let err):
+                print(err)
+                break
             }
-
-            self.view.updateGameList()
+            
         }
+        
+        self.view.updateGameList()
     }
     
     func refresh() {

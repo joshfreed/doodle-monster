@@ -1,3 +1,4 @@
-github "BoltsFramework/Bolts-iOS" "1.6.0"
-github "aleclarson/emitter-kit" "4.0.1"
-github "ParsePlatform/parse-sdk-ios-osx" "1.12.0"
+github "Alamofire/Alamofire" "3.4.0"
+github "BoltsFramework/Bolts-ObjC" "1.7.0"
+github "aleclarson/emitter-kit" "4.0.2"
+github "ParsePlatform/parse-sdk-ios-osx" "1.13.0"

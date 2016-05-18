@@ -27,9 +27,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
 //            PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
             
-            playerService = ParseUserService()
-            gameService = ParseGameService(parsePlayerService: playerService as! ParseUserService)
-            session = ParseSessionService()
+//            playerService = ParseUserService()
+//            session = ParseSessionService()
+            session = RestSessionService()
+            playerService = RestPlayerService(session: session)
+            gameService = RestGameService(session: session, gameTranslator: RestGameTranslator())
+//            gameService = ParseGameService(parsePlayerService: playerService as! ParseUserService)
         }
         
         doodleMonsterApp = DoodleMonsterApp(gameService: gameService, session: session)
@@ -125,4 +128,10 @@ enum Result<T> {
 
 enum UserError: ErrorType {
     case NoData
+}
+
+enum DoodMonError: ErrorType {
+    case HttpError(code: String, message: String)
+    case ServerError
+    case UnknownResponse
 }

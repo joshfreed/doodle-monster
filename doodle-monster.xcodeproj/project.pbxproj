@@ -37,6 +37,11 @@
 		536D6C5A1C49ABCD00BF5EBC /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C591C49ABCD00BF5EBC /* ReusableViews.swift */; };
 		536D6C5C1C4D994800BF5EBC /* MonsterSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C5B1C4D994800BF5EBC /* MonsterSectionHeader.swift */; };
 		536D6C5E1C4D995D00BF5EBC /* MainMenuBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D6C5D1C4D995D00BF5EBC /* MainMenuBottom.swift */; };
+		53833D9B1CECDB7500CED5EB /* RestSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53833D9A1CECDB7500CED5EB /* RestSessionService.swift */; };
+		53833D9D1CECE01600CED5EB /* DictionaryPlayerTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53833D9C1CECE01600CED5EB /* DictionaryPlayerTranslator.swift */; };
+		53833D9F1CECE63200CED5EB /* RestPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53833D9E1CECE63200CED5EB /* RestPlayerService.swift */; };
+		53833DA11CECEB0400CED5EB /* RestGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53833DA01CECEB0400CED5EB /* RestGameService.swift */; };
+		53833DA31CECF17100CED5EB /* RestGameTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53833DA21CECF17100CED5EB /* RestGameTranslator.swift */; };
 		539EF5101C86334F00883314 /* EmitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539EF50F1C86334F00883314 /* EmitterKit.framework */; };
 		539EF5121C86355C00883314 /* EmitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539EF50F1C86334F00883314 /* EmitterKit.framework */; };
 		539EF5181C864A0700883314 /* NewMonsterAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539EF5171C864A0700883314 /* NewMonsterAppTests.swift */; };
@@ -144,6 +149,11 @@
 		536D6C591C49ABCD00BF5EBC /* ReusableViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReusableViews.swift; path = View/Utilities/ReusableViews.swift; sourceTree = "<group>"; };
 		536D6C5B1C4D994800BF5EBC /* MonsterSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonsterSectionHeader.swift; path = View/MainMenu/MonsterSectionHeader.swift; sourceTree = "<group>"; };
 		536D6C5D1C4D995D00BF5EBC /* MainMenuBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuBottom.swift; path = View/MainMenu/MainMenuBottom.swift; sourceTree = "<group>"; };
+		53833D9A1CECDB7500CED5EB /* RestSessionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestSessionService.swift; path = Rest/RestSessionService.swift; sourceTree = "<group>"; };
+		53833D9C1CECE01600CED5EB /* DictionaryPlayerTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictionaryPlayerTranslator.swift; path = Rest/DictionaryPlayerTranslator.swift; sourceTree = "<group>"; };
+		53833D9E1CECE63200CED5EB /* RestPlayerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestPlayerService.swift; path = Rest/RestPlayerService.swift; sourceTree = "<group>"; };
+		53833DA01CECEB0400CED5EB /* RestGameService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestGameService.swift; path = Rest/RestGameService.swift; sourceTree = "<group>"; };
+		53833DA21CECF17100CED5EB /* RestGameTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestGameTranslator.swift; path = Rest/RestGameTranslator.swift; sourceTree = "<group>"; };
 		539EF50F1C86334F00883314 /* EmitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EmitterKit.framework; path = Carthage/Build/iOS/EmitterKit.framework; sourceTree = "<group>"; };
 		539EF5171C864A0700883314 /* NewMonsterAppTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewMonsterAppTests.swift; path = Application/NewMonsterAppTests.swift; sourceTree = "<group>"; };
 		53AA70E31C4DA81600EB238B /* MainMenuBottom.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenuBottom.xib; path = View/Game/MainMenuBottom.xib; sourceTree = "<group>"; };
@@ -268,6 +278,7 @@
 		532800911BA0ECF6005AD59C /* doodle-monster */ = {
 			isa = PBXGroup;
 			children = (
+				53833D991CEBCE1700CED5EB /* Rest */,
 				5326473D1C6A9ACC00819296 /* InMemory */,
 				533599791C69247200F50FAB /* Parse */,
 				534965C91C585C8D009552CC /* Service */,
@@ -384,6 +395,18 @@
 				53CC6F391CA727F300EF8E5F /* ConfirmCancelViewController.swift */,
 			);
 			name = Game;
+			sourceTree = "<group>";
+		};
+		53833D991CEBCE1700CED5EB /* Rest */ = {
+			isa = PBXGroup;
+			children = (
+				53833D9A1CECDB7500CED5EB /* RestSessionService.swift */,
+				53833D9C1CECE01600CED5EB /* DictionaryPlayerTranslator.swift */,
+				53833D9E1CECE63200CED5EB /* RestPlayerService.swift */,
+				53833DA01CECEB0400CED5EB /* RestGameService.swift */,
+				53833DA21CECF17100CED5EB /* RestGameTranslator.swift */,
+			);
+			name = Rest;
 			sourceTree = "<group>";
 		};
 		539EF5161C8649EE00883314 /* Application */ = {
@@ -655,6 +678,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/EmitterKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 			);
 			outputPaths = (
 			);
@@ -681,6 +705,7 @@
 				53C8D3F31C2B11340052A9ED /* NewMonsterViewController.swift in Sources */,
 				53EE34F11C32E1C900C70635 /* UIViewLoading.swift in Sources */,
 				532800951BA0ECF6005AD59C /* LoginViewController.swift in Sources */,
+				53833D9B1CECDB7500CED5EB /* RestSessionService.swift in Sources */,
 				5335997F1C69254400F50FAB /* ParsePlayerService.swift in Sources */,
 				535A0A151C65588B00CAC8D3 /* SegueHandler.swift in Sources */,
 				53E5BBC31C3F1BFA0035504F /* ArrayDataSource.swift in Sources */,
@@ -707,16 +732,20 @@
 				536D6C5E1C4D995D00BF5EBC /* MainMenuBottom.swift in Sources */,
 				536D6C4B1C44424300BF5EBC /* DrawingViewController.swift in Sources */,
 				53B90A841C65217900217362 /* SessionService.swift in Sources */,
+				53833DA11CECEB0400CED5EB /* RestGameService.swift in Sources */,
 				53C8D3F81C2B15B30052A9ED /* PlayerTableViewCell.swift in Sources */,
 				53C8D3F61C2B13840052A9ED /* InviteByEmailViewController.swift in Sources */,
 				536D6C5C1C4D994800BF5EBC /* MonsterSectionHeader.swift in Sources */,
 				53CED4BA1C1F4AE200B5BEEF /* LoginByEmailViewController.swift in Sources */,
 				53CED4D21C1F8F2800B5BEEF /* CreateAccountPresenter.swift in Sources */,
 				E9AFCA7E8618B15DD20156E9 /* ViewModelFactory.swift in Sources */,
+				53833DA31CECF17100CED5EB /* RestGameTranslator.swift in Sources */,
 				5335997B1C69249E00F50FAB /* ParseGameService.swift in Sources */,
 				5326473F1C6A9AFE00819296 /* InMemoryServices.swift in Sources */,
 				E9AFCA6DCF18C5A84BADF8BB /* StructWrapper.swift in Sources */,
+				53833D9D1CECE01600CED5EB /* DictionaryPlayerTranslator.swift in Sources */,
 				E9AFC51983D84DE39E50E75E /* NewMonsterRouter.swift in Sources */,
+				53833D9F1CECE63200CED5EB /* RestPlayerService.swift in Sources */,
 				E9AFC17D03315853177E65FC /* ArrayExtensions.swift in Sources */,
 				E9AFC75B7D95D3D1D46990FD /* DoodleMonsterApp.swift in Sources */,
 			);

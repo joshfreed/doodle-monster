@@ -42,7 +42,7 @@ class ParseGameService: GameService {
         }
     }
     
-    func getActiveGames(callback: ([Game] -> ())) {
+    func getActiveGames(callback: (Result<[Game]> -> ())) {
         let query = PFQuery(className: "Game")
         query.includeKey("players")
         query.whereKey("gameOver", equalTo: false)
@@ -56,7 +56,7 @@ class ParseGameService: GameService {
                 self.parseObjects.append(object)
                 games.append(self.gameTranslator.parseToModel(object))
             }
-            callback(games)
+            callback(.Success(games))
         }
     }
     
