@@ -9,7 +9,7 @@
 import UIKit
 
 class RestGameTranslator {
-    let playerTranslator = ParsePlayerTranslator()
+    let playerTranslator = DictionaryPlayerTranslator()
     
     func dictionaryToModel(object: NSDictionary) -> Game {
         let dateFormatter = NSDateFormatter()

@@ -12,11 +12,11 @@ import Alamofire
 class RestPlayerService: PlayerService {
     let apiUrl: String
     let session: SessionService
-    let playerTranslator: ParsePlayerTranslator
+    let playerTranslator: DictionaryPlayerTranslator
     
     private var players: [Player] = []
     
-    init(apiUrl: String, session: SessionService, playerTranslator: ParsePlayerTranslator) {
+    init(apiUrl: String, session: SessionService, playerTranslator: DictionaryPlayerTranslator) {
         self.apiUrl = apiUrl
         self.session = session
         self.playerTranslator = playerTranslator

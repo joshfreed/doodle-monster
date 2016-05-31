@@ -14,7 +14,7 @@ class RestSessionService: SessionService {
     var currentPlayer: Player?
     var token: String?
     
-    let playerTranslator = ParsePlayerTranslator()
+    let playerTranslator = DictionaryPlayerTranslator()
     
     init(apiUrl: String) {
         self.apiUrl = apiUrl

@@ -21,13 +21,6 @@ class WaitingCell: UICollectionViewCell, CollectionViewCell {
         
         if let imageData = item.game.thumbnail {
             monsterThumbnail.image = UIImage(data: imageData)
-//            thumbnailFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
-//                if error == nil {
-//                    if let imageData = imageData {
-//                        self.monsterThumbnail.image = UIImage(data: imageData)
-//                    }
-//                }
-//            }
         }
     }
 }

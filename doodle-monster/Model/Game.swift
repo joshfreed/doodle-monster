@@ -7,13 +7,11 @@
 //
 
 import Foundation
-import Parse
 
 struct Game: Equatable {
     var id: String?
     var gameOver: Bool = false
     var players: [Player] = []
-    var imageFile: PFFile?
     var thumbnail: NSData?
     var name: String?
     var lastTurn: NSDate?

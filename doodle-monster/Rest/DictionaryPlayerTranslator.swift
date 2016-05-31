@@ -9,7 +9,24 @@
 import UIKit
 
 class DictionaryPlayerTranslator {
-    func dictToModel(dict: [String:String]) {
-        
+    func dictionaryToModel(object: NSDictionary) -> Player {
+        var player = Player()
+        player.id = object["id"] as? String
+        player.username = object["email"] as? String
+        player.displayName = object["displayName"] as? String
+        return player
+    }
+    
+    func parseArray(objects: NSArray) -> [Player] {
+        var players: [Player] = []
+        for object in objects {
+            if let dict = object as? NSDictionary {
+                players.append(dictionaryToModel(dict))
+            } else {
+                print("dubs tee eff")
+            }
+            
+        }
+        return players
     }
 }

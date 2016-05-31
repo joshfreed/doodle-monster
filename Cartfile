@@ -1,3 +1,2 @@
-github "ParsePlatform/parse-sdk-ios-osx"
 github "https://github.com/aleclarson/emitter-kit"
 github "Alamofire/Alamofire" ~> 3.4
