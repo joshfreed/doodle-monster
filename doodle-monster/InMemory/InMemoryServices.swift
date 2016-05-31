@@ -94,6 +94,10 @@ class MemoryGameService: GameService {
         
         return nil
     }
+    
+    func loadImageData(gameId: String, completion: (Result<NSData>) -> ()) {
+        
+    }
 }
 
 class MemorySessionService: SessionService {

@@ -11,7 +11,6 @@ import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
     var viewModelFactory: ViewModelFactory!
     var playerService: PlayerService!
@@ -20,19 +19,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var doodleMonsterApp: DoodleMonster!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+//        let apiUrl = "https://doodle-monster.herokuapp.com"
+        let apiUrl = "http://localhost:8080"
         
         if NSProcessInfo.processInfo().arguments.contains("TESTING") {
             prepareTestData()
         } else {
-            Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
+//            Parse.setApplicationId("w2AR93Gv7UL9rXlbhIC9QCm2atKflpamAfHfy26O", clientKey: "qRj7xlR7m0Pu3ls5HXcXIqMWkA9283Xrxs1TCFzs")
 //            PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
-            
 //            playerService = ParseUserService()
 //            session = ParseSessionService()
-            session = RestSessionService()
-            playerService = RestPlayerService(session: session)
-            gameService = RestGameService(session: session, gameTranslator: RestGameTranslator())
 //            gameService = ParseGameService(parsePlayerService: playerService as! ParseUserService)
+            
+            session = RestSessionService(apiUrl: apiUrl)
+            playerService = RestPlayerService(apiUrl: apiUrl, session: session, playerTranslator: ParsePlayerTranslator())
+            gameService = RestGameService(apiUrl: apiUrl, session: session, gameTranslator: RestGameTranslator())
+
         }
         
         doodleMonsterApp = DoodleMonsterApp(gameService: gameService, session: session)

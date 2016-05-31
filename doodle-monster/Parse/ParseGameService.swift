@@ -82,6 +82,10 @@ class ParseGameService: GameService {
             completion(.Success(game))
         }
     }
+    
+    func loadImageData(gameId: String, completion: (Result<NSData>) -> ()) {
+        
+    }
 }
 
 class ParseGameTranslator {
@@ -92,8 +96,8 @@ class ParseGameTranslator {
         game.id = obj.objectId
         game.gameOver = obj["gameOver"] as? Bool ?? false
         game.players = playerTranslator.parseArray(obj["players"] as! NSArray)
-        game.imageFile = obj["imageFile"] as? PFFile
-        game.thumbnail = obj["thumbnail"] as? PFFile
+//        game.imageFile = obj["imageFile"] as? PFFile
+//        game.thumbnail = obj["thumbnail"] as? PFFile
         game.name = obj["name"] as? String
         game.lastTurn = obj["lastTurn"] as? NSDate
         game.currentPlayerNumber = obj["currentPlayerNumber"] as? Int ?? 0

@@ -193,6 +193,7 @@
 		53E5BBBD1C3EF5EB0035504F /* MainMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewModel.swift; path = ViewModel/MainMenuViewModel.swift; sourceTree = "<group>"; };
 		53E5BBBF1C3EF7F90035504F /* ParseGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseGame.swift; path = Parse/ParseGame.swift; sourceTree = "<group>"; };
 		53E5BBC21C3F1BFA0035504F /* ArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayDataSource.swift; path = View/Utilities/ArrayDataSource.swift; sourceTree = "<group>"; };
+		53E7100F1CFE02840038FB6B /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = debug.xcconfig; sourceTree = "<group>"; };
 		53EE34F01C32E1C900C70635 /* UIViewLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewLoading.swift; path = View/UIViewLoading.swift; sourceTree = "<group>"; };
 		53EE34F21C32E2A000C70635 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerView.swift; path = View/PlayerView.swift; sourceTree = "<group>"; };
 		53EE34F41C32E2B000C70635 /* PlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerView.xib; path = View/PlayerView.xib; sourceTree = "<group>"; };
@@ -255,6 +256,7 @@
 		532800861BA0ECF6005AD59C = {
 			isa = PBXGroup;
 			children = (
+				53E7100F1CFE02840038FB6B /* debug.xcconfig */,
 				53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */,
 				53CED4BD1C1F691200B5BEEF /* Cartfile */,
 				532800911BA0ECF6005AD59C /* doodle-monster */,
@@ -900,6 +902,7 @@
 		};
 		532800B81BA0ECF6005AD59C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 53E7100F1CFE02840038FB6B /* debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

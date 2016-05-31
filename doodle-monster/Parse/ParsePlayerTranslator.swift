@@ -19,8 +19,8 @@ class ParsePlayerTranslator {
     
     func dictionaryToModel(object: NSDictionary) -> Player {
         var player = Player()
-        player.id = object["objectId"] as? String
-        player.username = object["username"] as? String
+        player.id = object["id"] as? String
+        player.username = object["email"] as? String
         player.displayName = object["displayName"] as? String
         return player
     }

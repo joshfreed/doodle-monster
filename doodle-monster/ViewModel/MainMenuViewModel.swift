@@ -105,10 +105,9 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
                 print(err)
                 break
             }
-            
+         
+            self.view.updateGameList()
         }
-        
-        self.view.updateGameList()
     }
     
     func refresh() {

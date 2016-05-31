@@ -17,14 +17,15 @@ class YourTurnCell: UICollectionViewCell, CollectionViewCell {
         monsterName.text = item.monsterName
         playerInfo.text = item.playerInfo
         
-        if let thumbnailFile = item.game.thumbnail {
-            thumbnailFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
-                if error == nil {
-                    if let imageData = imageData {
-                        self.thumbnail.image = UIImage(data: imageData)
-                    }
-                }
-            }
+        if let imageData = item.game.thumbnail {
+            thumbnail.image = UIImage(data: imageData)
+//            thumbnailFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
+//                if error == nil {
+//                    if let imageData = imageData {
+//                        self.thumbnail.image = UIImage(data: imageData)
+//                    }
+//                }
+//            }
         }
     }
 }

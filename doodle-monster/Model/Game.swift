@@ -14,7 +14,7 @@ struct Game: Equatable {
     var gameOver: Bool = false
     var players: [Player] = []
     var imageFile: PFFile?
-    var thumbnail: PFFile?
+    var thumbnail: NSData?
     var name: String?
     var lastTurn: NSDate?
     var currentPlayerNumber: Int = 0

@@ -9,13 +9,16 @@
 import UIKit
 import Alamofire
 
-let DM_API_URL = "http://localhost:8080"
-
 class RestSessionService: SessionService {
+    let apiUrl: String
     var currentPlayer: Player?
     var token: String?
     
     let playerTranslator = ParsePlayerTranslator()
+    
+    init(apiUrl: String) {
+        self.apiUrl = apiUrl
+    }
     
     func hasSession() -> Bool {
         return currentPlayer != nil
@@ -27,7 +30,7 @@ class RestSessionService: SessionService {
             "password": password
         ]
         Alamofire
-            .request(.POST, DM_API_URL + "/auth/email", parameters: params, encoding: .JSON)
+            .request(.POST, apiUrl + "/auth/email", parameters: params, encoding: .JSON)
             .responseJSON { response in
                 guard response.result.isSuccess else {
                     callback(result: .Error)

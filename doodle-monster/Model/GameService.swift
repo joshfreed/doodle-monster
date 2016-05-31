@@ -10,4 +10,5 @@ protocol GameService {
     func createGame(players: [Player], callback: (Result<Game>) -> ())
     func getActiveGames(callback: (Result<[Game]>) -> ())
     func saveTurn(gameId: String, image: NSData, letter: String, completion: (Result<Game>) -> ())
+    func loadImageData(gameId: String, completion: (Result<NSData>) -> ())
 }

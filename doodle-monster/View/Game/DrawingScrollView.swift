@@ -14,6 +14,7 @@ protocol DrawingView {
     func switchToEraseMode()
     func showCancelConfirmation()
     func goToMainMenu()
+    func showAlert(title: String, message: String)
 }
 
 class DrawingScrollView: UIScrollView {

@@ -40,15 +40,12 @@ class DrawingViewModel: NSObject {
     }
 
     func loadPreviousTurns() {
-        if let previousMonsterFile = game.imageFile {
-            previousMonsterFile.getDataInBackgroundWithBlock() { (imageData: NSData?, error: NSError?) in
-                if error == nil {
-                    if let imageData = imageData {
-                        self.drawingService.setImageData(imageData)
-                    }
-                } else {
-                    // TODO: display an error or whatever
-                }
+        gameService.loadImageData(game.id!) { result in
+            switch result {
+            case .Success(let imageData):
+                self.drawingService.setImageData(imageData)
+            case .Failure(let err):
+                self.view.showAlert("Error", message: "Something went wrong while fetching the monster! Please try again later.")
             }
         }
     }
@@ -78,7 +75,7 @@ class DrawingViewModel: NSObject {
 
                 completion()
             case .Failure( _):
-                fatalError("Failed to save turn")
+                self.view.showAlert("Error", message: "Something went wrong while saving your turn. Please try again later.")
             }
         }
     }
@@ -89,6 +86,7 @@ class DrawingViewModel: NSObject {
         }
         
         drawingMode = .Draw
+        
         drawingService.drawingMode = .Draw
         
         view.switchToDrawMode()

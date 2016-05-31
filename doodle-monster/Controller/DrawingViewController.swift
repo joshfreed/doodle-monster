@@ -184,6 +184,12 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
     func allowPanningAndZooming() -> Bool {
         return viewModel.drawingService.allowPanningAndZooming()
     }
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+        presentViewController(alert, animated: true, completion: nil)
+    }
 }
 
 enum DrawingMode {

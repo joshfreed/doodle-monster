@@ -10,10 +10,16 @@ import UIKit
 import Alamofire
 
 class RestPlayerService: PlayerService {
+    let apiUrl: String
     let session: SessionService
+    let playerTranslator: ParsePlayerTranslator
     
-    init(session: SessionService) {
+    private var players: [Player] = []
+    
+    init(apiUrl: String, session: SessionService, playerTranslator: ParsePlayerTranslator) {
+        self.apiUrl = apiUrl
         self.session = session
+        self.playerTranslator = playerTranslator
     }
     
     func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ()) {
@@ -23,7 +29,7 @@ class RestPlayerService: PlayerService {
             "displayName": displayName
         ]
         Alamofire
-            .request(.POST, DM_API_URL + "/players/register", parameters: params, encoding: .JSON)
+            .request(.POST, apiUrl + "/players/register", parameters: params, encoding: .JSON)
             .responseJSON { response in
                 guard response.result.isSuccess else {
                     callback(result: .Error)
@@ -47,10 +53,37 @@ class RestPlayerService: PlayerService {
     }
     
     func search(searchText: String, callback: (result: SearchResult) -> ()) {
-        
+        let headers = [
+            "Authorization": "Bearer " + session.token!,
+        ]
+        Alamofire
+            .request(.GET, apiUrl + "/players?email=" + searchText, headers: headers)
+            .responseJSON { response in
+                switch response.result {
+                case .Success(let json):
+                    guard let objects = json as? [NSDictionary] else {
+                        return callback(result: .Error)
+                    }
+                    
+                    var players: [Player] = []
+                    for user in objects {
+                        let player = self.playerTranslator.dictionaryToModel(user)
+                        players.append(player)
+                        self.players.append(player)
+                    }
+                    callback(result: SearchResult.Success(players))
+                case .Failure(let error): callback(result: .Error)
+                }
+            }
     }
     
     func playerBy(id: String) -> Player? {
+        for object in players {
+            if object.id == id {
+                return object
+            }
+        }
+        
         return nil
     }
 }
