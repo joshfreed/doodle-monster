@@ -72,6 +72,7 @@
 		53CED4C71C1F6D5600B5BEEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4C61C1F6D5600B5BEEF /* AudioToolbox.framework */; };
 		53CED4CF1C1F6DE000B5BEEF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CED4CE1C1F6DE000B5BEEF /* SystemConfiguration.framework */; };
 		53CED4D21C1F8F2800B5BEEF /* CreateAccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CED4D11C1F8F2800B5BEEF /* CreateAccountPresenter.swift */; };
+		53DCA4271D08898A00BF4317 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DCA4261D08898A00BF4317 /* ViewControllerExtensions.swift */; };
 		53E379D21C9F52CB0055A2D7 /* DrawingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E379D11C9F52CB0055A2D7 /* DrawingService.swift */; };
 		53E5BBBE1C3EF5EB0035504F /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E5BBBD1C3EF5EB0035504F /* MainMenuViewModel.swift */; };
 		53E5BBC31C3F1BFA0035504F /* ArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E5BBC21C3F1BFA0035504F /* ArrayDataSource.swift */; };
@@ -180,6 +181,7 @@
 		53CED4CC1C1F6DD300B5BEEF /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		53CED4CE1C1F6DE000B5BEEF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		53CED4D11C1F8F2800B5BEEF /* CreateAccountPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountPresenter.swift; path = Presenter/CreateAccountPresenter.swift; sourceTree = "<group>"; };
+		53DCA4261D08898A00BF4317 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		53E379D11C9F52CB0055A2D7 /* DrawingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawingService.swift; path = Service/DrawingService.swift; sourceTree = "<group>"; };
 		53E5BBBD1C3EF5EB0035504F /* MainMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewModel.swift; path = ViewModel/MainMenuViewModel.swift; sourceTree = "<group>"; };
 		53E5BBC21C3F1BFA0035504F /* ArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayDataSource.swift; path = View/Utilities/ArrayDataSource.swift; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 			isa = PBXGroup;
 			children = (
 				E9AFC4F97913FC798BDB66CC /* ArrayExtensions.swift */,
+				53DCA4261D08898A00BF4317 /* ViewControllerExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -583,7 +586,6 @@
 				TargetAttributes = {
 					5328008E1BA0ECF6005AD59C = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = Q96RZM5NAK;
 					};
 					532800A21BA0ECF6005AD59C = {
 						CreatedOnToolsVersion = 7.0;
@@ -687,6 +689,7 @@
 				535A0A151C65588B00CAC8D3 /* SegueHandler.swift in Sources */,
 				53E5BBC31C3F1BFA0035504F /* ArrayDataSource.swift in Sources */,
 				53B60DEF1C43047900AF0E09 /* WaitingCell.swift in Sources */,
+				53DCA4271D08898A00BF4317 /* ViewControllerExtensions.swift in Sources */,
 				532692071CC195EB00486738 /* LoadingSpinner.swift in Sources */,
 				531602AB1C529C600023C19E /* MonsterSectionFooter.swift in Sources */,
 				5335997D1C69251100F50FAB /* Game.swift in Sources */,

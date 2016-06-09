@@ -44,7 +44,7 @@ class RestGameService: GameService {
                     print(json)
                     guard let data = json as? NSDictionary else {
                         // successful http request; bad data from server
-                        callback(.Failure(DoodMonError.ServerError))
+                        callback(.Failure(DoodMonError.UnexpectedResponse))
                         return
                     }
                     
@@ -53,25 +53,7 @@ class RestGameService: GameService {
                     
                     break
                     
-                case .Failure(let error):
-                    print(error)
-                    if let data = response.data {
-                        do {
-                            let object = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? [String: AnyObject]
-                            if let
-                                object = object,
-                                code = object["code"] as? String,
-                                message = object["message"] as? String
-                            {
-                                callback(.Failure(DoodMonError.HttpError(code: code, message: message)))
-                                return
-                            }
-                        } catch {
-                            
-                        }
-                        
-                        callback(.Failure(DoodMonError.ServerError))
-                    }
+                case .Failure(let error): callback(.Failure(self.parseErrorType(error, data: response.data)))
                 }
             }
     }
@@ -99,25 +81,7 @@ class RestGameService: GameService {
                     }
                     callback(.Success(games))
                     
-                case .Failure(let error):
-                    print(error)
-                    if let data = response.data {
-                        do {
-                            let object = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? [String: AnyObject]
-                            if let
-                                object = object,
-                                code = object["code"] as? String,
-                                message = object["message"] as? String
-                            {
-                                callback(.Failure(DoodMonError.HttpError(code: code, message: message)))
-                                return
-                            }
-                        } catch {
-                            
-                        }
-                        
-                        callback(.Failure(DoodMonError.ServerError))
-                    }
+                case .Failure(let error): callback(.Failure(self.parseErrorType(error, data: response.data)))
                 }
             }
     }
@@ -150,7 +114,7 @@ class RestGameService: GameService {
                                 print(json)
                                 guard let data = json as? NSDictionary else {
                                     // successful http request; bad data from server
-                                    completion(.Failure(DoodMonError.ServerError))
+                                    completion(.Failure(DoodMonError.UnexpectedResponse))
                                     return
                                 }
                                 
@@ -159,25 +123,7 @@ class RestGameService: GameService {
                                 
                                 break
                                 
-                            case .Failure(let error):
-                                print(error)
-                                if let data = response.data {
-                                    do {
-                                        let object = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? [String: AnyObject]
-                                        if let
-                                            object = object,
-                                            code = object["code"] as? String,
-                                            message = object["message"] as? String
-                                        {
-                                            completion(.Failure(DoodMonError.HttpError(code: code, message: message)))
-                                            return
-                                        }
-                                    } catch {
-                                        
-                                    }
-                                    
-                                    completion(.Failure(DoodMonError.ServerError))
-                                }
+                            case .Failure(let error): completion(.Failure(self.parseErrorType(error, data: response.data)))
                             }
                     }
                 case .Failure(let encodingError):
@@ -209,26 +155,39 @@ class RestGameService: GameService {
                     }
 
                     completion(.Success(imageData))
-                case .Failure(let error):
-                    print(error)
-                    if let data = response.data {
-                        do {
-                            let object = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? [String: AnyObject]
-                            if let
-                                object = object,
-                                code = object["code"] as? String,
-                                message = object["message"] as? String
-                            {
-                                completion(.Failure(DoodMonError.HttpError(code: code, message: message)))
-                                return
-                            }
-                        } catch {
-                            
-                        }
-                        
-                        completion(.Failure(DoodMonError.ServerError))
-                    }
+                case .Failure(let error): completion(.Failure(self.parseErrorType(error, data: response.data)))
                 }
         }
+    }
+    
+    private func parseErrorType(error: NSError, data: NSData?) -> ErrorType {
+        print(error)
+        
+        if let errTuple = self.parseErrorData(data) {
+            return DoodMonError.HttpError(code: errTuple.code, message: errTuple.message)
+        }
+        
+        return DoodMonError.ServerError(message: error.localizedDescription)
+    }
+    
+    private func parseErrorData(data: NSData?) -> (code: String, message: String)? {
+        guard let data = data else {
+            return nil
+        }
+        
+        do {
+            let object = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? [String: AnyObject]
+            if let
+                object = object,
+                code = object["code"] as? String,
+                message = object["message"] as? String
+            {
+                return (code: code, message: message)
+            }
+        } catch {
+            
+        }
+        
+        return nil
     }
 }

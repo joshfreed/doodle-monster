@@ -126,6 +126,7 @@ enum UserError: ErrorType {
 
 enum DoodMonError: ErrorType {
     case HttpError(code: String, message: String)
-    case ServerError
+    case ServerError(message: String)
+    case UnexpectedResponse
     case UnknownResponse
 }

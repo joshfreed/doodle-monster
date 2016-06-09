@@ -77,6 +77,8 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, Routed
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         prepare(segue, sender: sender)
     }
+    
+    // MARK: - IBActions
 
     @IBAction func unwindToMainMenu(segue: UIStoryboardSegue) {
     }
@@ -85,6 +87,12 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, Routed
         viewModel.signOut()
     }
 
+    func onRefresh(sender: UIRefreshControl!) {
+        viewModel.refresh()
+    }
+    
+    // MARK: - MainMenuView
+    
     func updateGameList() {
         refreshControl.endRefreshing()
         spinner.stopAnimating();
@@ -94,19 +102,21 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, Routed
         waiting.replaceItems(viewModel.waitingGames)
         monsterCollection.reloadData()
     }
+    
+    func showServerError(err: ErrorType) {
+        showErrorAlert(err, title: nil)
+    }
 
+    // MARK: - UICollectionViewDelegate
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 {
             return
         }
-
+        
         viewModel.selectGame(indexPath.row)
     }
     
-    func onRefresh(sender: UIRefreshControl!) {
-        viewModel.refresh()
-    }
-
     // MARK: - UICollectionViewFlowLayout Delegate
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {

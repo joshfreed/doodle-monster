@@ -10,6 +10,7 @@ import EmitterKit
 
 protocol MainMenuView {
     func updateGameList()
+    func showServerError(err: ErrorType)
 }
 
 protocol MainMenuViewModelProtocol: class {
@@ -101,9 +102,7 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
                     }
                 }
                 break
-            case .Failure(let err):
-                print(err)
-                break
+            case .Failure(let err): self.view.showServerError(err)
             }
          
             self.view.updateGameList()
