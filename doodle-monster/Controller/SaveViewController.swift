@@ -23,7 +23,7 @@ class SaveViewController: UIViewController, UITextFieldDelegate {
 
         nextLetterInput.delegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SaveViewController.keyboardWillShowNotification(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SaveViewController.keyboardWillHideNotification(_:)), name: UIKeyboardWillHideNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SaveViewController.keyboardWillHideNotification(_:)), name: UIKeyboardWillHideNotification, object: nil)
         nextLetterInput.becomeFirstResponder()
     }
 
@@ -52,8 +52,13 @@ class SaveViewController: UIViewController, UITextFieldDelegate {
             loadingSpinner.show(inView: nc.view)
         }
         
-        viewModel.saveTurn(nextLetterInput.text!) {
+        viewModel.saveTurn(nextLetterInput.text!) { err in
             self.loadingSpinner.hide()
+            
+            guard err == nil else {
+                return self.showErrorAlert(err!, title: "Error")
+            }
+            
             self.performSegueWithIdentifier("GoToMainMenu", sender: self)
         }
     }
@@ -62,9 +67,9 @@ class SaveViewController: UIViewController, UITextFieldDelegate {
         updateBottomLayoutConstraintWithNotification(notification)
     }
 
-    func keyboardWillHideNotification(notification: NSNotification) {
-        updateBottomLayoutConstraintWithNotification(notification)
-    }
+//    func keyboardWillHideNotification(notification: NSNotification) {
+//        updateBottomLayoutConstraintWithNotification(notification)
+//    }
 
     func updateBottomLayoutConstraintWithNotification(notification: NSNotification) {
         guard let userInfo = notification.userInfo else {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8ei-sg-I7G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8ei-sg-I7G">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -390,7 +390,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ym2-Wf-Cij">
-                                            <rect key="frame" x="279" y="15" width="42" height="20.5"/>
+                                            <rect key="frame" x="279" y="15" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -665,7 +665,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IW2-ph-72m" userLabel="Monster Name Container">
-                                        <rect key="frame" x="114.5" y="130" width="82" height="26"/>
+                                        <rect key="frame" x="115" y="130" width="82" height="26"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAx-Yh-u93" userLabel="Monster Name">
                                                 <rect key="frame" x="0.0" y="0.0" width="52" height="26"/>
@@ -697,7 +697,7 @@
                                         <rect key="frame" x="20" y="176" width="271" height="46"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ArP-VJ-lJV">
-                                                <rect key="frame" x="0.0" y="0.0" width="135.5" height="46"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="136" height="46"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="saveTurn" label="Save turn"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                                 <state key="normal" title="Save"/>
@@ -706,7 +706,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PuG-iM-4Sg">
-                                                <rect key="frame" x="135.5" y="0.0" width="135.5" height="46"/>
+                                                <rect key="frame" x="136" y="0.0" width="135" height="46"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <state key="normal" title="Cancel"/>
                                                 <connections>
@@ -810,8 +810,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <state key="normal" title="No"/>
                                         <connections>
-                                            <action selector="tappedNo:" destination="ohx-1f-COx" eventType="touchUpInside" id="Xt7-S1-rQr"/>
-                                            <segue destination="LI0-D2-hkj" kind="unwind" unwindAction="unwindToDrawing:" id="ihh-1a-edD"/>
+                                            <segue destination="LI0-D2-hkj" kind="unwind" unwindAction="unwindToDrawing:" id="JTc-qd-tev"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfk-Ks-n7y">
@@ -819,8 +818,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <state key="normal" title="Yes"/>
                                         <connections>
-                                            <action selector="tappedYes:" destination="ohx-1f-COx" eventType="touchUpInside" id="Uot-tG-xO4"/>
-                                            <segue destination="LI0-D2-hkj" kind="unwind" unwindAction="unwindToMainMenu:" id="2Ep-Hp-yTE"/>
+                                            <segue destination="LI0-D2-hkj" kind="unwind" unwindAction="unwindToMainMenu:" id="toC-Mx-YFS"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -848,7 +846,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="gLm-P2-AD1" firstAttribute="centerX" secondItem="PhO-lW-9ng" secondAttribute="centerX" id="Ayy-aa-UKT"/>
                             <constraint firstItem="c1y-CC-06h" firstAttribute="leading" secondItem="PhO-lW-9ng" secondAttribute="leading" id="FYO-U3-dN7"/>
@@ -1088,7 +1086,7 @@
                                         <rect key="frame" x="0.0" y="28" width="560" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tLC-UC-SBK" id="i3h-p3-CJ6">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzX-5W-Qy8">

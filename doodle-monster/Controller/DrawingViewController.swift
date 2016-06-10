@@ -190,6 +190,10 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
         alert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
         presentViewController(alert, animated: true, completion: nil)
     }
+    
+    func showError(err: ErrorType) {
+        showErrorAlert(err, title: nil)
+    }
 }
 
 enum DrawingMode {

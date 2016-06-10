@@ -42,10 +42,8 @@ class DrawingViewModel: NSObject {
     func loadPreviousTurns() {
         gameService.loadImageData(game.id!) { result in
             switch result {
-            case .Success(let imageData):
-                self.drawingService.setImageData(imageData)
-            case .Failure(let err):
-                self.view.showAlert("Error", message: "Something went wrong while fetching the monster! Please try again later.")
+            case .Success(let imageData): self.drawingService.setImageData(imageData)
+            case .Failure(let err): self.view.showError(err)
             }
         }
     }
@@ -57,7 +55,7 @@ class DrawingViewModel: NSObject {
         full = fullImageData
     }
 
-    func saveTurn(letter: String, completion: () -> ()) {
+    func saveTurn(letter: String, completion: (ErrorType?) -> ()) {
         guard let fullImageData = full else {
             fatalError("Did not set the images before saving")
         }
@@ -73,9 +71,10 @@ class DrawingViewModel: NSObject {
                     NSNotificationCenter.defaultCenter().postNotificationName("TurnComplete", object: nil, userInfo: ["game": wrappedGame])
                 }
 
-                completion()
-            case .Failure( _):
-                self.view.showAlert("Error", message: "Something went wrong while saving your turn. Please try again later.")
+                completion(nil)
+                
+                self.view.goToMainMenu()
+            case .Failure(let err): completion(err)
             }
         }
     }

@@ -32,9 +32,4 @@ class ConfirmCancelViewController: UIViewController {
     }
     */
 
-    @IBAction func tappedYes(sender: AnyObject) {
-    }
-    
-    @IBAction func tappedNo(sender: AnyObject) {
-    }
 }

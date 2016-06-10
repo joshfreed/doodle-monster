@@ -15,6 +15,7 @@ protocol DrawingView {
     func showCancelConfirmation()
     func goToMainMenu()
     func showAlert(title: String, message: String)
+    func showError(err: ErrorType)
 }
 
 class DrawingScrollView: UIScrollView {
