@@ -11,8 +11,8 @@ import UIKit
 class RestGameTranslator {
     let playerTranslator = DictionaryPlayerTranslator()
     
-    func dictionaryToModel(object: NSDictionary) -> Game {
-        let dateFormatter = NSDateFormatter()
+    func dictionaryToModel(_ object: NSDictionary) -> Game {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         
         var game = Game()
@@ -23,12 +23,12 @@ class RestGameTranslator {
         game.currentPlayerNumber = object["currentPlayerNumber"] as? Int ?? 0
         
         if let thumbnail = object["thumbnail"] as? String {
-            game.thumbnail = NSData(base64EncodedString: thumbnail, options: NSDataBase64DecodingOptions(rawValue: 0))
+            game.thumbnail = Data(base64Encoded: thumbnail, options: NSData.Base64DecodingOptions(rawValue: 0))
         } else {
-            game.thumbnail = NSData()
+            game.thumbnail = Data()
         }
         
-        if let lastTurn = object["lastTurn"] as? String, formatted = dateFormatter.dateFromString(lastTurn) {
+        if let lastTurn = object["lastTurn"] as? String, let formatted = dateFormatter.date(from: lastTurn) {
             game.lastTurn = formatted
         }
 

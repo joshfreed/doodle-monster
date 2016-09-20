@@ -14,13 +14,13 @@ class WaitingCell: UICollectionViewCell, CollectionViewCell {
     @IBOutlet weak var currentPlayerInfo: UILabel!
     @IBOutlet weak var lastTurnInfo: UILabel!
     
-    func configure(item: GameViewModel) {
+    func configure(_ item: GameViewModel) {
         monsterName.text = item.monsterName
         currentPlayerInfo.text = item.currentPlayerName
         lastTurnInfo.text = item.lastTurnText
         
         if let imageData = item.game.thumbnail {
-            monsterThumbnail.image = UIImage(data: imageData)
+            monsterThumbnail.image = UIImage(data: imageData as Data)
         }
     }
 }

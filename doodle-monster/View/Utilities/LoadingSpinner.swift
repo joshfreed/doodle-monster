@@ -13,9 +13,9 @@ class LoadingSpinner {
     var activityIndicator: UIActivityIndicatorView!
     
     func show(inView parent: UIView) {
-        overlayView = UIView(frame: UIScreen.mainScreen().bounds)
+        overlayView = UIView(frame: UIScreen.main.bounds)
         overlayView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         activityIndicator.center = overlayView.center
         overlayView.addSubview(activityIndicator)
         activityIndicator.startAnimating()

@@ -10,8 +10,8 @@ import UIKit
 import EmitterKit
 
 protocol NewMonsterView {
-    func displayPlayer(player: PlayerViewModel)
-    func removePlayer(player: PlayerViewModel)
+    func displayPlayer(_ player: PlayerViewModel)
+    func removePlayer(_ player: PlayerViewModel)
     func updateStartButton()
 }
 
@@ -21,7 +21,7 @@ protocol NewMonsterViewModelProtocol {
     var buttonHidden: Bool { get }
 
     init(view: NewMonsterView, session: SessionService, router: NewMonsterRouter, applicationLayer: DoodleMonster)
-    func removePlayer(player: PlayerViewModel)
+    func removePlayer(_ player: PlayerViewModel)
     func startGame()
 }
 
@@ -30,11 +30,11 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
     var currentPlayer: PlayerViewModel
     var buttonHidden = true
 
-    private let view: NewMonsterView
-    private let session: SessionService
-    private let router: NewMonsterRouter
-    private let appLayer: DoodleMonster
-    private var listeners: [Listener] = []
+    fileprivate let view: NewMonsterView
+    fileprivate let session: SessionService
+    fileprivate let router: NewMonsterRouter
+    fileprivate let appLayer: DoodleMonster
+    fileprivate var listeners: [Listener] = []
 
     required init(view: NewMonsterView, session: SessionService, router: NewMonsterRouter, applicationLayer: DoodleMonster) {
         self.view = view
@@ -53,14 +53,14 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
         print("NewMonsterViewModel::deinit")
     }
 
-    func playerAdded(player: Player) {
+    func playerAdded(_ player: Player) {
         let playerVm = PlayerViewModel(player: player)
         players.append(playerVm)
         view.displayPlayer(playerVm)
         validateGame()
     }
     
-    func playerRemoved(player: Player) {
+    func playerRemoved(_ player: Player) {
         let vm = PlayerViewModel(player: player)
         players.remove(vm)
         view.removePlayer(vm)
@@ -74,7 +74,7 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
 
     // MARK: - NewMonsterViewModelProtocol
 
-    func removePlayer(vm: PlayerViewModel) {
+    func removePlayer(_ vm: PlayerViewModel) {
         appLayer.removePlayer(vm.id)
     }
 
@@ -100,7 +100,7 @@ struct PlayerViewModel: Equatable {
         return player.displayName ?? ""
     }
 
-    private let player: Player
+    fileprivate let player: Player
     
     init(player: Player) {
         self.player = player

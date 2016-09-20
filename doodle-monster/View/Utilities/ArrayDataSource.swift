@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArrayDataSource<T: CellProtocol, Item where T.ItemType == Item>: NSObject, UICollectionViewDataSource, UITableViewDataSource {
+class ArrayDataSource<T: CellProtocol, Item>: NSObject, UICollectionViewDataSource, UITableViewDataSource where T.ItemType == Item {
     var items: [Item]
     let identifier: String
     
@@ -18,35 +18,35 @@ class ArrayDataSource<T: CellProtocol, Item where T.ItemType == Item>: NSObject,
         self.identifier = cellIdentifier
     }
 
-    func getItemAtIndex(indexPath: NSIndexPath) -> Item {
-        return items[indexPath.row]
+    func getItemAtIndex(_ indexPath: IndexPath) -> Item {
+        return items[(indexPath as NSIndexPath).row]
     }
 
-    func replaceItems(items: [Item]) {
+    func replaceItems(_ items: [Item]) {
         self.items = items
     }
 
     // MARK: - UICollectionViewDataSource
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! T
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! T
         cell.configure(getItemAtIndex(indexPath))
         return cell as! UICollectionViewCell
     }
 
     // MARK: - UITableViewDataSource
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(identifier) as! T
-        cell.configure(items[indexPath.row])
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! T
+        cell.configure(items[(indexPath as NSIndexPath).row])
         return cell as! UITableViewCell
     }
 }
@@ -54,6 +54,6 @@ class ArrayDataSource<T: CellProtocol, Item where T.ItemType == Item>: NSObject,
 protocol CellProtocol {
     associatedtype ItemType
     
-    func configure(item: ItemType)
+    func configure(_ item: ItemType)
 }
 

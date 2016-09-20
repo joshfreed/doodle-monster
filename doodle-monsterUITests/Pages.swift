@@ -27,14 +27,14 @@ struct LoginWithEmailPage {
         self.app = app
     }
     
-    func emailAddress(addr: String) {
+    func emailAddress(_ addr: String) {
         let emailAddressTextField = app.textFields["email address"]
         emailAddressTextField.tap()
         emailAddressTextField.typeText(addr)
         
     }
     
-    func password(pw: String) {
+    func password(_ pw: String) {
         let passwordSecureTextField = app.secureTextFields["password"]
         passwordSecureTextField.tap()
         passwordSecureTextField.typeText(pw)
@@ -58,13 +58,13 @@ struct CreateAccountPage {
         return emailAddr.label
     }
     
-    func confirmPassword(pw: String) {
+    func confirmPassword(_ pw: String) {
         let confirmPasswordSecureTextField = app.secureTextFields["confirm password"]
         confirmPasswordSecureTextField.tap()
         confirmPasswordSecureTextField.typeText(pw)
     }
     
-    func displayName(name: String) {
+    func displayName(_ name: String) {
         let displayNameTextField = app.textFields["display name"]
         displayNameTextField.tap()
         displayNameTextField.typeText(name)

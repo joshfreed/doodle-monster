@@ -6,12 +6,12 @@
 import Foundation
 
 extension Array where Element: Equatable {
-    mutating func remove(itemToRemove: Element) {
-        guard let index = indexOf(itemToRemove) else {
+    mutating func remove(_ itemToRemove: Element) {
+        guard let index = index(of: itemToRemove) else {
             print("Item not found \(itemToRemove)")
             return
         }
 
-        removeAtIndex(index)
+        self.remove(at: index)
     }
 }

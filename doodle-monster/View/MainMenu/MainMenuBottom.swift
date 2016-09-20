@@ -11,11 +11,11 @@ import UIKit
 class MainMenuBottom: UICollectionReusableView, NibLoadableView {
     weak var viewModel: MainMenuViewModelProtocol?
 
-    @IBAction func newMonster(sender: AnyObject) {
+    @IBAction func newMonster(_ sender: AnyObject) {
         viewModel?.newMonster()
     }
     
-    @IBAction func signOut(sender: AnyObject) {
+    @IBAction func signOut(_ sender: AnyObject) {
         viewModel?.signOut()
     }
 }

@@ -38,8 +38,8 @@ class GameTests: XCTestCase {
         
         let scrollView = app.scrollViews["drawingScrollView"]
         let exists = NSPredicate(format: "exists == 1")
-        expectationForPredicate(exists, evaluatedWithObject: scrollView, handler: nil)
-        waitForExpectationsWithTimeout(5, handler: nil)
+        expectation(for: exists, evaluatedWith: scrollView, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
         
         app.buttons["cancel drawing"].tap()
         
@@ -63,29 +63,29 @@ class GameTests: XCTestCase {
         
         let scrollView = app.scrollViews["drawingScrollView"]
         let exists = NSPredicate(format: "exists == 1")
-        expectationForPredicate(exists, evaluatedWithObject: scrollView, handler: nil)
-        waitForExpectationsWithTimeout(5, handler: nil)
+        expectation(for: exists, evaluatedWith: scrollView, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
         
         let imageContainer = app.otherElements["ImageContainer"]
         
-        let start = imageContainer.coordinateWithNormalizedOffset(CGVector(dx: 0, dy: 0))
-        let end = imageContainer.coordinateWithNormalizedOffset(CGVector(dx: 1, dy: 1))
-        start.pressForDuration(0, thenDragToCoordinate: end)
+        let start = imageContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
+        let end = imageContainer.coordinate(withNormalizedOffset: CGVector(dx: 1, dy: 1))
+        start.press(forDuration: 0, thenDragTo: end)
         
         app.buttons["saveDrawing"].tap()
         
-        let letterTextField = app.textFields["letter"]
+        let letterTextField = app.textFields["NameLetter"]
         letterTextField.typeText("Q")
         
         app.buttons["saveTurn"].tap()
-
+        
         XCTAssert(app.buttons["Sign Out"].exists)
         
         let monsterCollection = app.collectionViews["monsterCollection"]
         XCTAssert(monsterCollection.exists)
         XCTAssertEqual(1, monsterCollection.cells.count)
         
-        let cell = monsterCollection.cells.elementBoundByIndex(0)
+        let cell = monsterCollection.cells.element(boundBy: 0)
         XCTAssertEqual("Q", cell.staticTexts["monsterName"].label)
 
         // Game shows updated thumbnail. -- HOW DOES I TEST THIS?

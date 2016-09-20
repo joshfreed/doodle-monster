@@ -19,7 +19,7 @@ protocol Canvas {
 protocol StrokeHistoryProtocol {
     var strokes: [Stroke] { get }
     
-    func addStroke(stroke: Stroke)
+    func addStroke(_ stroke: Stroke)
     func undo()
     func redo()
 }
@@ -27,9 +27,9 @@ protocol StrokeHistoryProtocol {
 class StrokeHistory: StrokeHistoryProtocol {
     let undoLimit: Int
     
-    private var canvas: Canvas
-    private(set) var strokes: [Stroke] = []
-    private(set) var unDoneStrokes: [Stroke] = []
+    fileprivate var canvas: Canvas
+    fileprivate(set) var strokes: [Stroke] = []
+    fileprivate(set) var unDoneStrokes: [Stroke] = []
     
     init(canvas: Canvas) {
         self.canvas = canvas
@@ -41,7 +41,7 @@ class StrokeHistory: StrokeHistoryProtocol {
         self.undoLimit = undoLimit
     }
     
-    func addStroke(stroke: Stroke) {
+    func addStroke(_ stroke: Stroke) {
         strokes.append(stroke)
         
         if strokes.count > undoLimit + 1 {

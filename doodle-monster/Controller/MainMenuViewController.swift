@@ -50,14 +50,14 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, Routed
         monsterCollection.accessibilityActivate()
         monsterCollection.accessibilityIdentifier = "monsterCollection"
         
-        let theNib = UINib(nibName: MainMenuBottom.nibName, bundle: NSBundle(forClass: MainMenuBottom.self))
-        monsterCollection.registerNib(theNib, forSupplementaryViewOfKind: "MainMenuBottom", withReuseIdentifier: MainMenuBottom.defaultReuseIdentifier)
+        let theNib = UINib(nibName: MainMenuBottom.nibName, bundle: Bundle(for: MainMenuBottom.self))
+        monsterCollection.register(theNib, forSupplementaryViewOfKind: "MainMenuBottom", withReuseIdentifier: MainMenuBottom.defaultReuseIdentifier)
         
         refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(MainMenuViewController.onRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: #selector(MainMenuViewController.onRefresh(_:)), for: UIControlEvents.valueChanged)
         monsterCollection.addSubview(refreshControl)
         
-        spinner = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         
         monsterCollection.backgroundView = spinner
         spinner.startAnimating();
@@ -74,20 +74,20 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, Routed
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        prepare(segue, sender: sender)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        prepareRoutedSegue(segue, sender: sender)
     }
     
     // MARK: - IBActions
 
-    @IBAction func unwindToMainMenu(segue: UIStoryboardSegue) {
+    @IBAction func unwindToMainMenu(_ segue: UIStoryboardSegue) {
     }
 
-    @IBAction func signOut(sender: UIButton) {
+    @IBAction func signOut(_ sender: UIButton) {
         viewModel.signOut()
     }
 
-    func onRefresh(sender: UIRefreshControl!) {
+    func onRefresh(_ sender: UIRefreshControl!) {
         viewModel.refresh()
     }
     
@@ -103,50 +103,50 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, Routed
         monsterCollection.reloadData()
     }
     
-    func showServerError(err: ErrorType) {
+    func showServerError(_ err: Error) {
         showErrorAlert(err, title: nil)
     }
 
     // MARK: - UICollectionViewDelegate
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 1 {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if (indexPath as NSIndexPath).section == 1 {
             return
         }
         
-        viewModel.selectGame(indexPath.row)
+        viewModel.selectGame((indexPath as NSIndexPath).row)
     }
     
     // MARK: - UICollectionViewFlowLayout Delegate
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         // Set up desired width
         let targetWidth: CGFloat = (collectionView.bounds.width - 3 * kHorizontalInsets) / 2
 
-        if indexPath.section == 0 {
+        if (indexPath as NSIndexPath).section == 0 {
             var cell: YourTurnCell? = self.offscreenCells[YourTurnCell.defaultReuseIdentifier] as? YourTurnCell
             if cell == nil {
-                cell = NSBundle.mainBundle().loadNibNamed(YourTurnCell.nibName, owner: self, options: nil)[0] as? YourTurnCell
+                cell = Bundle.main.loadNibNamed(YourTurnCell.nibName, owner: self, options: nil)?[0] as? YourTurnCell
                 self.offscreenCells[YourTurnCell.defaultReuseIdentifier] = cell
             }
             
-            cell!.configure(yourTurn.items[indexPath.row])
+            cell!.configure(yourTurn.items[(indexPath as NSIndexPath).row])
             
             return calculateCellSize(cell!, targetWidth: targetWidth)
         } else {
             var cell: WaitingCell? = self.offscreenCells[WaitingCell.defaultReuseIdentifier] as? WaitingCell
             if cell == nil {
-                cell = NSBundle.mainBundle().loadNibNamed(WaitingCell.nibName, owner: self, options: nil)[0] as? WaitingCell
+                cell = Bundle.main.loadNibNamed(WaitingCell.nibName, owner: self, options: nil)?[0] as? WaitingCell
                 self.offscreenCells[WaitingCell.defaultReuseIdentifier] = cell
             }
-            cell!.configure(waiting.items[indexPath.row])
+            cell!.configure(waiting.items[(indexPath as NSIndexPath).row])
             return calculateCellSize(cell!, targetWidth: targetWidth)
         }
     }
     
-    private func calculateCellSize(cell: UICollectionViewCell, targetWidth: CGFloat) -> CGSize {
+    fileprivate func calculateCellSize(_ cell: UICollectionViewCell, targetWidth: CGFloat) -> CGSize {
         // Cell's size is determined in nib file, need to set it's width (in this case), and inside, use this cell's width to set label's preferredMaxLayoutWidth, thus, height can be determined, this size will be returned for real cell initialization
-        cell.bounds = CGRectMake(0, 0, targetWidth, cell.bounds.height)
+        cell.bounds = CGRect(x: 0, y: 0, width: targetWidth, height: cell.bounds.height)
         cell.contentView.bounds = cell.bounds
         
         
@@ -154,37 +154,37 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, Routed
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         
-        var size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        var size = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
         // Still need to force the width, since width can be smalled due to break mode of labels
         size.width = targetWidth
         return size
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(kVerticalInsets, kHorizontalInsets, kVerticalInsets, kHorizontalInsets)
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
         return kHorizontalInsets
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
         return kVerticalInsets
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if monsterDataSource.sections[section].count == 0 {
-            return CGSizeZero
+            return CGSize.zero
         } else {
             return (collectionViewLayout as! UICollectionViewFlowLayout).headerReferenceSize
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         if section == 1 {
             return CGSize(width: collectionView.frame.size.width, height: 155)
         } else {
-            return CGSizeZero
+            return CGSize.zero
         }
     }
 }

@@ -29,23 +29,23 @@ class CreateAccountViewController: UIViewController, CreateAccountView {
     // MARK: - CreateAccountView
 
     func goToMainMenu() {
-        performSegueWithIdentifier("MainMenu", sender: self)
+        performSegue(withIdentifier: "MainMenu", sender: self)
     }
     
     func showCreateAccountError() {
         
     }
     
-    func setUsername(username: String) {
+    func setUsername(_ username: String) {
         emailAddressLabel.text = username
     }
 
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MainMenu" {
-            if let vc = segue.destinationViewController as? MainMenuViewController {
+            if let vc = segue.destination as? MainMenuViewController {
                 vc.viewModel = appDelegate.viewModelFactory.mainMenuViewModel(vc)
             }
         }
@@ -53,10 +53,10 @@ class CreateAccountViewController: UIViewController, CreateAccountView {
 
     // MARK: - Actions
     
-    @IBAction func createAccount(sender: UIButton) {
+    @IBAction func createAccount(_ sender: UIButton) {
         guard let
             displayName = displayNameTextField.text,
-            confirmPassword = confirmPasswordTextField.text else
+            let confirmPassword = confirmPasswordTextField.text else
         {
             return
         }

@@ -17,13 +17,13 @@ class PlayerTableViewCell: UITableViewCell, CellProtocol {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
 
-    func configure(item: PlayerViewModel) {
+    func configure(_ item: PlayerViewModel) {
         self.displayName.text = item.displayName
         self.emailAddress.text = item.email
     }

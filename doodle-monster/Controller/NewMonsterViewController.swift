@@ -38,34 +38,34 @@ class NewMonsterViewController: UIViewController, RoutedSegue, NewMonsterView {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        prepare(segue, sender: sender)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        prepareRoutedSegue(segue, sender: sender)
     }
     
     // MARK: - Actions
     
-    @IBAction func unwindToNewMonster(segue: UIStoryboardSegue) {
+    @IBAction func unwindToNewMonster(_ segue: UIStoryboardSegue) {
         
     }
 
-    @IBAction func inviteFromFacebook(sender: UIButton) {
+    @IBAction func inviteFromFacebook(_ sender: UIButton) {
         
     }
     
-    @IBAction func start(sender: UIButton) {
+    @IBAction func start(_ sender: UIButton) {
         viewModel.startGame()
     }
 
     // MARK: - NewMonsterView
 
-    func displayPlayer(player: PlayerViewModel) {
+    func displayPlayer(_ player: PlayerViewModel) {
         let playerView = PlayerView.loadFromNib()
         playerView.configure(viewModel, playerViewModel: player)
         stackView.addArrangedSubview(playerView)
         playerViews.append(playerView)
     }
 
-    func removePlayer(player: PlayerViewModel) {
+    func removePlayer(_ player: PlayerViewModel) {
         for playerView in playerViews {
             if playerView.playerViewModel == player {
                 stackView.removeArrangedSubview(playerView)
@@ -75,7 +75,7 @@ class NewMonsterViewController: UIViewController, RoutedSegue, NewMonsterView {
     }
 
     func updateStartButton() {
-        startButton.hidden = viewModel.buttonHidden
+        startButton.isHidden = viewModel.buttonHidden
     }
 }
 

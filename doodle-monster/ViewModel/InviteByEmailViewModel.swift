@@ -17,8 +17,8 @@ protocol InviteByEmailViewModelProtocol: class {
     var players: [PlayerViewModel] { get }
 
     init(view: InviteByEmailView, playerService: PlayerService, session: SessionService, applicationLayer: DoodleMonster)
-    func search(text: String)
-    func selectPlayer(index: NSIndexPath)
+    func search(_ text: String)
+    func selectPlayer(_ index: IndexPath)
 }
 
 class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
@@ -26,11 +26,11 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
         return playerViewModels
     }
 
-    private let view: InviteByEmailView
-    private let session: SessionService
-    private let playerService: PlayerService
-    private let appLayer: DoodleMonster
-    private var playerViewModels: [PlayerViewModel] = []
+    fileprivate let view: InviteByEmailView
+    fileprivate let session: SessionService
+    fileprivate let playerService: PlayerService
+    fileprivate let appLayer: DoodleMonster
+    fileprivate var playerViewModels: [PlayerViewModel] = []
     
     required init(view: InviteByEmailView, playerService: PlayerService, session: SessionService, applicationLayer: DoodleMonster) {
         self.view = view
@@ -39,7 +39,7 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
         self.appLayer = applicationLayer
     }
 
-    func setPlayers(players: [Player]) {
+    func setPlayers(_ players: [Player]) {
         playerViewModels = players
             .filter({ return $0 != session.currentPlayer })
             .map({ return PlayerViewModel(player: $0) })
@@ -47,23 +47,23 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     
     // MARK: - InviteByEmailViewModelProtocol
 
-    func search(text: String) {
+    func search(_ text: String) {
         playerService.search(text) { result in
             switch result {
-            case .Success(let players):
+            case .success(let players):
                 self.setPlayers(players)
                 self.view.displaySearchResults()
-            case .Error: self.view.displaySearchError()
+            case .error: self.view.displaySearchError()
             }
         }
     }
 
-    func selectPlayer(index: NSIndexPath) {
-        guard index.row >= 0 && index.row < players.count else {
+    func selectPlayer(_ index: IndexPath) {
+        guard (index as NSIndexPath).row >= 0 && (index as NSIndexPath).row < players.count else {
             return
         }
 
-        let playerId = players[index.row].id
+        let playerId = players[(index as NSIndexPath).row].id
 
         guard let player = playerService.playerBy(playerId) else {
             print("No player with id \(playerId)")

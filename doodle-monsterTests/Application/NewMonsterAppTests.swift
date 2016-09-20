@@ -78,7 +78,7 @@ class NewMonsterAppTests: XCTestCase {
     
     func test_addPlayer_emitsAnEvent() {
         let player = PlayerBuilder.aPlayer().build()
-        let expectation = expectationWithDescription("playerAddedEvent was emitted")
+        let expectation = self.expectation(description: "playerAddedEvent was emitted")
         app.playerAdded.once { p in
             XCTAssertEqual(player, p)
             expectation.fulfill()
@@ -87,7 +87,7 @@ class NewMonsterAppTests: XCTestCase {
         app.createLobby()
         app.addPlayer(player)
 
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
     
     // MARK: removePlayer
@@ -104,7 +104,7 @@ class NewMonsterAppTests: XCTestCase {
     
     func test_removePlayer_emitsAnEvent() {
         let player = PlayerBuilder.aPlayer().build()
-        let expectation = expectationWithDescription("Event was emitted")
+        let expectation = self.expectation(description: "Event was emitted")
         app.playerRemoved.once { p in
             XCTAssertEqual(player, p)
             expectation.fulfill()
@@ -114,7 +114,7 @@ class NewMonsterAppTests: XCTestCase {
         app.addPlayer(player)
         app.removePlayer(player.id!)
         
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
     
     func test_removePlayer_anUnknownPlayerIdDoesNothing() {
@@ -146,8 +146,8 @@ class NewMonsterAppTests: XCTestCase {
         
         // EXPECTATIONS
         let theNewGame = GameBuilder.aGame().withPlayers(app.newGamePlayers).build()
-        gameServiceMock.createGameResult = .Success(theNewGame)
-        let expectation = expectationWithDescription("Event was emitted")
+        gameServiceMock.createGameResult = .success(theNewGame)
+        let expectation = self.expectation(description: "Event was emitted")
         app.newGameStarted.once { g in
             XCTAssertEqual(theNewGame, g)
             expectation.fulfill()
@@ -158,7 +158,7 @@ class NewMonsterAppTests: XCTestCase {
         
         // VERIFY
         XCTAssertEqual([], app.newGamePlayers)
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
     
     func test_startGame_doesNotStartTheGameIfThereArentEnoughPlayers() {

@@ -13,13 +13,13 @@ protocol SegueHandlerType {
 }
 
 extension SegueHandlerType where Self: UIViewController, SegueIdentifier.RawValue == String {
-    func performSegueWithIdentifier(segueIdentifier: SegueIdentifier, sender: AnyObject?) {
-        performSegueWithIdentifier(segueIdentifier.rawValue, sender: sender)
+    func performSegueWithIdentifier(_ segueIdentifier: SegueIdentifier, sender: AnyObject?) {
+        performSegue(withIdentifier: segueIdentifier.rawValue, sender: sender)
     }
     
-    func segueIdentifierForSegue(segue: UIStoryboardSegue) -> SegueIdentifier {
+    func segueIdentifierForSegue(_ segue: UIStoryboardSegue) -> SegueIdentifier {
         // still have to use guard stuff here, but at least you're extracting it this time
-        guard let identifier = segue.identifier, segueIdentifier = SegueIdentifier(rawValue: identifier) else {
+        guard let identifier = segue.identifier, let segueIdentifier = SegueIdentifier(rawValue: identifier) else {
             fatalError("Invalid segue identifier \(segue.identifier).")
         }
         
@@ -34,13 +34,13 @@ protocol RoutedSegue {
 }
 
 extension RoutedSegue where Self: UIViewController {
-    func prepare(segue: UIStoryboardSegue, sender: AnyObject?) {
-        guard let identifier = segue.identifier, segueAction = segues[identifier] else {
+    func prepareRoutedSegue(_ segue: UIStoryboardSegue, sender: Any?) {
+        guard let identifier = segue.identifier, let segueAction = segues[identifier] else {
             print("Segue \(segue.identifier) was not configured")
             return
         }
 
-        segueAction.run(segue.destinationViewController)
+        segueAction.run(segue.destination)
     }
 }
 
@@ -48,12 +48,12 @@ struct Segue {
     let action: (UIViewController, [String: Any]) -> ()
     let arguments: [String: Any]
 
-    init(action: (UIViewController, [String: Any]) -> (), arguments: [String: Any]) {
+    init(action: @escaping (UIViewController, [String: Any]) -> (), arguments: [String: Any]) {
         self.action = action
         self.arguments = arguments
     }
 
-    func run(vc: UIViewController) {
+    func run(_ vc: UIViewController) {
         action(vc, arguments)
     }
 }

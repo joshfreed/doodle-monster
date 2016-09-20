@@ -7,8 +7,8 @@
 //
 
 protocol GameService {
-    func createGame(players: [Player], callback: (Result<Game>) -> ())
-    func getActiveGames(callback: (Result<[Game]>) -> ())
-    func saveTurn(gameId: String, image: NSData, letter: String, completion: (Result<Game>) -> ())
-    func loadImageData(gameId: String, completion: (Result<NSData>) -> ())
+    func createGame(_ players: [Player], callback: @escaping (Result<Game>) -> ())
+    func getActiveGames(_ callback: @escaping (Result<[Game]>) -> ())
+    func saveTurn(_ gameId: String, image: Data, letter: String, completion: @escaping (Result<Game>) -> ())
+    func loadImageData(_ gameId: String, completion: @escaping (Result<Data>) -> ())
 }

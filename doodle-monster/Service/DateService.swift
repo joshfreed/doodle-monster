@@ -9,19 +9,19 @@
 import UIKit
 
 class DateService {
-    func getPrettyDiff(date1: NSDate, date2: NSDate) -> String {
-        let seconds = date2.timeIntervalSinceDate(date1)
+    func getPrettyDiff(_ date1: Date, date2: Date) -> String {
+        let seconds = date2.timeIntervalSince(date1)
         
         if (seconds < 0) {
             fatalError("Seconds cannot be less than zero. Did you give pass in the dates in the correct order?")
         }
         
-        let oneMinute = NSTimeInterval(60)
-        let oneHour = NSTimeInterval(oneMinute * 60)
-        let oneDay = NSTimeInterval(oneHour * 24)
-        let oneWeek = NSTimeInterval(oneDay * 7)
-        let oneMonth = NSTimeInterval(oneDay * 30)
-        let oneYear = NSTimeInterval(oneDay * 365)
+        let oneMinute = TimeInterval(60)
+        let oneHour = TimeInterval(oneMinute * 60)
+        let oneDay = TimeInterval(oneHour * 24)
+        let oneWeek = TimeInterval(oneDay * 7)
+        let oneMonth = TimeInterval(oneDay * 30)
+        let oneYear = TimeInterval(oneDay * 365)
         
         if seconds < oneMinute {
             return "\(Int(seconds))s"

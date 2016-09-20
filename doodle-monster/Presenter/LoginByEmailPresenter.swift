@@ -10,7 +10,7 @@ import UIKit
 
 protocol LoginByEmailView {
     func goToMainMenu()
-    func goToCreateAccount(username: String, password: String)
+    func goToCreateAccount(_ username: String, password: String)
     func showError()
     func showLoading()
     func hideLoading()
@@ -18,7 +18,7 @@ protocol LoginByEmailView {
 
 protocol LoginByEmailViewPresenter {
     init(view: LoginByEmailView, session: SessionService)
-    func login(username: String, password: String)
+    func login(_ username: String, password: String)
 }
 
 class LoginByEmailPresenter: LoginByEmailViewPresenter {
@@ -30,17 +30,17 @@ class LoginByEmailPresenter: LoginByEmailViewPresenter {
         self.session = session
     }
     
-    func login(username: String, password: String) {
+    func login(_ username: String, password: String) {
         view.showLoading()
         
         session.tryToLogIn(username, password: password) { result in
             self.view.hideLoading()
             
             switch result {
-            case .Success: self.view.goToMainMenu()
-            case .NoSuchUser: self.view.goToCreateAccount(username, password: password)
-            case .Failed: self.view.showError()
-            case .Error: self.view.showError()
+            case .success: self.view.goToMainMenu()
+            case .noSuchUser: self.view.goToCreateAccount(username, password: password)
+            case .failed: self.view.showError()
+            case .error: self.view.showError()
             }
         }
     }

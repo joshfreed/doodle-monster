@@ -12,8 +12,8 @@ protocol DoodleMonster {
     // MARK: Actions
     func createLobby()
     func cancelLobby()
-    func addPlayer(player: Player)
-    func removePlayer(playerId: String)
+    func addPlayer(_ player: Player)
+    func removePlayer(_ playerId: String)
     func canStartGame() -> Bool
     func startGame()
     
@@ -33,7 +33,7 @@ class DoodleMonsterApp: DoodleMonster {
     let playerRemoved = Event<Player>()
     let newGameStarted = Event<Game>()
     
-    private(set) var newGamePlayers: [Player] = []
+    fileprivate(set) var newGamePlayers: [Player] = []
     
     init(gameService: GameService, session: SessionService) {
         self.gameService = gameService
@@ -54,7 +54,7 @@ class DoodleMonsterApp: DoodleMonster {
         newGamePlayers = []
     }
     
-    func addPlayer(player: Player) {
+    func addPlayer(_ player: Player) {
         guard !newGamePlayers.contains(player) else {
             return
         }
@@ -63,7 +63,7 @@ class DoodleMonsterApp: DoodleMonster {
         playerAdded.emit(player)
     }
 
-    func removePlayer(playerId: String) {
+    func removePlayer(_ playerId: String) {
         let matches = newGamePlayers.filter { return $0.id == playerId }
         guard let player = matches.first else {
             return
@@ -83,11 +83,11 @@ class DoodleMonsterApp: DoodleMonster {
         
         gameService.createGame(newGamePlayers) { (result) -> () in
             switch result {
-            case .Success(let newGame):
+            case .success(let newGame):
                 self.newGamePlayers = []
                 self.newGameStarted.emit(newGame)
                 break
-            case .Failure( _): break
+            case .failure( _): break
             }
         }
     }

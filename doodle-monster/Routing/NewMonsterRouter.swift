@@ -6,7 +6,7 @@
 import UIKit
 
 protocol NewMonsterRouter {
-    func goToNewMonster(game: Game)
+    func goToNewMonster(_ game: Game)
 }
 
 class NewMonsterRouterImpl: NewMonsterRouter {
@@ -20,12 +20,12 @@ class NewMonsterRouterImpl: NewMonsterRouter {
         self.vc.segues["InviteByEmail"] = Segue(action: segueToInviteByEmailViewController, arguments: [:])
     }
 
-    func goToNewMonster(game: Game) {
+    func goToNewMonster(_ game: Game) {
         vc.segues["goToNewMonster"] = Segue(action: segueToDrawingViewController, arguments: ["game": game])
-        vc.performSegueWithIdentifier("goToNewMonster", sender: vc)
+        vc.performSegue(withIdentifier: "goToNewMonster", sender: vc)
     }
 
-    func segueToDrawingViewController(destinationViewController: UIViewController, arguments: [String: Any]) {
+    func segueToDrawingViewController(_ destinationViewController: UIViewController, arguments: [String: Any]) {
         guard let vc = destinationViewController as? DrawingViewController else {
             fatalError("Unexpected view controller type")
         }
@@ -39,9 +39,9 @@ class NewMonsterRouterImpl: NewMonsterRouter {
         vc.viewModel = viewModelFactory.drawingViewModel(game, view: drawingView)
     }
 
-    func segueToInviteByEmailViewController(destinationViewController: UIViewController, arguments: [String: Any]) {
+    func segueToInviteByEmailViewController(_ destinationViewController: UIViewController, arguments: [String: Any]) {
         if let nc = destinationViewController as? UINavigationController,
-            vc = nc.topViewController as? InviteByEmailViewController
+            let vc = nc.topViewController as? InviteByEmailViewController
         {
             vc.viewModel = viewModelFactory.inviteByEmailViewModel(vc)
         }

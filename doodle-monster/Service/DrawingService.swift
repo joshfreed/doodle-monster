@@ -9,14 +9,14 @@
 import UIKit
 
 protocol DrawingServiceProtocol {
-    var fullImageData: NSData? { get }
+    var fullImageData: Data? { get }
     var drawingMode: DrawingMode { get set }
     
-    func setImageData(imageData: NSData)
-    func startDraw(currentPoint: CGPoint)
-    func movePencilTo(currentPoint: CGPoint)
+    func setImageData(_ imageData: Data)
+    func startDraw(_ currentPoint: CGPoint)
+    func movePencilTo(_ currentPoint: CGPoint)
     func endDraw()
-    func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint)
+    func drawLineFrom(_ fromPoint: CGPoint, toPoint: CGPoint)
     func abortLine()
     func saveCurrentToHistory()
     func allowPanningAndZooming() -> Bool
@@ -29,14 +29,14 @@ class DrawingService: DrawingServiceProtocol {
     let strokeHistory: StrokeHistoryProtocol
     let uiDrawingService: GraphicsContextService
     
-    var drawingMode: DrawingMode = .Draw
+    var drawingMode: DrawingMode = .draw
     
-    private(set) var startPoint = CGPoint.zero
-    private(set) var lastPoint = CGPoint.zero
-    private(set) var swiped = false
+    fileprivate(set) var startPoint = CGPoint.zero
+    fileprivate(set) var lastPoint = CGPoint.zero
+    fileprivate(set) var swiped = false
     
-    var fullImageData: NSData? {
-        return uiDrawingService.fullImageData
+    var fullImageData: Data? {
+        return uiDrawingService.fullImageData as Data?
     }
     
     init(uiDrawingService: GraphicsContextService, strokeHistory: StrokeHistoryProtocol) {
@@ -45,17 +45,17 @@ class DrawingService: DrawingServiceProtocol {
         saveCurrentToHistory()
     }
     
-    func setImageData(imageData: NSData) {
+    func setImageData(_ imageData: Data) {
         uiDrawingService.setImageData(imageData)
     }
     
-    func startDraw(currentPoint: CGPoint) {
+    func startDraw(_ currentPoint: CGPoint) {
         swiped = false
         lastPoint = currentPoint
         startPoint = currentPoint
     }
     
-    func movePencilTo(currentPoint: CGPoint) {
+    func movePencilTo(_ currentPoint: CGPoint) {
         swiped = true
         drawLineFrom(lastPoint, toPoint: currentPoint)
         lastPoint = currentPoint
@@ -71,12 +71,12 @@ class DrawingService: DrawingServiceProtocol {
         saveCurrentToHistory()
     }
     
-    func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
+    func drawLineFrom(_ fromPoint: CGPoint, toPoint: CGPoint) {
         uiDrawingService.startDrawingLine(fromPoint, toPoint)
         
-        if drawingMode == .Draw {
+        if drawingMode == .draw {
             uiDrawingService.setNormalStroke()
-        } else if drawingMode == .Erase {
+        } else if drawingMode == .erase {
             uiDrawingService.setClearStroke()
         }
     

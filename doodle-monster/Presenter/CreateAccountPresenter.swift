@@ -11,12 +11,12 @@ import UIKit
 protocol CreateAccountView {
     func goToMainMenu()
     func showCreateAccountError()
-    func setUsername(username: String)
+    func setUsername(_ username: String)
 }
 
 protocol CreateAccountViewPresenter {
     init(view: CreateAccountView, playerService: PlayerService, username: String, password: String)
-    func createAccount(displayName: String, confirmPassword: String)
+    func createAccount(_ displayName: String, confirmPassword: String)
     func showUsername()
 }
 
@@ -33,7 +33,7 @@ class CreateAccountPresenter: CreateAccountViewPresenter {
         self.password = password
     }
     
-    func createAccount(displayName: String, confirmPassword: String) {
+    func createAccount(_ displayName: String, confirmPassword: String) {
         guard !username.isEmpty && !password.isEmpty else {
             // the previous view controller sent us bad data
             return
@@ -46,8 +46,8 @@ class CreateAccountPresenter: CreateAccountViewPresenter {
         
         playerService.createUser(username, password: password, displayName: displayName) { result in
             switch result {
-            case .Success: self.view.goToMainMenu()
-            case .Error: self.view.showCreateAccountError()
+            case .success: self.view.goToMainMenu()
+            case .error: self.view.showCreateAccountError()
             }
         }
     }

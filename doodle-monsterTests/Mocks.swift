@@ -13,6 +13,10 @@ class MainMenuViewMock: MainMenuView {
     func updateGameList() {
         gameListWasUpdated = true
     }
+    
+    func showServerError(_ err: Error) {
+        
+    }
 }
 
 class InviteByEmailViewMock: InviteByEmailView {
@@ -33,13 +37,13 @@ class GameServiceMock: GameService {
     var createGameResult: Result<Game>?
     var calledCreateGame = false
 
-    func setActiveGames(games: [Game]) {
+    func setActiveGames(_ games: [Game]) {
         activeGames = games
     }
 
     // MARK: GameService
 
-    func createGame(players: [Player], callback: (Result<Game>) -> ()) {
+    func createGame(_ players: [Player], callback: @escaping (Result<Game>) -> ()) {
         calledCreateGame = true
         guard let result = createGameResult else {
             return
@@ -47,24 +51,29 @@ class GameServiceMock: GameService {
         callback(result);
     }
 
-    func getActiveGames(callback: ([Game]) -> ()) {
-        callback(activeGames)
+    func getActiveGames(_ callback: @escaping (Result<[Game]>) -> ()) {
+        callback(.success(activeGames))
     }
 
-    func saveTurn(gameId: String, image: NSData, letter: String, completion: (Result<Game>) -> ()) {
+    func saveTurn(_ gameId: String, image: Data, letter: String, completion: @escaping (Result<Game>) -> ()) {
 
+    }
+    
+    func loadImageData(_ gameId: String, completion: @escaping (Result<Data>) -> ()) {
+        
     }
 }
 
 class SessionMock: SessionService {
     var currentPlayer: Player?
+    var token: String?
     var loggedOut = false
 
     func hasSession() -> Bool {
         return false
     }
 
-    func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ()) {
+    func tryToLogIn(_ username: String, password: String, callback: @escaping (LoginResult) -> ()) {
 
     }
 
@@ -74,6 +83,10 @@ class SessionMock: SessionService {
 
     func resume() {
 
+    }
+    
+    func setAuthToken(_ token: String, andPlayer playerDict: NSDictionary) {
+        
     }
 }
 
@@ -86,7 +99,7 @@ class MainMenuRouterMock: MainMenuRouter {
         showedNewMonsterScreen = true
     }
 
-    func showDrawingScreen(game: Game) {
+    func showDrawingScreen(_ game: Game) {
         showedGame = game
     }
 
@@ -110,16 +123,16 @@ class PlayerServiceMock: PlayerService {
     var nextResult: SearchResult?
     var players: [Player] = []
 
-    func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ()) {
+    func createUser(_ username: String, password: String, displayName: String, callback: @escaping (CreateUserResult) -> ()) {
 
     }
 
-    func search(searchText: String, callback: (result: SearchResult) -> ()) {
+    func search(_ searchText: String, callback: @escaping (SearchResult) -> ()) {
         lastSearchedFor = searchText
-        callback(result: nextResult!)
+        callback(nextResult!)
     }
 
-    func playerBy(id: String) -> Player? {
+    func playerBy(_ id: String) -> Player? {
         for player in players {
             if player.id == id {
                 return player
@@ -143,11 +156,11 @@ class DoodleMonsterMock: DoodleMonster {
         
     }
     
-    func addPlayer(player: Player) {
+    func addPlayer(_ player: Player) {
         lastPlayerAdded = player
     }
     
-    func removePlayer(playerId: String) {
+    func removePlayer(_ playerId: String) {
         
     }
     
@@ -167,7 +180,7 @@ class DoodleMonsterMock: DoodleMonster {
 }
 
 class GraphicsContextMock: GraphicsContextService {
-    var fullImageData: NSData? {
+    var fullImageData: Data? {
         return nil
     }
     
@@ -175,11 +188,11 @@ class GraphicsContextMock: GraphicsContextService {
         return nil
     }
     
-    func setImageData(imageData: NSData) {
+    func setImageData(_ imageData: Data) {
         
     }
     
-    func startDrawingLine(fromPoint: CGPoint, _ toPoint: CGPoint) {
+    func startDrawingLine(_ fromPoint: CGPoint, _ toPoint: CGPoint) {
         
     }
     
@@ -199,7 +212,7 @@ class GraphicsContextMock: GraphicsContextService {
 class StrokeHistoryMock: StrokeHistoryProtocol {
     var strokes: [Stroke] = []
     
-    func addStroke(stroke: Stroke) {
+    func addStroke(_ stroke: Stroke) {
         strokes.append(stroke)
     }
     
@@ -241,34 +254,42 @@ class DrawingViewMock: DrawingView {
     func goToMainMenu() {
         calledGoToMainMenu = true
     }
+    
+    func showAlert(_ title: String, message: String) {
+        
+    }
+    
+    func showError(_ err: Error) {
+        
+    }
 }
 
 class DrawingServiceMock: DrawingServiceProtocol {
     var wasChanged = false
     
-    var fullImageData: NSData? {
+    var fullImageData: Data? {
         return nil
     }
     
     var drawingMode: DrawingMode
     
     init() {
-        drawingMode = .Draw
+        drawingMode = .draw
     }
     
-    func setImageData(imageData: NSData) {
+    func setImageData(_ imageData: Data) {
         
     }
-    func startDraw(currentPoint: CGPoint) {
+    func startDraw(_ currentPoint: CGPoint) {
         
     }
-    func movePencilTo(currentPoint: CGPoint) {
+    func movePencilTo(_ currentPoint: CGPoint) {
         
     }
     func endDraw() {
         
     }
-    func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
+    func drawLineFrom(_ fromPoint: CGPoint, toPoint: CGPoint) {
         
     }
     func abortLine() {

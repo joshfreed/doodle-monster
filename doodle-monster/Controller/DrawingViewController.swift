@@ -51,12 +51,12 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
         // Dispose of any resources that can be recreated.
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         updateZoom()
         viewModel.loadPreviousTurns()
     }
 
-    @IBAction func unwindToDrawing(segue: UIStoryboardSegue) {
+    @IBAction func unwindToDrawing(_ segue: UIStoryboardSegue) {
     }
     
     func updateZoom() {
@@ -71,111 +71,111 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "SaveDrawing" {
-            let vc = segue.destinationViewController as! SaveViewController
+            let vc = segue.destination as! SaveViewController
             vc.viewModel = viewModel
         }
     }
     
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageContainer
     }
     
-    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
         
     }
     
     // MARK: - Actions
     
-    @IBAction func touchedSave(sender: UIButton) {
+    @IBAction func touchedSave(_ sender: UIButton) {
         viewModel.saveImages()
-        performSegueWithIdentifier("SaveDrawing", sender: self)
+        performSegue(withIdentifier: "SaveDrawing", sender: self)
     }
     
-    @IBAction func touchedPencil(sender: UIButton) {
+    @IBAction func touchedPencil(_ sender: UIButton) {
         viewModel.enterDrawMode()
     }
     
-    @IBAction func touchedEraser(sender: UIButton) {
+    @IBAction func touchedEraser(_ sender: UIButton) {
         viewModel.enterEraseMode()
     }
     
-    @IBAction func touchedCancel(sender: UIButton) {
+    @IBAction func touchedCancel(_ sender: UIButton) {
         viewModel.cancelDrawing()
     }
     
-    @IBAction func undo(sender: UIButton) {
+    @IBAction func undo(_ sender: UIButton) {
         viewModel.undo()
     }
     
-    @IBAction func redo(sender: UIButton) {
+    @IBAction func redo(_ sender: UIButton) {
         viewModel.redo()
     }
     
     // MARK: - View Commands
     
     func switchToDrawMode() {
-        pencilButton.setImage(UIImage(named: "pencil-selected"), forState: .Normal)
-        eraserButton.setImage(UIImage(named: "eraser"), forState: .Normal)
+        pencilButton.setImage(UIImage(named: "pencil-selected"), for: UIControlState())
+        eraserButton.setImage(UIImage(named: "eraser"), for: UIControlState())
         
         view.layoutIfNeeded()
         
-        pencilNotSelectedConstraint.active = false
-        eraserSelectedConstraint.active = false
-        pencilSelectedContraint.active = true
-        eraserNotSelectedConstraint.active = true
+        pencilNotSelectedConstraint.isActive = false
+        eraserSelectedConstraint.isActive = false
+        pencilSelectedContraint.isActive = true
+        eraserNotSelectedConstraint.isActive = true
         
-        UIView.animateWithDuration(0.5) { () -> Void in
+        UIView.animate(withDuration: 0.5, animations: { () -> Void in
             self.view.layoutIfNeeded()
-        }
+        }) 
     }
     
     func switchToEraseMode() {
-        pencilButton.setImage(UIImage(named: "pencil"), forState: .Normal)
-        eraserButton.setImage(UIImage(named: "eraser-selected"), forState: .Normal)
+        pencilButton.setImage(UIImage(named: "pencil"), for: UIControlState())
+        eraserButton.setImage(UIImage(named: "eraser-selected"), for: UIControlState())
         
         view.layoutIfNeeded()
         
-        pencilSelectedContraint.active = false
-        eraserNotSelectedConstraint.active = false
-        pencilNotSelectedConstraint.active = true
-        eraserSelectedConstraint.active = true
+        pencilSelectedContraint.isActive = false
+        eraserNotSelectedConstraint.isActive = false
+        pencilNotSelectedConstraint.isActive = true
+        eraserSelectedConstraint.isActive = true
         
-        UIView.animateWithDuration(0.5) { () -> Void in
+        UIView.animate(withDuration: 0.5, animations: { () -> Void in
             self.view.layoutIfNeeded()
-        }
+        }) 
     }
     
     func showCancelConfirmation() {
-        performSegueWithIdentifier("ConfirmCancelDrawing", sender: self)
+        performSegue(withIdentifier: "ConfirmCancelDrawing", sender: self)
     }
     
     func goToMainMenu() {
-        performSegueWithIdentifier("cancelDrawing", sender: self)
+        performSegue(withIdentifier: "cancelDrawing", sender: self)
     }
     
     // MARK: - Touches
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            viewModel.startDraw(touch.locationInView(imageContainer))
+            viewModel.startDraw(touch.location(in: imageContainer))
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            viewModel.movePencilTo(touch.locationInView(imageContainer))
+            viewModel.movePencilTo(touch.location(in: imageContainer))
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         viewModel.endDraw()
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         viewModel.abortLine()
     }
     
@@ -185,20 +185,20 @@ class DrawingViewController: UIViewController, UIScrollViewDelegate, DrawingView
         return viewModel.drawingService.allowPanningAndZooming()
     }
     
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
-        presentViewController(alert, animated: true, completion: nil)
+    func showAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
-    func showError(err: ErrorType) {
+    func showError(_ err: Error) {
         showErrorAlert(err, title: nil)
     }
 }
 
 enum DrawingMode {
-    case Draw
-    case Erase
+    case draw
+    case erase
 }
 
 extension UIImage: Stroke {

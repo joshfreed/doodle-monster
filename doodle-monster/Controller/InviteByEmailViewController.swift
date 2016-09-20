@@ -22,7 +22,7 @@ class InviteByEmailViewController: UIViewController, InviteByEmailView {
 
         playersTable.dataSource = dataSource
         playersTable.delegate = self
-        searchTextField.addTarget(self, action: #selector(InviteByEmailViewController.searchTextDidChange), forControlEvents: .EditingChanged)
+        searchTextField.addTarget(self, action: #selector(InviteByEmailViewController.searchTextDidChange), for: .editingChanged)
         searchTextField.becomeFirstResponder()
     }
 
@@ -47,16 +47,16 @@ class InviteByEmailViewController: UIViewController, InviteByEmailView {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
     }
 }
 
 // MARK: - UITableViewDelegate
 extension InviteByEmailViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.selectPlayer(indexPath)
-        self.performSegueWithIdentifier("CloseInviteByEmail", sender: self)
+        self.performSegue(withIdentifier: "CloseInviteByEmail", sender: self)
     }
 }
 

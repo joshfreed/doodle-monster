@@ -10,7 +10,7 @@ import EmitterKit
 
 protocol MainMenuView {
     func updateGameList()
-    func showServerError(err: ErrorType)
+    func showServerError(_ err: Error)
 }
 
 protocol MainMenuViewModelProtocol: class {
@@ -27,7 +27,7 @@ protocol MainMenuViewModelProtocol: class {
     func refresh()
     func signOut()
     func newMonster()
-    func selectGame(index: Int)
+    func selectGame(_ index: Int)
 }
 
 class MainMenuViewModel: MainMenuViewModelProtocol {
@@ -42,7 +42,7 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     var yourTurnGames: [GameViewModel] = []
     var waitingGames: [GameViewModel] = []
     
-    private var listeners: [Listener] = []
+    fileprivate var listeners: [Listener] = []
 
     required init(view: MainMenuView,
                   gameService: GameService,
@@ -67,19 +67,19 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
         self.listener.stopListening()
     }
 
-    func newGameStarted(game: Game) {
+    func newGameStarted(_ game: Game) {
         yourTurnGames.append(GameViewModel(game: game))
         view.updateGameList()
     }
 
-    func turnComplete(game: Game) {
+    func turnComplete(_ game: Game) {
         let vm = GameViewModel(game: game)
         yourTurnGames.remove(vm)
         waitingGames.append(vm)
         view.updateGameList()
     }
 
-    func gameOver(game: Game) {
+    func gameOver(_ game: Game) {
         yourTurnGames.remove(GameViewModel(game: game))
         view.updateGameList()
     }
@@ -93,7 +93,7 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
 
         gameService.getActiveGames() { result in
             switch result {
-            case .Success(let games):
+            case .success(let games):
                 for game in games {
                     if game.isCurrentTurn(currentPlayer) {
                         self.yourTurnGames.append(GameViewModel(game: game))
@@ -102,7 +102,7 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
                     }
                 }
                 break
-            case .Failure(let err): self.view.showServerError(err)
+            case .failure(let err): self.view.showServerError(err)
             }
          
             self.view.updateGameList()
@@ -125,7 +125,7 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
         router.showNewMonsterScreen()
     }
 
-    func selectGame(index: Int) {
+    func selectGame(_ index: Int) {
         let game = yourTurnGames[index].game
         router.showDrawingScreen(game)
     }
@@ -162,47 +162,47 @@ func ==(lhs: GameViewModel, rhs: GameViewModel) -> Bool {
 class MainMenuViewModelListener {
     weak var viewModel: MainMenuViewModel?
 
-    private var newGameObserver: NSObjectProtocol?
-    private var turnCompleteObserver: NSObjectProtocol?
-    private var gameOverObserver: NSObjectProtocol?
+    fileprivate var newGameObserver: NSObjectProtocol?
+    fileprivate var turnCompleteObserver: NSObjectProtocol?
+    fileprivate var gameOverObserver: NSObjectProtocol?
 
     func startListening() {
-        let center = NSNotificationCenter.defaultCenter()
-        newGameObserver = center.addObserverForName("NewGameStarted", object: nil, queue: nil) { [weak self] n in self?.newGameStarted(n) }
-        turnCompleteObserver = center.addObserverForName("TurnComplete", object: nil, queue: nil)  { [weak self] n in self?.turnComplete(n) }
-        gameOverObserver = center.addObserverForName("GameOver", object: nil, queue: nil)  { [weak self] n in self?.gameOver(n) }
+        let center = NotificationCenter.default
+        newGameObserver = center.addObserver(forName: NSNotification.Name(rawValue: "NewGameStarted"), object: nil, queue: nil) { [weak self] n in self?.newGameStarted(n) }
+        turnCompleteObserver = center.addObserver(forName: NSNotification.Name(rawValue: "TurnComplete"), object: nil, queue: nil)  { [weak self] n in self?.turnComplete(n) }
+        gameOverObserver = center.addObserver(forName: NSNotification.Name(rawValue: "GameOver"), object: nil, queue: nil)  { [weak self] n in self?.gameOver(n) }
     }
 
     func stopListening() {
         if newGameObserver != nil {
-            NSNotificationCenter.defaultCenter().removeObserver(newGameObserver!)
+            NotificationCenter.default.removeObserver(newGameObserver!)
         }
         if turnCompleteObserver != nil {
-            NSNotificationCenter.defaultCenter().removeObserver(turnCompleteObserver!)
+            NotificationCenter.default.removeObserver(turnCompleteObserver!)
         }
         if gameOverObserver != nil {
-            NSNotificationCenter.defaultCenter().removeObserver(gameOverObserver!)
+            NotificationCenter.default.removeObserver(gameOverObserver!)
         }
     }
 
-    func newGameStarted(notification: NSNotification) {
-        guard let userInfo = notification.userInfo, wrapper = userInfo["game"] as? Wrapper<Game> else {
+    func newGameStarted(_ notification: Foundation.Notification) {
+        guard let userInfo = (notification as NSNotification).userInfo, let wrapper = userInfo["game"] as? Wrapper<Game> else {
             fatalError("Missing game in message");
         }
 
         viewModel?.newGameStarted(wrapper.wrappedValue)
     }
 
-    func turnComplete(notification: NSNotification) {
-        guard let userInfo = notification.userInfo, wrapper = userInfo["game"] as? Wrapper<Game> else {
+    func turnComplete(_ notification: Foundation.Notification) {
+        guard let userInfo = (notification as NSNotification).userInfo, let wrapper = userInfo["game"] as? Wrapper<Game> else {
             fatalError("Missing game in message");
         }
 
         viewModel?.turnComplete(wrapper.wrappedValue)
     }
 
-    func gameOver(notification: NSNotification) {
-        guard let userInfo = notification.userInfo, wrapper = userInfo["game"] as? Wrapper<Game> else {
+    func gameOver(_ notification: Foundation.Notification) {
+        guard let userInfo = (notification as NSNotification).userInfo, let wrapper = userInfo["game"] as? Wrapper<Game> else {
             fatalError("Missing game in message");
         }
 

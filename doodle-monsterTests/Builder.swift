@@ -15,7 +15,7 @@ extension Builder {
         return randomStringWithLength(6)
     }
 
-    func randomStringWithLength(len: Int) -> String {
+    func randomStringWithLength(_ len: Int) -> String {
         let letters: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
         var randomString: String = ""
@@ -23,7 +23,7 @@ extension Builder {
         for _ in 0..<len {
             let length = UInt32(letters.characters.count)
             let rand = arc4random_uniform(length)
-            randomString += String(letters.characters[letters.startIndex.advancedBy(Int(rand))])
+            randomString += String(letters.characters[letters.characters.index(letters.startIndex, offsetBy: Int(rand))])
         }
 
         return randomString

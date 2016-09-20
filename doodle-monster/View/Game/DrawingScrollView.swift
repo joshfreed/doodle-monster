@@ -14,38 +14,38 @@ protocol DrawingView {
     func switchToEraseMode()
     func showCancelConfirmation()
     func goToMainMenu()
-    func showAlert(title: String, message: String)
-    func showError(err: ErrorType)
+    func showAlert(_ title: String, message: String)
+    func showError(_ err: Error)
 }
 
 class DrawingScrollView: UIScrollView {
     var drawingDelegate: DrawingView?
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        nextResponder()?.touchesBegan(touches, withEvent: event)
-        super.touchesBegan(touches, withEvent: event)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        next?.touchesBegan(touches, with: event)
+        super.touchesBegan(touches, with: event)
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        nextResponder()?.nextResponder()?.touchesMoved(touches, withEvent: event)
-        super.touchesMoved(touches, withEvent: event)
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        next?.next?.touchesMoved(touches, with: event)
+        super.touchesMoved(touches, with: event)
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        nextResponder()?.nextResponder()?.touchesEnded(touches, withEvent: event)
-        super.touchesEnded(touches, withEvent: event)
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        next?.next?.touchesEnded(touches, with: event)
+        super.touchesEnded(touches, with: event)
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        nextResponder()?.nextResponder()?.touchesCancelled(touches, withEvent: event)
-        super.touchesCancelled(touches, withEvent: event)
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        next?.next?.touchesCancelled(touches, with: event)
+        super.touchesCancelled(touches, with: event)
     }
     
-    override func touchesShouldCancelInContentView(view: UIView) -> Bool {
+    override func touchesShouldCancel(in view: UIView) -> Bool {
         if drawingDelegate != nil {
             return drawingDelegate!.allowPanningAndZooming()
         } else {
-            return super.touchesShouldCancelInContentView(view)
+            return super.touchesShouldCancel(in: view)
         }
     }
 }

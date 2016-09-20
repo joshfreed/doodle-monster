@@ -10,7 +10,7 @@ import UIKit
 
 protocol MainMenuRouter {
     func showNewMonsterScreen()
-    func showDrawingScreen(game: Game)
+    func showDrawingScreen(_ game: Game)
     func showLoginScreen()
 }
 
@@ -27,28 +27,28 @@ class MainMenuRouterImpl: MainMenuRouter {
 
     func showNewMonsterScreen() {
         vc.segues["NewMonster"] = Segue(action: segueToNewMonsterViewController, arguments: [:])
-        vc.performSegueWithIdentifier("NewMonster", sender: vc)
+        vc.performSegue(withIdentifier: "NewMonster", sender: vc)
     }
 
-    func showDrawingScreen(game: Game) {
+    func showDrawingScreen(_ game: Game) {
         vc.segues["goToGame"] = Segue(action: segueToDrawingViewController, arguments: ["game": game])
-        vc.performSegueWithIdentifier("goToGame", sender: vc)
+        vc.performSegue(withIdentifier: "goToGame", sender: vc)
     }
 
     func showLoginScreen() {
-        vc.performSegueWithIdentifier("ShowLoginScreen", sender: vc)
+        vc.performSegue(withIdentifier: "ShowLoginScreen", sender: vc)
     }
 
     // MARK: - Segues
 
-    func segueToNewMonsterViewController(destinationViewController: UIViewController, arguments: [String: Any]) {
+    func segueToNewMonsterViewController(_ destinationViewController: UIViewController, arguments: [String: Any]) {
         guard let vc = destinationViewController as? NewMonsterViewController else {
             fatalError("Unexpected view controller type")
         }
         vc.viewModel = viewModelFactory.newMonsterViewModel(vc)
     }
 
-    func segueToDrawingViewController(destinationViewController: UIViewController, arguments: [String: Any]) {
+    func segueToDrawingViewController(_ destinationViewController: UIViewController, arguments: [String: Any]) {
         guard let vc = destinationViewController as? DrawingViewController else {
             fatalError("Unexpected view controller type")
         }

@@ -17,7 +17,7 @@ class MemoryPlayerService: PlayerService {
         self.session = session
     }
     
-    func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ()) {
+    func createUser(_ username: String, password: String, displayName: String, callback: @escaping (CreateUserResult) -> ()) {
         nextId = nextId + 1
         var player = Player()
         player.id = String(nextId)
@@ -26,22 +26,22 @@ class MemoryPlayerService: PlayerService {
         player.displayName = displayName
         players.append(player)
         session.currentPlayer = player
-        callback(result: .Success)
+        callback(.success)
     }
     
-    func search(searchText: String, callback: (result: SearchResult) -> ()) {
+    func search(_ searchText: String, callback: @escaping (SearchResult) -> ()) {
         print("Searching for \(searchText)")
         var matches: [Player] = []
         for player in players {
             print("Checking \(player.username)")
-            if player.username != nil && player.username!.containsString(searchText) {
+            if player.username != nil && player.username!.contains(searchText) {
                 matches.append(player)
             }
         }
-        callback(result: .Success(matches))
+        callback(.success(matches))
     }
 
-    func playerBy(id: String) -> Player? {
+    func playerBy(_ id: String) -> Player? {
         for player in players {
             if player.id == id {
                 return player
@@ -61,31 +61,31 @@ class MemoryGameService: GameService {
         self.session = session
     }
     
-    func createGame(players: [Player], callback: (Result<Game>) -> ()) {
+    func createGame(_ players: [Player], callback: @escaping (Result<Game>) -> ()) {
         nextId = nextId + 1
         var game = Game()
         game.id = String(nextId)
         game.name = ""
         game.players = players
         games.append(game)
-        callback(.Success(game))
+        callback(.success(game))
     }
     
-    func getActiveGames(callback: (Result<[Game]>) -> ()) {
-        callback(.Success(games))
+    func getActiveGames(_ callback: @escaping (Result<[Game]>) -> ()) {
+        callback(.success(games))
     }
     
-    func saveTurn(gameId: String, image: NSData, letter: String, completion: (Result<Game>) -> ()) {
+    func saveTurn(_ gameId: String, image: Data, letter: String, completion: @escaping (Result<Game>) -> ()) {
         var game = getGame(gameId)
         if game != nil {
             game!.name = (game!.name ?? "") + letter
-            return completion(.Success(game!))
+            return completion(.success(game!))
         }
         
-        completion(.Failure(NSError(domain: "Game not found", code: 0, userInfo: nil)))
+        completion(.failure(NSError(domain: "Game not found", code: 0, userInfo: nil)))
     }
     
-    func getGame(gameId: String) -> Game? {
+    func getGame(_ gameId: String) -> Game? {
         for game in games {
             if game.id == gameId {
                 return game
@@ -95,7 +95,7 @@ class MemoryGameService: GameService {
         return nil
     }
     
-    func loadImageData(gameId: String, completion: (Result<NSData>) -> ()) {
+    func loadImageData(_ gameId: String, completion: @escaping (Result<Data>) -> ()) {
         
     }
 }
@@ -105,7 +105,7 @@ class MemorySessionService: SessionService {
     var token: String?
     var playerService: MemoryPlayerService!
     
-    func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ()) {
+    func tryToLogIn(_ username: String, password: String, callback: @escaping (LoginResult) -> ()) {
         var foundPlayer = false
         for player in playerService.players {
             if player.username == username {
@@ -114,17 +114,17 @@ class MemorySessionService: SessionService {
             }
         }
         if !foundPlayer {
-            return callback(result: .NoSuchUser)
+            return callback(.noSuchUser)
         }
         
         for player in playerService.players {
             if player.username == username && player.password == password {
                 currentPlayer = player
-                return callback(result: .Success)
+                return callback(.success)
             }
         }
         
-        callback(result: .Error)
+        callback(.error)
     }
     
     func hasSession() -> Bool {
@@ -139,7 +139,7 @@ class MemorySessionService: SessionService {
         
     }
     
-    func setAuthToken(token: String, andPlayer playerDict: NSDictionary) {
+    func setAuthToken(_ token: String, andPlayer playerDict: NSDictionary) {
         
     }
 }

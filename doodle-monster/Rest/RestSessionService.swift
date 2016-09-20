@@ -23,43 +23,44 @@ class RestSessionService: SessionService {
     func hasSession() -> Bool {
         return currentPlayer != nil
     }
-    
-    func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ()) {
+
+    func tryToLogIn(_ username: String, password: String, callback: @escaping (LoginResult) -> ()) {
         let params = [
             "email": username,
             "password": password
         ]
+
         Alamofire
-            .request(.POST, apiUrl + "/auth/email", parameters: params, encoding: .JSON)
+            .request(apiUrl + "/auth/email", method: .post, parameters: params, encoding: JSONEncoding.default)
             .responseJSON { response in
                 guard response.result.isSuccess else {
-                    callback(result: .Error)
+                    callback(.error)
                     return
                 }
                 
                 print("response value: \(response.result.value)")
                 guard let data = response.result.value as? [String:AnyObject],
-                    result = data["result"] as? String
+                    let result = data["result"] as? String
                 else {
-                    callback(result: .Error)
+                    callback(.error)
                     return
                 }
                 
                 if result == "NoSuchPlayer" {
-                    callback(result: .NoSuchUser)
+                    callback(.noSuchUser)
                 } else if result == "LoginFailed" {
-                    callback(result: .Failed)
+                    callback(.failed)
                 } else if result == "OK" {
                     guard let
                         playerDict = data["player"] as? NSDictionary,
-                        token = data["token"] as? String
+                        let token = data["token"] as? String
                     else {
-                        callback(result: .Error)
+                        callback(.error)
                         return
                     }
                     
                     self.setAuthToken(token, andPlayer: playerDict)
-                    callback(result: .Success)
+                    callback(.success)
                 }
             }
     }
@@ -71,8 +72,8 @@ class RestSessionService: SessionService {
     
     func resume() {
         guard let
-            token = NSUserDefaults.standardUserDefaults().valueForKey("token") as? String,
-            playerDict = NSUserDefaults.standardUserDefaults().valueForKey("player") as? NSDictionary
+            token = UserDefaults.standard.value(forKey: "token") as? String,
+            let playerDict = UserDefaults.standard.value(forKey: "player") as? NSDictionary
         else {
             // no token, or invalid token
             clearToken()
@@ -83,17 +84,17 @@ class RestSessionService: SessionService {
         currentPlayer = playerTranslator.dictionaryToModel(playerDict)
     }
     
-    func setAuthToken(token: String, andPlayer playerDict:NSDictionary) {
+    func setAuthToken(_ token: String, andPlayer playerDict:NSDictionary) {
         self.token = token
         self.currentPlayer = self.playerTranslator.dictionaryToModel(playerDict)
-        NSUserDefaults.standardUserDefaults().setValue(token, forKey: "token")
-        NSUserDefaults.standardUserDefaults().setValue(playerDict, forKey: "player")
+        UserDefaults.standard.setValue(token, forKey: "token")
+        UserDefaults.standard.setValue(playerDict, forKey: "player")
     }
     
     func clearToken() {
         self.token = nil
         self.currentPlayer = nil
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("token")
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("player")
+        UserDefaults.standard.removeObject(forKey: "token")
+        UserDefaults.standard.removeObject(forKey: "player")
     }
 }

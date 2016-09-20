@@ -9,19 +9,19 @@
 import UIKit
 
 extension UIViewController {
-    func showSimpleAlert(title title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
-        presentViewController(alert, animated: true, completion: nil)
+    func showSimpleAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
-    func showErrorAlert(err: ErrorType, title: String?) {
+    func showErrorAlert(_ err: Error, title: String?) {
         let title = title ?? "Server Error"
         let defaultMessage = "This operation could not be completed because a server error has occurred. Please try again later."
         
         switch err {
-        case DoodMonError.HttpError(_, let msg): showSimpleAlert(title: title, message: msg)
-        case DoodMonError.ServerError(let msg): showSimpleAlert(title: title, message: msg)
+        case DoodMonError.httpError(_, let msg): showSimpleAlert(title: title, message: msg)
+        case DoodMonError.serverError(let msg): showSimpleAlert(title: title, message: msg)
         default: showSimpleAlert(title: title, message: defaultMessage)
         }
     }

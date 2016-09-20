@@ -12,8 +12,8 @@ protocol DrawingViewModelProtocol {
     var name: String { get }
 
     init(view: DrawingView, game: Game, gameService: GameService)
-    func saveImages(fullImageData: NSData)
-    func saveTurn(letter: String)
+    func saveImages(_ fullImageData: Data)
+    func saveTurn(_ letter: String)
     func enterDrawMode()
     func enterEraseMode()
     func cancelDrawing()
@@ -30,8 +30,8 @@ class DrawingViewModel: NSObject {
         return game.name ?? ""
     }
 
-    private var full: NSData?
-    private var drawingMode: DrawingMode = .Draw
+    fileprivate var full: Data?
+    fileprivate var drawingMode: DrawingMode = .draw
     
     required init(view: DrawingView, game: Game, gameService: GameService) {
         self.view = view
@@ -42,8 +42,8 @@ class DrawingViewModel: NSObject {
     func loadPreviousTurns() {
         gameService.loadImageData(game.id!) { result in
             switch result {
-            case .Success(let imageData): self.drawingService.setImageData(imageData)
-            case .Failure(let err): self.view.showError(err)
+            case .success(let imageData): self.drawingService.setImageData(imageData)
+            case .failure(let err): self.view.showError(err)
             }
         }
     }
@@ -52,52 +52,52 @@ class DrawingViewModel: NSObject {
         guard let fullImageData = drawingService.fullImageData else {
             fatalError("Can't get the image data")
         }
-        full = fullImageData
+        full = fullImageData as Data
     }
 
-    func saveTurn(letter: String, completion: (ErrorType?) -> ()) {
+    func saveTurn(_ letter: String, completion: @escaping (Error?) -> ()) {
         guard let fullImageData = full else {
             fatalError("Did not set the images before saving")
         }
 
         gameService.saveTurn(game.id!, image: fullImageData, letter: letter) { result in
             switch result {
-            case .Success(let updatedGame):
+            case .success(let updatedGame):
                 let wrappedGame = Wrapper<Game>(theValue: updatedGame)
 
                 if updatedGame.gameOver {
-                    NSNotificationCenter.defaultCenter().postNotificationName("GameOver", object: nil, userInfo: ["game": wrappedGame])
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "GameOver"), object: nil, userInfo: ["game": wrappedGame])
                 } else {
-                    NSNotificationCenter.defaultCenter().postNotificationName("TurnComplete", object: nil, userInfo: ["game": wrappedGame])
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "TurnComplete"), object: nil, userInfo: ["game": wrappedGame])
                 }
 
                 completion(nil)
                 
                 self.view.goToMainMenu()
-            case .Failure(let err): completion(err)
+            case .failure(let err): completion(err)
             }
         }
     }
     
     func enterDrawMode() {
-        guard drawingMode != .Draw else {
+        guard drawingMode != .draw else {
             return
         }
         
-        drawingMode = .Draw
+        drawingMode = .draw
         
-        drawingService.drawingMode = .Draw
+        drawingService.drawingMode = .draw
         
         view.switchToDrawMode()
     }
     
     func enterEraseMode() {
-        guard drawingMode != .Erase else {
+        guard drawingMode != .erase else {
             return
         }
 
-        drawingMode = .Erase
-        drawingService.drawingMode = .Erase
+        drawingMode = .erase
+        drawingService.drawingMode = .erase
         
         view.switchToEraseMode()
     }
@@ -110,11 +110,11 @@ class DrawingViewModel: NSObject {
         drawingService.redo()
     }
     
-    func startDraw(point: CGPoint) {
+    func startDraw(_ point: CGPoint) {
         drawingService.startDraw(point)
     }
     
-    func movePencilTo(point: CGPoint) {
+    func movePencilTo(_ point: CGPoint) {
         drawingService.movePencilTo(point)
     }
     

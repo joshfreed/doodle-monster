@@ -9,24 +9,24 @@
 import UIKit
 
 protocol PlayerService {
-    func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ())
-    func search(searchText: String, callback: (result: SearchResult) -> ())
-    func playerBy(id: String) -> Player?
+    func createUser(_ username: String, password: String, displayName: String, callback: @escaping (CreateUserResult) -> ())
+    func search(_ searchText: String, callback: @escaping (SearchResult) -> ())
+    func playerBy(_ id: String) -> Player?
 }
 
 enum LoginResult {
-    case Success
-    case NoSuchUser
-    case Failed
-    case Error
+    case success
+    case noSuchUser
+    case failed
+    case error
 }
 
 enum CreateUserResult {
-    case Success
-    case Error
+    case success
+    case error
 }
 
 enum SearchResult {
-    case Success([Player])
-    case Error
+    case success([Player])
+    case error
 }

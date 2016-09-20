@@ -13,12 +13,12 @@ class YourTurnCell: UICollectionViewCell, CollectionViewCell {
     @IBOutlet weak var monsterName: UILabel!
     @IBOutlet weak var playerInfo: UILabel!
     
-    func configure(item: GameViewModel) {
+    func configure(_ item: GameViewModel) {
         monsterName.text = item.monsterName
         playerInfo.text = item.playerInfo
         
         if let imageData = item.game.thumbnail {
-            thumbnail.image = UIImage(data: imageData)
+            thumbnail.image = UIImage(data: imageData as Data)
         }
     }
 }

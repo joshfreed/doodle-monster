@@ -13,9 +13,9 @@ protocol SessionService {
     var token: String? { get }
 
     func hasSession() -> Bool
-    func tryToLogIn(username: String, password: String, callback: (result: LoginResult) -> ())
+    func tryToLogIn(_ username: String, password: String, callback: @escaping (LoginResult) -> ())
     func logout()
     func resume()
-    func setAuthToken(token: String, andPlayer playerDict: NSDictionary)
+    func setAuthToken(_ token: String, andPlayer playerDict: NSDictionary)
 }
 

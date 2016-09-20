@@ -21,18 +21,18 @@ class LoginViewController: UIViewController {
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "LoginByEmail" {
-            if let vc = segue.destinationViewController as? LoginByEmailViewController {
+            if let vc = segue.destination as? LoginByEmailViewController {
                 vc.presenter = appDelegate.viewModelFactory.loginByEmailPresenter(vc)
             }
         }
     }
     
-    @IBAction func unwindToLoginScreen(segue: UIStoryboardSegue) {
+    @IBAction func unwindToLoginScreen(_ segue: UIStoryboardSegue) {
     }
 
-    @IBAction func loginByFacebook(sender: UIButton) {
+    @IBAction func loginByFacebook(_ sender: UIButton) {
     }
 }
 

@@ -12,9 +12,9 @@ struct Game: Equatable {
     var id: String?
     var gameOver: Bool = false
     var players: [Player] = []
-    var thumbnail: NSData?
+    var thumbnail: Data?
     var name: String?
-    var lastTurn: NSDate?
+    var lastTurn: Date?
     var currentPlayerNumber: Int = 0
     
     var currentPlayerName: String {
@@ -25,17 +25,17 @@ struct Game: Equatable {
         return players[currentPlayerNumber]
     }
     
-    func isCurrentTurn(player: Player) -> Bool {
+    func isCurrentTurn(_ player: Player) -> Bool {
         return currentPlayer.id == player.id
     }
     
-    func isWaitingForAnotherPlayer(player: Player) -> Bool {
+    func isWaitingForAnotherPlayer(_ player: Player) -> Bool {
         return currentPlayer.id != player.id
     }
     
     func friendlyLastTurnText() -> String {
         if lastTurn != nil {
-            return DateService().getPrettyDiff(lastTurn!, date2: NSDate()) + " ago"
+            return DateService().getPrettyDiff(lastTurn!, date2: Date()) + " ago"
         } else {
             return ""
         }

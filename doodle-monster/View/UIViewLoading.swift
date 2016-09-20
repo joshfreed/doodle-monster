@@ -15,6 +15,6 @@ extension UIViewLoading where Self: UIView {
     static func loadFromNib() -> Self {
         let nibName = "\(self)".characters.split{ $0 == "." }.map(String.init).last!
         let nib = UINib(nibName: nibName, bundle: nil)
-        return nib.instantiateWithOwner(self, options: nil).first as! Self
+        return nib.instantiate(withOwner: self, options: nil).first as! Self
     }
 }

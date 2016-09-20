@@ -1,2 +1,2 @@
-github "Alamofire/Alamofire" "3.4.0"
-github "aleclarson/emitter-kit" "4.0.2"
+github "Alamofire/Alamofire" "4.0.0"
+github "aleclarson/emitter-kit" "5.0.0"

@@ -18,7 +18,7 @@ class InviteByEmailViewModelTests: XCTestCase {
 
         view = InviteByEmailViewMock()
         playerService = PlayerServiceMock()
-        playerService.nextResult = SearchResult.Success([])
+        playerService.nextResult = SearchResult.success([])
         session = SessionMock()
         app = DoodleMonsterMock()
         vm = InviteByEmailViewModel(view: view, playerService: playerService, session: session, applicationLayer: app)
@@ -39,7 +39,7 @@ class InviteByEmailViewModelTests: XCTestCase {
             PlayerBuilder.aPlayer().withName("Jimmy Jack").build(),
             PlayerBuilder.aPlayer().withName("Freddy Johns").build(),
         ]
-        playerService.nextResult = SearchResult.Success(searchResults)
+        playerService.nextResult = SearchResult.success(searchResults)
 
         vm.search("anything")
 
@@ -55,7 +55,7 @@ class InviteByEmailViewModelTests: XCTestCase {
             PlayerBuilder.aPlayer().withName("Jimmy Jack").build(),
             PlayerBuilder.aPlayer().withName("Freddy Johns").build(),
         ]
-        playerService.nextResult = SearchResult.Success(searchResults)
+        playerService.nextResult = SearchResult.success(searchResults)
         session.currentPlayer = searchResults[1];
         
         vm.search("whatever");
@@ -70,7 +70,7 @@ class InviteByEmailViewModelTests: XCTestCase {
     }
     
     func test_search_error_updatesTheViewAfterAnError() {
-        playerService.nextResult = SearchResult.Error
+        playerService.nextResult = SearchResult.error
         vm.search("anything")
         XCTAssertTrue(view.calledSearchError);
     }
@@ -84,7 +84,7 @@ class InviteByEmailViewModelTests: XCTestCase {
         vm.setPlayers(players)
         playerService.players = players
         
-        vm.selectPlayer(NSIndexPath(forRow: 2, inSection: 0))
+        vm.selectPlayer(IndexPath(row: 2, section: 0))
        
         XCTAssertEqual(players[2], app.lastPlayerAdded)
     }
@@ -98,7 +98,7 @@ class InviteByEmailViewModelTests: XCTestCase {
         vm.setPlayers(players)
         playerService.players = players
         
-        vm.selectPlayer(NSIndexPath(forRow: 90, inSection: 0))
+        vm.selectPlayer(IndexPath(row: 90, section: 0))
         
         XCTAssertNil(app.lastPlayerAdded)
     }

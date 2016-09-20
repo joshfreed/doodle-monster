@@ -21,12 +21,12 @@ class PlayerBuilder: Builder {
         return player
     }
 
-    func withId(id: String) -> PlayerBuilder {
+    func withId(_ id: String) -> PlayerBuilder {
         playerId = id
         return self
     }
 
-    func withName(name: String) -> PlayerBuilder {
+    func withName(_ name: String) -> PlayerBuilder {
         displayName = name
         return self
     }

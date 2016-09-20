@@ -14,7 +14,7 @@ class RestPlayerService: PlayerService {
     let session: SessionService
     let playerTranslator: DictionaryPlayerTranslator
     
-    private var players: [Player] = []
+    fileprivate var players: [Player] = []
     
     init(apiUrl: String, session: SessionService, playerTranslator: DictionaryPlayerTranslator) {
         self.apiUrl = apiUrl
@@ -22,47 +22,47 @@ class RestPlayerService: PlayerService {
         self.playerTranslator = playerTranslator
     }
     
-    func createUser(username: String, password: String, displayName: String, callback: (result: CreateUserResult) -> ()) {
+    func createUser(_ username: String, password: String, displayName: String, callback: @escaping (CreateUserResult) -> ()) {
         let params = [
             "email": username,
             "password": password,
             "displayName": displayName
         ]
         Alamofire
-            .request(.POST, apiUrl + "/players/register", parameters: params, encoding: .JSON)
+            .request(apiUrl + "/players/register", method: .post, parameters: params, encoding: JSONEncoding.default)
             .responseJSON { response in
                 guard response.result.isSuccess else {
-                    callback(result: .Error)
+                    callback(.error)
                     return
                 }
                 
                 guard let
                     data = response.result.value as? NSDictionary,
-                    playerDict = data["player"] as? NSDictionary,
-                    token = data["token"] as? String
+                    let playerDict = data["player"] as? NSDictionary,
+                    let token = data["token"] as? String
                 else {
-                    callback(result: .Error)
+                    callback(.error)
                     return
                 }
                 
                 self.session.setAuthToken(token, andPlayer: playerDict)
                 
-                callback(result: .Success)
+                callback(.success)
             }
         
     }
     
-    func search(searchText: String, callback: (result: SearchResult) -> ()) {
+    func search(_ searchText: String, callback: @escaping (SearchResult) -> ()) {
         let headers = [
             "Authorization": "Bearer " + session.token!,
         ]
         Alamofire
-            .request(.GET, apiUrl + "/players?email=" + searchText, headers: headers)
+            .request(apiUrl + "/players?email=" + searchText, headers: headers)
             .responseJSON { response in
                 switch response.result {
-                case .Success(let json):
+                case .success(let json):
                     guard let objects = json as? [NSDictionary] else {
-                        return callback(result: .Error)
+                        return callback(.error)
                     }
                     
                     var players: [Player] = []
@@ -71,13 +71,13 @@ class RestPlayerService: PlayerService {
                         players.append(player)
                         self.players.append(player)
                     }
-                    callback(result: SearchResult.Success(players))
-                case .Failure(let error): callback(result: .Error)
+                    callback(SearchResult.success(players))
+                case .failure(let error): callback(.error)
                 }
             }
     }
     
-    func playerBy(id: String) -> Player? {
+    func playerBy(_ id: String) -> Player? {
         for object in players {
             if object.id == id {
                 return object

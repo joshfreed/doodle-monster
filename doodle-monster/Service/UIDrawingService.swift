@@ -9,10 +9,10 @@
 import UIKit
 
 protocol GraphicsContextService {
-    var fullImageData: NSData? { get }
+    var fullImageData: Data? { get }
     var currentImage: UIImage? { get }
-    func setImageData(imageData: NSData)
-    func startDrawingLine(fromPoint: CGPoint, _ toPoint: CGPoint)
+    func setImageData(_ imageData: Data)
+    func startDrawingLine(_ fromPoint: CGPoint, _ toPoint: CGPoint)
     func setNormalStroke()
     func setClearStroke()
     func endDrawingLine()
@@ -31,11 +31,11 @@ class UIDrawingService: GraphicsContextService {
     
     var context: CGContext?
     
-    var fullImageData: NSData? {
+    var fullImageData: Data? {
         UIGraphicsBeginImageContext(currentTurnImageView.frame.size)
         let rect = CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height)
-        previousTurnImageView.image?.drawInRect(rect, blendMode: CGBlendMode.Normal, alpha: 1.0)
-        currentTurnImageView.image?.drawInRect(rect, blendMode: CGBlendMode.Normal, alpha: opacity)
+        previousTurnImageView.image?.draw(in: rect, blendMode: CGBlendMode.normal, alpha: 1.0)
+        currentTurnImageView.image?.draw(in: rect, blendMode: CGBlendMode.normal, alpha: opacity)
         previousTurnImageView.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
@@ -58,34 +58,34 @@ class UIDrawingService: GraphicsContextService {
         self.previousTurnImageView = previousTurnImageView
     }
     
-    func setImageData(imageData: NSData) {
+    func setImageData(_ imageData: Data) {
         let image = UIImage(data: imageData)
         self.previousTurnImageView.image = image
     }
     
-    func startDrawingLine(fromPoint: CGPoint, _ toPoint: CGPoint) {
+    func startDrawingLine(_ fromPoint: CGPoint, _ toPoint: CGPoint) {
         UIGraphicsBeginImageContext(currentTurnImageView.frame.size)
         context = UIGraphicsGetCurrentContext()
-        currentTurnImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height))
+        currentTurnImageView.image?.draw(in: CGRect(x: 0, y: 0, width: currentTurnImageView.frame.size.width, height: currentTurnImageView.frame.size.height))
         
-        CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
-        CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
-        CGContextSetLineCap(context, CGLineCap.Round)
+        context?.move(to: CGPoint(x: fromPoint.x, y: fromPoint.y))
+        context?.addLine(to: CGPoint(x: toPoint.x, y: toPoint.y))
+        context?.setLineCap(CGLineCap.round)
     }
     
     func setNormalStroke() {
-        CGContextSetLineWidth(context, brushWidth)
-        CGContextSetRGBStrokeColor(context, red, green, blue, 1.0)
-        CGContextSetBlendMode(context, CGBlendMode.Normal)
+        context?.setLineWidth(brushWidth)
+        context?.setStrokeColor(red: red, green: green, blue: blue, alpha: 1.0)
+        context?.setBlendMode(CGBlendMode.normal)
     }
     
     func setClearStroke() {
-        CGContextSetLineWidth(context, eraserWidth)
-        CGContextSetBlendMode(context, CGBlendMode.Clear)
+        context?.setLineWidth(eraserWidth)
+        context?.setBlendMode(CGBlendMode.clear)
     }
     
     func endDrawingLine() {
-        CGContextStrokePath(context)
+        context?.strokePath()
         
         currentTurnImageView.image = UIGraphicsGetImageFromCurrentImageContext()
         currentTurnImageView.alpha = opacity

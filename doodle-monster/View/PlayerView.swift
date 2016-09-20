@@ -15,11 +15,11 @@ class PlayerView: UIStackView {
     var viewModel: NewMonsterViewModelProtocol!
     var playerViewModel: PlayerViewModel!
     
-    @IBAction func removePlayer(sender: UIButton) {
+    @IBAction func removePlayer(_ sender: UIButton) {
         viewModel.removePlayer(playerViewModel)
     }
     
-    func configure(viewModel: NewMonsterViewModelProtocol, playerViewModel: PlayerViewModel) {
+    func configure(_ viewModel: NewMonsterViewModelProtocol, playerViewModel: PlayerViewModel) {
         self.viewModel = viewModel
         self.playerViewModel = playerViewModel
         displayNameLabel.text = playerViewModel.displayName
