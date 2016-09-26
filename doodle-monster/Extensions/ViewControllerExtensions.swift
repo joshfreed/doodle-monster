@@ -15,11 +15,15 @@ extension UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func showErrorAlert(_ err: Error, title: String?) {
+    func showErrorAlert(_ err: Error, title: String? = nil) {
+        showAlert(error: err, title: title)
+    }
+    
+    func showAlert(error: Error, title: String? = nil) {
         let title = title ?? "Server Error"
         let defaultMessage = "This operation could not be completed because a server error has occurred. Please try again later."
         
-        switch err {
+        switch error {
         case DoodMonError.httpError(_, let msg): showSimpleAlert(title: title, message: msg)
         case DoodMonError.serverError(let msg): showSimpleAlert(title: title, message: msg)
         default: showSimpleAlert(title: title, message: defaultMessage)

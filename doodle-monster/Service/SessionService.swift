@@ -17,5 +17,6 @@ protocol SessionService {
     func logout()
     func resume()
     func setAuthToken(_ token: String, andPlayer playerDict: NSDictionary)
+    func loginByFacebook(withToken accessToken: String, completion: @escaping (Result<Bool>) -> ())
 }
 

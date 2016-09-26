@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import FacebookCore
+import FacebookLogin
 
 class LoginViewController: UIViewController {
+    let loadingSpinner = LoadingSpinner()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -33,6 +37,32 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginByFacebook(_ sender: UIButton) {
+        loadingSpinner.show(inView: navigationController!.view)
+        
+        let loginManager = LoginManager()
+
+        loginManager.logIn([.email], viewController: self) { loginResult in
+            switch loginResult {
+            case .failed(let error):
+                print(error)
+            case .cancelled:
+                print("User cancelled login.")
+            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+                self.sendToServer(token: accessToken.authenticationToken)
+            }
+        }
+    }
+    
+    private func sendToServer(token: String) {
+        self.appDelegate.session.loginByFacebook(withToken: token) { result in
+            switch result {
+            case .success(let user):
+                self.loadingSpinner.hide()
+                // todo go to main menu
+                break
+            case .failure(let err): self.showAlert(error: err)
+            }
+        }
     }
 }
 

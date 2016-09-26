@@ -21,6 +21,11 @@
 		533599781C69182E00F50FAB /* MainMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533599771C69182E00F50FAB /* MainMenuViewModelTests.swift */; };
 		5335997D1C69251100F50FAB /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5335997C1C69251100F50FAB /* Game.swift */; };
 		533599811C69257C00F50FAB /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533599801C69257C00F50FAB /* Player.swift */; };
+		5340AAA31D997E7300345ECC /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5340AA9F1D997E7300345ECC /* Bolts.framework */; };
+		5340AAA41D997E7300345ECC /* FacebookCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5340AAA01D997E7300345ECC /* FacebookCore.framework */; };
+		5340AAA51D997E7300345ECC /* FacebookLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5340AAA11D997E7300345ECC /* FacebookLogin.framework */; };
+		5340AAA61D997E7300345ECC /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5340AAA21D997E7300345ECC /* FBSDKCoreKit.framework */; };
+		5340AAA81D9984C600345ECC /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5340AAA71D9984C600345ECC /* FBSDKLoginKit.framework */; };
 		534965CB1C585CA5009552CC /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534965CA1C585CA5009552CC /* DateService.swift */; };
 		535A0A151C65588B00CAC8D3 /* SegueHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535A0A141C65588B00CAC8D3 /* SegueHandler.swift */; };
 		535ECC0F1C31E42400E17D0F /* NewMonsterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535ECC0E1C31E42400E17D0F /* NewMonsterViewModel.swift */; };
@@ -129,6 +134,12 @@
 		533599771C69182E00F50FAB /* MainMenuViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewModelTests.swift; path = ViewModel/MainMenuViewModelTests.swift; sourceTree = "<group>"; };
 		5335997C1C69251100F50FAB /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Model/Game.swift; sourceTree = "<group>"; };
 		533599801C69257C00F50FAB /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Player.swift; path = Model/Player.swift; sourceTree = "<group>"; };
+		5340AA9F1D997E7300345ECC /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Carthage/Build/iOS/Bolts.framework; sourceTree = "<group>"; };
+		5340AAA01D997E7300345ECC /* FacebookCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookCore.framework; path = Carthage/Build/iOS/FacebookCore.framework; sourceTree = "<group>"; };
+		5340AAA11D997E7300345ECC /* FacebookLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookLogin.framework; path = Carthage/Build/iOS/FacebookLogin.framework; sourceTree = "<group>"; };
+		5340AAA21D997E7300345ECC /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Carthage/Build/iOS/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		5340AAA71D9984C600345ECC /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Carthage/Build/iOS/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		5340AAA91D99878F00345ECC /* doodle-monster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "doodle-monster.entitlements"; sourceTree = "<group>"; };
 		534965CA1C585CA5009552CC /* DateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateService.swift; path = Service/DateService.swift; sourceTree = "<group>"; };
 		535A0A141C65588B00CAC8D3 /* SegueHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueHandler.swift; path = View/Utilities/SegueHandler.swift; sourceTree = "<group>"; };
 		535ECC0E1C31E42400E17D0F /* NewMonsterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewMonsterViewModel.swift; path = ViewModel/NewMonsterViewModel.swift; sourceTree = "<group>"; };
@@ -208,6 +219,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5340AAA81D9984C600345ECC /* FBSDKLoginKit.framework in Frameworks */,
+				5340AAA31D997E7300345ECC /* Bolts.framework in Frameworks */,
+				5340AAA41D997E7300345ECC /* FacebookCore.framework in Frameworks */,
+				5340AAA51D997E7300345ECC /* FacebookLogin.framework in Frameworks */,
+				5340AAA61D997E7300345ECC /* FBSDKCoreKit.framework in Frameworks */,
 				539EF5101C86334F00883314 /* EmitterKit.framework in Frameworks */,
 				53CED4CF1C1F6DE000B5BEEF /* SystemConfiguration.framework in Frameworks */,
 				53CED4C71C1F6D5600B5BEEF /* AudioToolbox.framework in Frameworks */,
@@ -268,6 +284,7 @@
 		532800911BA0ECF6005AD59C /* doodle-monster */ = {
 			isa = PBXGroup;
 			children = (
+				5340AAA91D99878F00345ECC /* doodle-monster.entitlements */,
 				53833D991CEBCE1700CED5EB /* Rest */,
 				5326473D1C6A9ACC00819296 /* InMemory */,
 				534965C91C585C8D009552CC /* Service */,
@@ -457,6 +474,11 @@
 		53CED4C31C1F6BD200B5BEEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5340AAA71D9984C600345ECC /* FBSDKLoginKit.framework */,
+				5340AA9F1D997E7300345ECC /* Bolts.framework */,
+				5340AAA01D997E7300345ECC /* FacebookCore.framework */,
+				5340AAA11D997E7300345ECC /* FacebookLogin.framework */,
+				5340AAA21D997E7300345ECC /* FBSDKCoreKit.framework */,
 				539EF50F1C86334F00883314 /* EmitterKit.framework */,
 				53CED4CE1C1F6DE000B5BEEF /* SystemConfiguration.framework */,
 				53CED4CC1C1F6DD300B5BEEF /* Security.framework */,
@@ -584,7 +606,13 @@
 				TargetAttributes = {
 					5328008E1BA0ECF6005AD59C = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = Q96RZM5NAK;
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					532800A21BA0ECF6005AD59C = {
 						CreatedOnToolsVersion = 7.0;
@@ -660,6 +688,11 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/EmitterKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FacebookCore.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FBSDKCoreKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Bolts.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FacebookLogin.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FBSDKLoginKit.framework",
 			);
 			outputPaths = (
 			);
@@ -880,7 +913,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "doodle-monster/doodle-monster.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Q96RZM5NAK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -899,7 +934,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "doodle-monster/doodle-monster.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Q96RZM5NAK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

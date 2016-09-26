@@ -84,7 +84,7 @@ class RestSessionService: SessionService {
         currentPlayer = playerTranslator.dictionaryToModel(playerDict)
     }
     
-    func setAuthToken(_ token: String, andPlayer playerDict:NSDictionary) {
+    func setAuthToken(_ token: String, andPlayer playerDict: NSDictionary) {
         self.token = token
         self.currentPlayer = self.playerTranslator.dictionaryToModel(playerDict)
         UserDefaults.standard.setValue(token, forKey: "token")
@@ -96,5 +96,35 @@ class RestSessionService: SessionService {
         self.currentPlayer = nil
         UserDefaults.standard.removeObject(forKey: "token")
         UserDefaults.standard.removeObject(forKey: "player")
+    }
+    
+    func loginByFacebook(withToken accessToken: String, completion: @escaping (Result<Bool>) -> ()) {
+        print(accessToken)
+        
+        let params = ["accessToken": accessToken]
+        
+        Alamofire
+            .request(apiUrl + "/auth/fb", method: .post, parameters: params, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                print(response)
+                
+                switch response.result {
+                case .success(let json):
+                    guard
+                        let json = json as? NSDictionary,
+                        let token = json["token"] as? String,
+                        let playerJson = json["player"] as? NSDictionary
+                    else {
+                        completion(.failure(DoodMonError.unexpectedResponse))
+                        return
+                    }
+
+                    self.setAuthToken(token, andPlayer: playerJson)
+                    completion(.success(true))
+                case .failure(let err):
+//                    completion(.failure(self.buildError(err, response.data)))
+                    break
+                }
+            }
     }
 }

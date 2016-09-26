@@ -5,6 +5,7 @@
 
 import Foundation
 import EmitterKit
+import FacebookCore
 
 // MARK: - DoodleMonster Protocol
 protocol DoodleMonster {
