@@ -13,16 +13,16 @@ class DrawingViewModelTests: XCTestCase {
     var sut: DrawingViewModel!
     var view: DrawingViewMock!
     var game: Game!
-    var gameService: GameServiceMock!
+    var api: ApiServiceMock!
     var drawingService: DrawingServiceMock!
     
     override func setUp() {
         super.setUp()
         view = DrawingViewMock()
         game = GameBuilder.aGame().build()
-        gameService = GameServiceMock()
+        api = ApiServiceMock()
         drawingService = DrawingServiceMock()
-        sut = DrawingViewModel(view: view, game: game, gameService: gameService)
+        sut = DrawingViewModel(view: view, game: game, api: api)
         sut.drawingService = drawingService
     }
     

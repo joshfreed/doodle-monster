@@ -54,11 +54,11 @@ class LoginViewController: UIViewController {
     }
     
     private func sendToServer(token: String) {
-        self.appDelegate.session.loginByFacebook(withToken: token) { result in
+        self.appDelegate.api.loginByFacebook(withToken: token) { result in
             switch result {
-            case .success(let user):
+            case .success:
                 self.loadingSpinner.hide()
-                // todo go to main menu
+                self.performSegue(withIdentifier: "MainMenu", sender: nil)
                 break
             case .failure(let err): self.showAlert(error: err)
             }

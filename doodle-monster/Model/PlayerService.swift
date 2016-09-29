@@ -8,12 +8,6 @@
 
 import UIKit
 
-protocol PlayerService {
-    func createUser(_ username: String, password: String, displayName: String, callback: @escaping (CreateUserResult) -> ())
-    func search(_ searchText: String, callback: @escaping (SearchResult) -> ())
-    func playerBy(_ id: String) -> Player?
-}
-
 enum LoginResult {
     case success
     case noSuchUser

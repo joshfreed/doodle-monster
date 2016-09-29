@@ -15,20 +15,20 @@ protocol CreateAccountView {
 }
 
 protocol CreateAccountViewPresenter {
-    init(view: CreateAccountView, playerService: PlayerService, username: String, password: String)
+    init(view: CreateAccountView, api: DoodMonApi, username: String, password: String)
     func createAccount(_ displayName: String, confirmPassword: String)
     func showUsername()
 }
 
 class CreateAccountPresenter: CreateAccountViewPresenter {
     let view: CreateAccountView
-    let playerService: PlayerService
+    let api: DoodMonApi
     let username: String
     let password: String
     
-    required init(view: CreateAccountView, playerService: PlayerService, username: String, password: String) {
+    required init(view: CreateAccountView, api: DoodMonApi, username: String, password: String) {
         self.view = view
-        self.playerService = playerService
+        self.api = api
         self.username = username
         self.password = password
     }
@@ -44,7 +44,7 @@ class CreateAccountPresenter: CreateAccountViewPresenter {
             return
         }
         
-        playerService.createUser(username, password: password, displayName: displayName) { result in
+        api.createUser(username, password: password, displayName: displayName) { result in
             switch result {
             case .success: self.view.goToMainMenu()
             case .error: self.view.showCreateAccountError()

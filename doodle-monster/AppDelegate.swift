@@ -8,50 +8,45 @@
 
 import UIKit
 import FacebookCore
+import ObjectMapper
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var viewModelFactory: ViewModelFactory!
-    var playerService: PlayerService!
-    var gameService: GameService!
-    var session: SessionService!
+    var session: DoodMonSession!
     var doodleMonsterApp: DoodleMonster!
+    var api: DoodMonApi!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        let apiUrl = "https://doodle-monster.herokuapp.com"
+//        let apiUrl = "http://localhost:8000"
+
         SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-        
-        //let apiUrl = "https://doodle-monster.herokuapp.com"
         
         if ProcessInfo.processInfo.arguments.contains("TESTING") {
             prepareTestData()
         } else {
-            session = RestSessionService(apiUrl: apiUrl)
-            playerService = RestPlayerService(apiUrl: apiUrl, session: session, playerTranslator: DictionaryPlayerTranslator())
-            gameService = RestGameService(apiUrl: apiUrl, session: session, gameTranslator: RestGameTranslator())
+            session = Session()
+            api = ApiService(baseUrl: apiUrl)
         }
         
-        doodleMonsterApp = DoodleMonsterApp(gameService: gameService, session: session)
-        
+        doodleMonsterApp = DoodleMonsterApp(api: api, session: session)
         viewModelFactory = ViewModelFactory(appDelegate: self)
 
-        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), for: .default)
-        
         session.resume()
-        
-        print(session.token)
         
         if session.hasSession() {
             let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             let vc = storyboard.instantiateViewController(withIdentifier: "MainMenu") as! MainMenuViewController
-            guard let _ = session.currentPlayer else {
+            guard let _ = session.me else {
                 fatalError("Have a session but can't get the current player. What's going on?")
             }
-            vc.viewModel = viewModelFactory.mainMenuViewModel(vc)
             let nc = window?.rootViewController as! UINavigationController
             nc.pushViewController(vc, animated: false)
         }
         
+        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header"), for: .default)
         
         return true
     }
@@ -85,31 +80,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     fileprivate func prepareTestData() {
         print("Put the app in testing mode")
-//        PFUser.logOut()
-        session = MemorySessionService()
-        playerService = MemoryPlayerService(session: session as! MemorySessionService)
-        gameService = MemoryGameService(session: session as! MemorySessionService)
-        (session as! MemorySessionService).playerService = playerService as! MemoryPlayerService
         
-        var player1 = Player()
-        player1.id = "11111"
-        player1.username = "jeffery@bleepsmazz.com"
+        session = InMemorySession()
+        let mockSession = session as! InMemorySession
+        
+        api = InMemoryApiService(session: mockSession)
+        let mockApi = api as! InMemoryApiService
+        
+        let json1 = [
+            "id": "11111",
+            "email": "jeffery@bleepsmazz.com",
+            "displayName": "Jeffery"
+        ]
+        var player1 = Mapper<Player>().map(JSON: json1)!
         player1.password = "bleep"
-        player1.displayName = "Jeffery"
-        (playerService as! MemoryPlayerService).players.append(player1)
+        mockApi.players.append(player1)
         
-        var player2 = Player()
-        player2.id = "22222"
-        player2.username = "jerry@bleepsmazz.com"
+        let json2 = [
+            "id": "22222",
+            "email": "jerry@bleepsmazz.com",
+            "displayName": "Jerry"
+        ]
+        var player2 = Mapper<Player>().map(JSON: json2)!
         player2.password = "bleep"
-        player2.displayName = "Jerry"
-        (playerService as! MemoryPlayerService).players.append(player2)
+        mockApi.players.append(player2)
         
         print(ProcessInfo.processInfo.environment["CURRENT_USER"])
         if let currentPlayerId = ProcessInfo.processInfo.environment["CURRENT_USER"] {
-            for player in (playerService as! MemoryPlayerService).players {
+            for player in mockApi.players {
                 if player.id == currentPlayerId {
-                    (session as! MemorySessionService).currentPlayer = player
+                    print("Logging in as player \(player)")
+                    mockSession.me = player
                 }
             }
         }
@@ -138,4 +139,5 @@ enum DoodMonError: Error {
     case serverError(message: String)
     case unexpectedResponse
     case unknownResponse
+    case noToken
 }

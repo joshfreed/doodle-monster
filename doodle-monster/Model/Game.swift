@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import ObjectMapper
 
-struct Game: Equatable {
+struct Game: Mappable, Equatable {
     var id: String?
     var gameOver: Bool = false
     var players: [Player] = []
@@ -22,7 +23,22 @@ struct Game: Equatable {
     }
     
     var currentPlayer: Player {
+        print("Get current player: \(currentPlayerNumber) from \(players)")
         return players[currentPlayerNumber]
+    }
+    
+    init?(map: Map) {
+        
+    }
+    
+    mutating func mapping(map: Map) {
+        id <- map["id"]
+        gameOver <- map["gameOver"]
+        players <- map["players"]
+        thumbnail <- (map["thumbnail"], Base64Transform())
+        name <- map["name"]
+        currentPlayerNumber <- map["currentPlayerNumber"]
+        lastTurn <- (map["lastTurn"], DateTransform(dateFormat: "yyyy-MM-dd"))
     }
     
     func isCurrentTurn(_ player: Player) -> Bool {

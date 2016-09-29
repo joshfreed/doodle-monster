@@ -12,7 +12,7 @@ import XCTest
 class MainMenuViewModelTests: XCTestCase {
     var vm: MainMenuViewModel!
     var view: MainMenuViewMock!
-    var gameService: GameServiceMock!
+    var api: ApiServiceMock!
     var session: SessionMock!
     var router: MainMenuRouterMock!
     var listener: MainMenuViewModelListenerMock!
@@ -21,12 +21,12 @@ class MainMenuViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         view = MainMenuViewMock()
-        gameService = GameServiceMock()
+        api = ApiServiceMock()
         session = SessionMock()
         router = MainMenuRouterMock()
         listener = MainMenuViewModelListenerMock()
         app = DoodleMonsterMock()
-        vm = MainMenuViewModel(view: view, gameService: gameService, session: session, router: router, listener: listener, applicationLayer: app)
+        vm = MainMenuViewModel(view: view, api: api, session: session, router: router, listener: listener, applicationLayer: app)
     }
     
     override func tearDown() {
@@ -42,8 +42,8 @@ class MainMenuViewModelTests: XCTestCase {
         let game1 = GameBuilder.aGame().withPlayers([player1, player2]).build()
         let game2 = GameBuilder.aGame().withPlayers([player2, player3]).build()
         let game3 = GameBuilder.aGame().withPlayers([player3, player4]).build()
-        gameService.setActiveGames([game1, game2, game3])
-        session.currentPlayer = player2.build()
+        api.setActiveGames([game1, game2, game3])
+        session.me = player2.build()
 
         let expectedVm1 = GameViewModel(game: game1)
         let expectedVm2 = GameViewModel(game: game2)

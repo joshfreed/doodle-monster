@@ -30,6 +30,8 @@ class MainMenuViewController: UIViewController, UICollectionViewDelegate, Routed
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        viewModel = appDelegate.viewModelFactory.mainMenuViewModel(self)
+        
         headerViewFactory = SupplementaryViewFactory<MonsterSectionHeader>()
         footerViewFactory = MonsterFooterViewFactory(viewModel: viewModel)
 

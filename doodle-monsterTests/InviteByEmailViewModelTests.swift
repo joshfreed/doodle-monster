@@ -9,7 +9,7 @@ import XCTest
 class InviteByEmailViewModelTests: XCTestCase {
     var vm: InviteByEmailViewModel!
     var view: InviteByEmailViewMock!
-    var playerService: PlayerServiceMock!
+    var api: ApiServiceMock!
     var session: SessionMock!
     var app: DoodleMonsterMock!
 
@@ -17,11 +17,11 @@ class InviteByEmailViewModelTests: XCTestCase {
         super.setUp()
 
         view = InviteByEmailViewMock()
-        playerService = PlayerServiceMock()
-        playerService.nextResult = SearchResult.success([])
+        api = ApiServiceMock()
+        api.nextResult = SearchResult.success([])
         session = SessionMock()
         app = DoodleMonsterMock()
-        vm = InviteByEmailViewModel(view: view, playerService: playerService, session: session, applicationLayer: app)
+        vm = InviteByEmailViewModel(view: view, api: api, session: session, applicationLayer: app)
     }
 
     override func tearDown() {
@@ -30,7 +30,7 @@ class InviteByEmailViewModelTests: XCTestCase {
 
     func test_search_callsPlayerServiceSearchWithTheSearchString() {
         vm.search("hamburgers")
-        XCTAssertEqual("hamburgers", playerService.lastSearchedFor)
+        XCTAssertEqual("hamburgers", api.lastSearchedFor)
     }
     
     func test_search_translatesPlayersToViewModels() {
@@ -39,7 +39,7 @@ class InviteByEmailViewModelTests: XCTestCase {
             PlayerBuilder.aPlayer().withName("Jimmy Jack").build(),
             PlayerBuilder.aPlayer().withName("Freddy Johns").build(),
         ]
-        playerService.nextResult = SearchResult.success(searchResults)
+        api.nextResult = SearchResult.success(searchResults)
 
         vm.search("anything")
 
@@ -55,8 +55,8 @@ class InviteByEmailViewModelTests: XCTestCase {
             PlayerBuilder.aPlayer().withName("Jimmy Jack").build(),
             PlayerBuilder.aPlayer().withName("Freddy Johns").build(),
         ]
-        playerService.nextResult = SearchResult.success(searchResults)
-        session.currentPlayer = searchResults[1];
+        api.nextResult = SearchResult.success(searchResults)
+        session.me = searchResults[1];
         
         vm.search("whatever");
         
@@ -70,7 +70,7 @@ class InviteByEmailViewModelTests: XCTestCase {
     }
     
     func test_search_error_updatesTheViewAfterAnError() {
-        playerService.nextResult = SearchResult.error
+        api.nextResult = SearchResult.error
         vm.search("anything")
         XCTAssertTrue(view.calledSearchError);
     }
@@ -82,7 +82,7 @@ class InviteByEmailViewModelTests: XCTestCase {
             PlayerBuilder.aPlayer().withName("Freddy Johns").build(),
         ]
         vm.setPlayers(players)
-        playerService.players = players
+        api.players = players
         
         vm.selectPlayer(IndexPath(row: 2, section: 0))
        
@@ -96,7 +96,7 @@ class InviteByEmailViewModelTests: XCTestCase {
             PlayerBuilder.aPlayer().withName("Freddy Johns").build(),
         ]
         vm.setPlayers(players)
-        playerService.players = players
+        api.players = players
         
         vm.selectPlayer(IndexPath(row: 90, section: 0))
         

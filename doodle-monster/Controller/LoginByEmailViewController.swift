@@ -44,12 +44,12 @@ class LoginByEmailViewController: UIViewController, LoginByEmailView, SegueHandl
         switch segueIdentifier {
         case .CreateAccount:
             if let vc = segue.destination as? CreateAccountViewController {
-                vc.presenter = CreateAccountPresenter(view: vc, playerService: appDelegate.playerService, username: username!, password: password!)
+                vc.presenter = CreateAccountPresenter(view: vc, api: appDelegate.api, username: username!, password: password!)
             }
-        case .MainMenu:
-            if let vc = segue.destination as? MainMenuViewController {
-                vc.viewModel = appDelegate.viewModelFactory.mainMenuViewModel(vc)
-            }
+        case .MainMenu: break
+//            if let vc = segue.destination as? MainMenuViewController {
+//                vc.viewModel = appDelegate.viewModelFactory.mainMenuViewModel(vc)
+//            }
         }
     }
 

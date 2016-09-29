@@ -11,7 +11,7 @@ import UIKit
 protocol DrawingViewModelProtocol {
     var name: String { get }
 
-    init(view: DrawingView, game: Game, gameService: GameService)
+    init(view: DrawingView, game: Game, api: DoodMonApi)
     func saveImages(_ fullImageData: Data)
     func saveTurn(_ letter: String)
     func enterDrawMode()
@@ -22,7 +22,7 @@ protocol DrawingViewModelProtocol {
 class DrawingViewModel: NSObject {
     let view: DrawingView
     let game: Game
-    let gameService: GameService
+    let api: DoodMonApi
 
     var drawingService: DrawingServiceProtocol!
     
@@ -33,14 +33,14 @@ class DrawingViewModel: NSObject {
     fileprivate var full: Data?
     fileprivate var drawingMode: DrawingMode = .draw
     
-    required init(view: DrawingView, game: Game, gameService: GameService) {
+    required init(view: DrawingView, game: Game, api: DoodMonApi) {
         self.view = view
         self.game = game
-        self.gameService = gameService
+        self.api = api
     }
 
     func loadPreviousTurns() {
-        gameService.loadImageData(game.id!) { result in
+        api.loadImageData(game.id!) { result in
             switch result {
             case .success(let imageData): self.drawingService.setImageData(imageData)
             case .failure(let err): self.view.showError(err)
@@ -60,7 +60,7 @@ class DrawingViewModel: NSObject {
             fatalError("Did not set the images before saving")
         }
 
-        gameService.saveTurn(game.id!, image: fullImageData, letter: letter) { result in
+        api.saveTurn(game.id!, image: fullImageData, letter: letter) { result in
             switch result {
             case .success(let updatedGame):
                 let wrappedGame = Wrapper<Game>(theValue: updatedGame)

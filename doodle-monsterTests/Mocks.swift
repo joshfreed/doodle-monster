@@ -32,17 +32,74 @@ class InviteByEmailViewMock: InviteByEmailView {
     }
 }
 
-class GameServiceMock: GameService {
+class SessionMock: DoodMonSession {
+    var me: Player?
+    var token: String?
+    var loggedOut = false
+    
+    func logout() {
+        loggedOut = true
+    }
+    
+    func hasSession() -> Bool {
+        return false
+    }
+    
+    func setSession(token: String, player: Player) {
+        
+    }
+    
+    func resume() {
+        
+    }
+}
+
+class ApiServiceMock: DoodMonApi {
+    var lastSearchedFor: String?
+    var nextResult: SearchResult?
+    var players: [Player] = []
+    
     var activeGames: [Game] = []
     var createGameResult: Result<Game>?
     var calledCreateGame = false
-
+    
     func setActiveGames(_ games: [Game]) {
         activeGames = games
     }
 
-    // MARK: GameService
-
+    // MARK: - Auth
+    
+    func tryToLogIn(_ username: String, password: String, callback: @escaping (LoginResult) -> ()) {
+        
+    }
+    
+    func loginByFacebook(withToken accessToken: String, completion: @escaping (Result<Bool>) -> ()) {
+        
+    }
+    
+    // MARK: - Player
+    
+    func createUser(_ username: String, password: String, displayName: String, callback: @escaping (CreateUserResult) -> ()) {
+        
+    }
+    
+    func search(_ searchText: String, callback: @escaping (SearchResult) -> ()) {
+        lastSearchedFor = searchText
+        callback(nextResult!)
+    }
+    
+    func playerBy(_ id: String) -> Player? {
+        for player in players {
+            if player.id == id {
+                return player
+            }
+        }
+        
+        return nil
+    }
+    
+    // MARK: Game
+    
     func createGame(_ players: [Player], callback: @escaping (Result<Game>) -> ()) {
         calledCreateGame = true
         guard let result = createGameResult else {
@@ -50,44 +107,19 @@ class GameServiceMock: GameService {
         }
         callback(result);
     }
-
+    
     func getActiveGames(_ callback: @escaping (Result<[Game]>) -> ()) {
         callback(.success(activeGames))
     }
-
+    
     func saveTurn(_ gameId: String, image: Data, letter: String, completion: @escaping (Result<Game>) -> ()) {
-
+        
     }
     
     func loadImageData(_ gameId: String, completion: @escaping (Result<Data>) -> ()) {
         
     }
-}
 
-class SessionMock: SessionService {
-    var currentPlayer: Player?
-    var token: String?
-    var loggedOut = false
-
-    func hasSession() -> Bool {
-        return false
-    }
-
-    func tryToLogIn(_ username: String, password: String, callback: @escaping (LoginResult) -> ()) {
-
-    }
-
-    func logout() {
-        loggedOut = true
-    }
-
-    func resume() {
-
-    }
-    
-    func setAuthToken(_ token: String, andPlayer playerDict: NSDictionary) {
-        
-    }
 }
 
 class MainMenuRouterMock: MainMenuRouter {
@@ -115,31 +147,6 @@ class MainMenuViewModelListenerMock: MainMenuViewModelListener {
 
     override func stopListening() {
 
-    }
-}
-
-class PlayerServiceMock: PlayerService {
-    var lastSearchedFor: String?
-    var nextResult: SearchResult?
-    var players: [Player] = []
-
-    func createUser(_ username: String, password: String, displayName: String, callback: @escaping (CreateUserResult) -> ()) {
-
-    }
-
-    func search(_ searchText: String, callback: @escaping (SearchResult) -> ()) {
-        lastSearchedFor = searchText
-        callback(nextResult!)
-    }
-
-    func playerBy(_ id: String) -> Player? {
-        for player in players {
-            if player.id == id {
-                return player
-            }
-        }
-        
-        return nil
     }
 }
 

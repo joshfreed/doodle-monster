@@ -26,8 +26,8 @@ protocol DoodleMonster {
 
 // MARK: - DoodleMonsterApp
 class DoodleMonsterApp: DoodleMonster {
-    let gameService: GameService
-    let session: SessionService
+    let api: DoodMonApi
+    let session: DoodMonSession
     
     // MARK: Events
     let playerAdded = Event<Player>()
@@ -36,19 +36,19 @@ class DoodleMonsterApp: DoodleMonster {
     
     fileprivate(set) var newGamePlayers: [Player] = []
     
-    init(gameService: GameService, session: SessionService) {
-        self.gameService = gameService
+    init(api: DoodMonApi, session: DoodMonSession) {
+        self.api = api
         self.session = session
     }
     
     // MARK:  Actions
     
     func createLobby() {
-        guard newGamePlayers.count == 0 else {
+        guard let me = session.me, newGamePlayers.count == 0 else {
             return
         }
         
-        newGamePlayers.append(session.currentPlayer!)
+        newGamePlayers.append(me)
     }
     
     func cancelLobby() {
@@ -69,7 +69,7 @@ class DoodleMonsterApp: DoodleMonster {
         guard let player = matches.first else {
             return
         }
-        guard player != session.currentPlayer! else {
+        guard let me = session.me, player != me else {
             return
         }
 
@@ -82,7 +82,7 @@ class DoodleMonsterApp: DoodleMonster {
             return
         }
         
-        gameService.createGame(newGamePlayers) { (result) -> () in
+        api.createGame(newGamePlayers) { (result) -> () in
             switch result {
             case .success(let newGame):
                 self.newGamePlayers = []

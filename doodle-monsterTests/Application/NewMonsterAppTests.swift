@@ -11,16 +11,16 @@ import XCTest
 
 class NewMonsterAppTests: XCTestCase {
     var app: DoodleMonsterApp!
-    var gameServiceMock: GameServiceMock!
+    var api: ApiServiceMock!
     var session: SessionMock!
     
     override func setUp() {
         super.setUp()
         
-        session = SessionMock();
-        gameServiceMock = GameServiceMock()
-        session.currentPlayer = PlayerBuilder.aPlayer().build()
-        app = DoodleMonsterApp(gameService: gameServiceMock, session: session)
+        session = SessionMock()
+        api = ApiServiceMock()
+        session.me = PlayerBuilder.aPlayer().build()
+        app = DoodleMonsterApp(api: api, session: session)
     }
     
     override func tearDown() {
@@ -34,7 +34,7 @@ class NewMonsterAppTests: XCTestCase {
         app.createLobby()
         
         XCTAssertEqual(1, app.newGamePlayers.count)
-        XCTAssertTrue(app.newGamePlayers.contains(session.currentPlayer!))
+        XCTAssertTrue(app.newGamePlayers.contains(session.me!))
     }
     
     func test_createLobby_doesNothingIfThereIsAlreadyALobbyCreated() {
@@ -42,7 +42,7 @@ class NewMonsterAppTests: XCTestCase {
         app.createLobby() // 2nd one won't initialize things twice
         
         XCTAssertEqual(1, app.newGamePlayers.count)
-        XCTAssertTrue(app.newGamePlayers.contains(session.currentPlayer!))
+        XCTAssertTrue(app.newGamePlayers.contains(session.me!))
     }
     
     // MARK: cancelLobby
@@ -132,9 +132,9 @@ class NewMonsterAppTests: XCTestCase {
     func test_removePlayer_cannotRemoveTheCurrentPlayer() {
         app.createLobby()
         
-        app.removePlayer(session.currentPlayer!.id!)
+        app.removePlayer(session.me!.id!)
         
-        XCTAssertTrue(app.newGamePlayers.contains(session.currentPlayer!))
+        XCTAssertTrue(app.newGamePlayers.contains(session.me!))
     }
     
     // MARK: startGame
@@ -146,7 +146,7 @@ class NewMonsterAppTests: XCTestCase {
         
         // EXPECTATIONS
         let theNewGame = GameBuilder.aGame().withPlayers(app.newGamePlayers).build()
-        gameServiceMock.createGameResult = .success(theNewGame)
+        api.createGameResult = .success(theNewGame)
         let expectation = self.expectation(description: "Event was emitted")
         app.newGameStarted.once { g in
             XCTAssertEqual(theNewGame, g)
@@ -164,7 +164,7 @@ class NewMonsterAppTests: XCTestCase {
     func test_startGame_doesNotStartTheGameIfThereArentEnoughPlayers() {
         app.createLobby()
         app.startGame()
-        XCTAssertFalse(gameServiceMock.calledCreateGame)
+        XCTAssertFalse(api.calledCreateGame)
     }
     
     func test_startGame_wontStartIfThereAreTooManyPlayers() {
@@ -173,7 +173,7 @@ class NewMonsterAppTests: XCTestCase {
             app.addPlayer(PlayerBuilder.aPlayer().build())
         }
         app.startGame()
-        XCTAssertFalse(gameServiceMock.calledCreateGame)
+        XCTAssertFalse(api.calledCreateGame)
 
     }
     

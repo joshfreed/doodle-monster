@@ -1,0 +1,56 @@
+PODS:
+  - Alamofire (4.0.1)
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
+  - DateTools (1.7.0)
+  - EmitterKit (5.0.0)
+  - FacebookCore (0.2.0):
+    - Bolts (~> 1.8)
+    - FBSDKCoreKit (~> 4.15)
+  - FacebookLogin (0.2.0):
+    - Bolts (~> 1.8)
+    - FacebookCore (~> 0.2)
+    - FBSDKCoreKit (~> 4.15)
+    - FBSDKLoginKit (~> 4.15)
+  - FacebookShare (0.2.0):
+    - Bolts (~> 1.8)
+    - FacebookCore (~> 0.2)
+    - FBSDKCoreKit (~> 4.15)
+    - FBSDKShareKit (~> 4.15)
+  - FBSDKCoreKit (4.15.1):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.15.1):
+    - FBSDKCoreKit
+  - FBSDKShareKit (4.15.1):
+    - FBSDKCoreKit
+  - ObjectMapper (2.0.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - DateTools
+  - EmitterKit
+  - FacebookCore
+  - FacebookLogin
+  - FacebookShare
+  - ObjectMapper
+
+SPEC CHECKSUMS:
+  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
+  EmitterKit: 0057b2086840f20987cb8d4445b4490b96c0bfd8
+  FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
+  FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
+  FacebookShare: 8e9ee8ea06505e6a1d3d719b0cc63e840fb8aaeb
+  FBSDKCoreKit: fc7fa53d16b095ee3fd53f0cd59f1df8bcbb634d
+  FBSDKLoginKit: 073f79b3b2e762fc6f54a283fe15f45372d59f5f
+  FBSDKShareKit: 11cbb5a4d7b5fda8143cc95b76188147e6725736
+  ObjectMapper: aed2570edabbd3c9b26c939e1cabdb6558f933e0
+
+PODFILE CHECKSUM: 744ca12280860278f9241c2ff665b248d8d6dde1
+
+COCOAPODS: 1.0.1

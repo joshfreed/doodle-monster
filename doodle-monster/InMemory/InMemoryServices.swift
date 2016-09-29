@@ -7,30 +7,62 @@
 //
 
 import UIKit
+import ObjectMapper
 
-class MemoryPlayerService: PlayerService {
+class InMemoryApiService: DoodMonApi {
+    let session: InMemorySession
     var players: [Player] = []
+    var games: [Game] = []
     var nextId = 0
-    let session: MemorySessionService
     
-    init(session: MemorySessionService) {
+    init(session: InMemorySession) {
         self.session = session
+    }
+    
+    func tryToLogIn(_ username: String, password: String, callback: @escaping (LoginResult) -> ()) {
+        var foundPlayer = false
+        for player in players {
+            if player.username == username {
+                foundPlayer = true
+                break
+            }
+        }
+        if !foundPlayer {
+            return callback(.noSuchUser)
+        }
+        
+        for player in players {
+            if player.username == username && player.password == password {
+                session.me = player
+                return callback(.success)
+            }
+        }
+        
+        callback(.error)
+    }
+    
+    func loginByFacebook(withToken accessToken: String, completion: @escaping (Result<Bool>) -> ()) {
+        
     }
     
     func createUser(_ username: String, password: String, displayName: String, callback: @escaping (CreateUserResult) -> ()) {
         nextId = nextId + 1
-        var player = Player()
-        player.id = String(nextId)
-        player.username = username
+        
+        let json = [
+            "id": "\(nextId)",
+            "username": username,
+            "displayName": displayName
+        ]
+        
+        var player = Mapper<Player>().map(JSON: json)!
         player.password = password
-        player.displayName = displayName
         players.append(player)
-        session.currentPlayer = player
+        session.me = player
         callback(.success)
+
     }
     
     func search(_ searchText: String, callback: @escaping (SearchResult) -> ()) {
-        print("Searching for \(searchText)")
         var matches: [Player] = []
         for player in players {
             print("Checking \(player.username)")
@@ -40,32 +72,25 @@ class MemoryPlayerService: PlayerService {
         }
         callback(.success(matches))
     }
-
+    
     func playerBy(_ id: String) -> Player? {
         for player in players {
             if player.id == id {
                 return player
             }
         }
-
+        
         return nil
-    }
-}
-
-class MemoryGameService: GameService {
-    var games: [Game] = []
-    let session: MemorySessionService
-    var nextId = 0
-    
-    init(session: MemorySessionService) {
-        self.session = session
     }
     
     func createGame(_ players: [Player], callback: @escaping (Result<Game>) -> ()) {
         nextId = nextId + 1
-        var game = Game()
-        game.id = String(nextId)
-        game.name = ""
+        
+        let json: [String : Any] = [
+            "id": String(nextId)
+        ]
+        
+        var game = Mapper<Game>().map(JSON: json)!
         game.players = players
         games.append(game)
         callback(.success(game))
@@ -85,7 +110,7 @@ class MemoryGameService: GameService {
         completion(.failure(NSError(domain: "Game not found", code: 0, userInfo: nil)))
     }
     
-    func getGame(_ gameId: String) -> Game? {
+    private func getGame(_ gameId: String) -> Game? {
         for game in games {
             if game.id == gameId {
                 return game
@@ -100,50 +125,26 @@ class MemoryGameService: GameService {
     }
 }
 
-class MemorySessionService: SessionService {
-    var currentPlayer: Player?
+class InMemorySession: DoodMonSession {
+    var me: Player?
     var token: String?
-    var playerService: MemoryPlayerService!
-    
-    func tryToLogIn(_ username: String, password: String, callback: @escaping (LoginResult) -> ()) {
-        var foundPlayer = false
-        for player in playerService.players {
-            if player.username == username {
-                foundPlayer = true
-                break
-            }
-        }
-        if !foundPlayer {
-            return callback(.noSuchUser)
-        }
-        
-        for player in playerService.players {
-            if player.username == username && player.password == password {
-                currentPlayer = player
-                return callback(.success)
-            }
-        }
-        
-        callback(.error)
-    }
     
     func hasSession() -> Bool {
-        return currentPlayer != nil
+        return me != nil
+    }
+    
+    func setSession(token: String, player: Player) {
+        self.token = token
+        self.me = player
     }
     
     func logout() {
-        currentPlayer = nil
+        self.token = nil
+        self.me = nil
     }
     
     func resume() {
         
     }
-    
-    func setAuthToken(_ token: String, andPlayer playerDict: NSDictionary) {
-        
-    }
-    
-    func loginByFacebook(withToken accessToken: String, completion: @escaping (Result<Bool>) -> ()) {
-        
-    }
 }
+

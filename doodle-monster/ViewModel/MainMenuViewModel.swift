@@ -18,8 +18,8 @@ protocol MainMenuViewModelProtocol: class {
     var waitingGames: [GameViewModel] { get }
 
     init(view: MainMenuView,
-         gameService: GameService,
-         session: SessionService,
+         api: DoodMonApi,
+         session: DoodMonSession,
          router: MainMenuRouter,
          listener: MainMenuViewModelListener,
          applicationLayer: DoodleMonster)
@@ -32,8 +32,8 @@ protocol MainMenuViewModelProtocol: class {
 
 class MainMenuViewModel: MainMenuViewModelProtocol {
     let view: MainMenuView
-    let gameService: GameService
-    let session: SessionService
+    let api: DoodMonApi
+    let session: DoodMonSession
     let router: MainMenuRouter
     let listener: MainMenuViewModelListener
     let appLayer: DoodleMonster
@@ -45,13 +45,13 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     fileprivate var listeners: [Listener] = []
 
     required init(view: MainMenuView,
-                  gameService: GameService,
-                  session: SessionService,
+                  api: DoodMonApi,
+                  session: DoodMonSession,
                   router: MainMenuRouter,
                   listener: MainMenuViewModelListener,
                   applicationLayer: DoodleMonster) {
         self.view = view
-        self.gameService = gameService
+        self.api = api
         self.session = session
         self.router = router
         self.listener = listener
@@ -87,11 +87,11 @@ class MainMenuViewModel: MainMenuViewModelProtocol {
     // MARK: - MainMenuViewModelProtocol
 
     func loadItems() {
-        guard let currentPlayer = session.currentPlayer else {
+        guard let currentPlayer = session.me else {
             fatalError("Tried to load games but no one is logged in")
         }
 
-        gameService.getActiveGames() { result in
+        api.getActiveGames() { result in
             switch result {
             case .success(let games):
                 for game in games {

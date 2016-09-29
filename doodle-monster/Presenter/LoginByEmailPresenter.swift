@@ -17,23 +17,23 @@ protocol LoginByEmailView {
 }
 
 protocol LoginByEmailViewPresenter {
-    init(view: LoginByEmailView, session: SessionService)
+    init(view: LoginByEmailView, api: DoodMonApi)
     func login(_ username: String, password: String)
 }
 
 class LoginByEmailPresenter: LoginByEmailViewPresenter {
     let view: LoginByEmailView
-    let session: SessionService
+    let api: DoodMonApi
     
-    required init(view: LoginByEmailView, session: SessionService) {
+    required init(view: LoginByEmailView, api: DoodMonApi) {
         self.view = view
-        self.session = session
+        self.api = api
     }
     
     func login(_ username: String, password: String) {
         view.showLoading()
         
-        session.tryToLogIn(username, password: password) { result in
+        api.tryToLogIn(username, password: password) { result in
             self.view.hideLoading()
             
             switch result {

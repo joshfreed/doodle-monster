@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import ObjectMapper
 @testable import doodle_monster
 
 class GameBuilder: Builder {
@@ -16,10 +17,12 @@ class GameBuilder: Builder {
     }
 
     func build() -> Game {
-        var game = Game()
-        game.id = gameId ?? generateId()
-        game.currentPlayerNumber = 0
-
+        var json: [String: Any] = [:]
+        json["id"] = gameId ?? generateId()
+        json["currentPlayerNumber"] = 0
+        
+        var game = Mapper<Game>().map(JSON: json)!
+        
         var players: [Player] = []
         for builder in playerBuilders {
             players.append(builder.build())
@@ -28,7 +31,7 @@ class GameBuilder: Builder {
             players.append(player)
         }
         game.players = players
-
+        
         return game
     }
 

@@ -111,10 +111,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="LLf-Gz-SFv"/>
+                    <connections>
+                        <segue destination="gWE-pp-Uki" kind="show" identifier="MainMenu" id="TGo-fB-LcN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1080" y="416"/>
+            <point key="canvasLocation" x="631" y="415"/>
         </scene>
         <!--Create Account View Controller-->
         <scene sceneID="C5M-pO-khz">
@@ -329,7 +332,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ANm-ge-s2E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1843" y="416"/>
+            <point key="canvasLocation" x="1825" y="-445"/>
         </scene>
         <!--Doodle Monster-->
         <scene sceneID="mi8-aM-h9Y">
@@ -576,7 +579,7 @@
                         <outlet property="previousTurnsImageView" destination="sSf-pk-7zV" id="DzP-cx-HsI"/>
                         <outlet property="saveButton" destination="NXU-3c-UyV" id="t2J-XV-07o"/>
                         <outlet property="scrollView" destination="3eR-pZ-eEJ" id="070-2n-3DB"/>
-                        <segue destination="A2v-OG-fi1" kind="presentation" identifier="SaveDrawing" id="Az7-Rh-Ymz"/>
+                        <segue destination="A2v-OG-fi1" kind="presentation" identifier="SaveDrawing" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="Az7-Rh-Ymz"/>
                         <segue destination="vba-Rs-2tY" kind="unwind" identifier="cancelDrawing" unwindAction="unwindToMainMenu:" id="XtL-Je-2k9"/>
                         <segue destination="ohx-1f-COx" kind="presentation" identifier="ConfirmCancelDrawing" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="yzh-LE-INQ"/>
                     </connections>
@@ -671,14 +674,15 @@
                                     <constraint firstItem="Cvj-QA-XOk" firstAttribute="top" secondItem="Uqp-JV-wdg" secondAttribute="top" constant="64" id="6j5-n1-HaW"/>
                                     <constraint firstItem="hAl-Mw-ogH" firstAttribute="leading" secondItem="Uqp-JV-wdg" secondAttribute="leading" id="Dnz-kK-8s7"/>
                                     <constraint firstAttribute="bottom" secondItem="BgL-vp-XN1" secondAttribute="bottom" id="ESL-Pl-uQv"/>
-                                    <constraint firstItem="xAx-Yh-u93" firstAttribute="top" secondItem="Cvj-QA-XOk" secondAttribute="bottom" constant="32" id="MCb-Sa-x2Q"/>
+                                    <constraint firstItem="xAx-Yh-u93" firstAttribute="top" secondItem="Cvj-QA-XOk" secondAttribute="bottom" constant="42" id="MCb-Sa-x2Q"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="311" id="NDG-Si-e5n"/>
                                     <constraint firstItem="l6f-TU-Z6x" firstAttribute="leading" secondItem="Iit-aG-BWO" secondAttribute="trailing" id="Ubh-6a-TAX"/>
+                                    <constraint firstItem="b7F-4i-7q7" firstAttribute="top" secondItem="xAx-Yh-u93" secondAttribute="bottom" constant="42" id="b9Y-97-Ogf"/>
                                     <constraint firstItem="l6f-TU-Z6x" firstAttribute="centerY" secondItem="hAl-Mw-ogH" secondAttribute="centerY" id="eJS-yz-4s6"/>
+                                    <constraint firstAttribute="bottom" secondItem="b7F-4i-7q7" secondAttribute="bottom" constant="60" id="ff4-Ab-HGv"/>
                                     <constraint firstItem="Cvj-QA-XOk" firstAttribute="leading" secondItem="Uqp-JV-wdg" secondAttribute="leading" id="hSR-w9-7KO"/>
                                     <constraint firstAttribute="trailing" secondItem="BgL-vp-XN1" secondAttribute="trailing" id="hqp-hD-Sfu"/>
                                     <constraint firstItem="Iit-aG-BWO" firstAttribute="leading" secondItem="xAx-Yh-u93" secondAttribute="trailing" id="idk-3v-vK9"/>
-                                    <constraint firstItem="b7F-4i-7q7" firstAttribute="top" secondItem="xAx-Yh-u93" secondAttribute="bottom" constant="20" id="jU1-Ch-Htd"/>
                                     <constraint firstItem="BgL-vp-XN1" firstAttribute="top" secondItem="Uqp-JV-wdg" secondAttribute="top" id="kHL-ed-tq9"/>
                                     <constraint firstItem="Iit-aG-BWO" firstAttribute="centerY" secondItem="xAx-Yh-u93" secondAttribute="centerY" id="l0B-7V-H22"/>
                                     <constraint firstItem="b7F-4i-7q7" firstAttribute="leading" secondItem="Uqp-JV-wdg" secondAttribute="leading" constant="20" id="ovV-ST-nuA"/>
@@ -1110,7 +1114,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FAV-6I-rJe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="268" y="416"/>
+            <point key="canvasLocation" x="-180" y="415"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Drh-25-VqC">
@@ -1146,7 +1150,7 @@
         <image name="undo" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="51A-Ag-woa"/>
+        <segue reference="TGo-fB-LcN"/>
         <segue reference="rza-KZ-eL7"/>
     </inferredMetricsTieBreakers>
 </document>

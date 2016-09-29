@@ -13,7 +13,7 @@ class ViewModelFactory {
     }
 
     func loginByEmailPresenter(_ view: LoginByEmailView) -> LoginByEmailPresenter {
-        return LoginByEmailPresenter(view: view, session: appDelegate!.session)
+        return LoginByEmailPresenter(view: view, api: appDelegate!.api)
     }
 
     func newMonsterViewModel(_ vc: NewMonsterViewController) -> NewMonsterViewModel {
@@ -26,7 +26,7 @@ class ViewModelFactory {
 
     func mainMenuViewModel(_ vc: MainMenuViewController) -> MainMenuViewModel {
         return MainMenuViewModel(view: vc,
-            gameService: appDelegate!.gameService,
+            api: appDelegate!.api,
             session: appDelegate!.session,
             router: MainMenuRouterImpl(vc: vc, vmFactory: self),
             listener: MainMenuViewModelListener(),
@@ -35,10 +35,10 @@ class ViewModelFactory {
     }
 
     func drawingViewModel(_ game: Game, view: DrawingView) -> DrawingViewModel {
-        return DrawingViewModel(view: view, game: game, gameService: appDelegate!.gameService)
+        return DrawingViewModel(view: view, game: game, api: appDelegate!.api)
     }
 
     func inviteByEmailViewModel(_ vc: InviteByEmailViewController) -> InviteByEmailViewModel {
-        return InviteByEmailViewModel(view: vc, playerService: appDelegate!.playerService, session: appDelegate!.session, applicationLayer: appDelegate!.doodleMonsterApp)
+        return InviteByEmailViewModel(view: vc, api: appDelegate!.api, session: appDelegate!.session, applicationLayer: appDelegate!.doodleMonsterApp)
     }
 }

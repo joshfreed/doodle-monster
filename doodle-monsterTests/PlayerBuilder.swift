@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import ObjectMapper
 @testable import doodle_monster
 
 class PlayerBuilder: Builder {
@@ -15,7 +16,8 @@ class PlayerBuilder: Builder {
     }
 
     func build() -> Player {
-        var player = Player()
+        var json: [String: Any] = [:]
+        var player = Mapper<Player>().map(JSON: json)!
         player.id = playerId ?? generateId()
         player.displayName = displayName
         return player

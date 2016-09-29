@@ -20,7 +20,7 @@ protocol NewMonsterViewModelProtocol {
     var currentPlayer: PlayerViewModel { get }
     var buttonHidden: Bool { get }
 
-    init(view: NewMonsterView, session: SessionService, router: NewMonsterRouter, applicationLayer: DoodleMonster)
+    init(view: NewMonsterView, session: DoodMonSession, router: NewMonsterRouter, applicationLayer: DoodleMonster)
     func removePlayer(_ player: PlayerViewModel)
     func startGame()
 }
@@ -31,18 +31,18 @@ class NewMonsterViewModel: NewMonsterViewModelProtocol {
     var buttonHidden = true
 
     fileprivate let view: NewMonsterView
-    fileprivate let session: SessionService
+    fileprivate let session: DoodMonSession
     fileprivate let router: NewMonsterRouter
     fileprivate let appLayer: DoodleMonster
     fileprivate var listeners: [Listener] = []
 
-    required init(view: NewMonsterView, session: SessionService, router: NewMonsterRouter, applicationLayer: DoodleMonster) {
+    required init(view: NewMonsterView, session: DoodMonSession, router: NewMonsterRouter, applicationLayer: DoodleMonster) {
         self.view = view
         self.session = session
         self.router = router
         self.appLayer = applicationLayer
 
-        self.currentPlayer = PlayerViewModel(player: session.currentPlayer!)
+        self.currentPlayer = PlayerViewModel(player: session.me!)
         
         listeners += appLayer.playerAdded.on { [weak self] n in self?.playerAdded(n) }
         listeners += appLayer.playerRemoved.on { [weak self] n in self?.playerRemoved(n) }

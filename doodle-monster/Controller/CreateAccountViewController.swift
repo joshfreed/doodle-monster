@@ -40,16 +40,16 @@ class CreateAccountViewController: UIViewController, CreateAccountView {
         emailAddressLabel.text = username
     }
 
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "MainMenu" {
-            if let vc = segue.destination as? MainMenuViewController {
-                vc.viewModel = appDelegate.viewModelFactory.mainMenuViewModel(vc)
-            }
-        }
-    }
+//    // MARK: - Navigation
+//
+//    // In a storyboard-based application, you will often want to do a little preparation before navigation
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "MainMenu" {
+//            if let vc = segue.destination as? MainMenuViewController {
+//                vc.viewModel = appDelegate.viewModelFactory.mainMenuViewModel(vc)
+//            }
+//        }
+//    }
 
     // MARK: - Actions
     

@@ -16,7 +16,7 @@ protocol InviteByEmailView {
 protocol InviteByEmailViewModelProtocol: class {
     var players: [PlayerViewModel] { get }
 
-    init(view: InviteByEmailView, playerService: PlayerService, session: SessionService, applicationLayer: DoodleMonster)
+    init(view: InviteByEmailView, api: DoodMonApi, session: DoodMonSession, applicationLayer: DoodleMonster)
     func search(_ text: String)
     func selectPlayer(_ index: IndexPath)
 }
@@ -27,28 +27,28 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
     }
 
     fileprivate let view: InviteByEmailView
-    fileprivate let session: SessionService
-    fileprivate let playerService: PlayerService
+    fileprivate let session: DoodMonSession
+    fileprivate let api: DoodMonApi
     fileprivate let appLayer: DoodleMonster
     fileprivate var playerViewModels: [PlayerViewModel] = []
     
-    required init(view: InviteByEmailView, playerService: PlayerService, session: SessionService, applicationLayer: DoodleMonster) {
+    required init(view: InviteByEmailView, api: DoodMonApi, session: DoodMonSession, applicationLayer: DoodleMonster) {
         self.view = view
-        self.playerService = playerService
+        self.api = api
         self.session = session
         self.appLayer = applicationLayer
     }
 
     func setPlayers(_ players: [Player]) {
         playerViewModels = players
-            .filter({ return $0 != session.currentPlayer })
+            .filter({ return $0 != session.me })
             .map({ return PlayerViewModel(player: $0) })
     }
     
     // MARK: - InviteByEmailViewModelProtocol
 
     func search(_ text: String) {
-        playerService.search(text) { result in
+        api.search(text) { result in
             switch result {
             case .success(let players):
                 self.setPlayers(players)
@@ -65,7 +65,7 @@ class InviteByEmailViewModel: InviteByEmailViewModelProtocol {
 
         let playerId = players[(index as NSIndexPath).row].id
 
-        guard let player = playerService.playerBy(playerId) else {
+        guard let player = api.playerBy(playerId) else {
             print("No player with id \(playerId)")
             return
         }
