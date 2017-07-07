@@ -75,6 +75,7 @@
 		53EE34F31C32E2A000C70635 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE34F21C32E2A000C70635 /* PlayerView.swift */; };
 		53EE34F51C32E2B000C70635 /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53EE34F41C32E2B000C70635 /* PlayerView.xib */; };
 		53EE34F71C345E8600C70635 /* NewMonsterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE34F61C345E8600C70635 /* NewMonsterTests.swift */; };
+		53F3A8A91EC4A7F10012D367 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 53F3A8A81EC4A7F10012D367 /* Podfile */; };
 		8D811AF744F01A45C261B6D5 /* Pods_doodle_monsterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28873C715255AE3BD13DE5EA /* Pods_doodle_monsterTests.framework */; };
 		BA243D6A62482C5E338CFCDD /* Pods_doodle_monster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3B7E0AD9491B76CA75CEEB4 /* Pods_doodle_monster.framework */; };
 		E9AFC17D03315853177E65FC /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC4F97913FC798BDB66CC /* ArrayExtensions.swift */; };
@@ -194,6 +195,7 @@
 		53EE34F41C32E2B000C70635 /* PlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerView.xib; path = View/PlayerView.xib; sourceTree = "<group>"; };
 		53EE34F61C345E8600C70635 /* NewMonsterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMonsterTests.swift; sourceTree = "<group>"; };
 		53EE34FA1C386F6C00C70635 /* doodle-monster-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "doodle-monster-Bridging-Header.h"; sourceTree = "<group>"; };
+		53F3A8A81EC4A7F10012D367 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		5C99717EEB50E12FE7538ED2 /* Pods-doodle-monsterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-doodle-monsterUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-doodle-monsterUITests/Pods-doodle-monsterUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B2CE0CCBBE829A02A47FC143 /* Pods-doodle-monsterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-doodle-monsterUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-doodle-monsterUITests/Pods-doodle-monsterUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B7592EF7E7759608966A1326 /* Pods-doodle-monsterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-doodle-monsterTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-doodle-monsterTests/Pods-doodle-monsterTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		532800861BA0ECF6005AD59C = {
 			isa = PBXGroup;
 			children = (
+				53F3A8A81EC4A7F10012D367 /* Podfile */,
 				53C8D3EA1C29E9B70052A9ED /* Cartfile.resolved */,
 				53CED4BD1C1F691200B5BEEF /* Cartfile */,
 				532800911BA0ECF6005AD59C /* doodle-monster */,
@@ -663,6 +666,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53F3A8A91EC4A7F10012D367 /* Podfile in Resources */,
 				5328009D1BA0ECF6005AD59C /* LaunchScreen.storyboard in Resources */,
 				53AA70E41C4DA81600EB238B /* MainMenuBottom.xib in Resources */,
 				5328009A1BA0ECF6005AD59C /* Assets.xcassets in Resources */,
